@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.IcloudSidebarDaoImpl">
+
+	<!-- 插入实体 -->
+	<insert id="insert" parameterType="com.zhiyun.entity.IcloudSidebar">
+		INSERT INTO ICLOUD_SIDEBAR (
+		   	ID,
+		   	NAME,
+		   	URL,
+		   	SEQUENCE,
+		   	PARENT_ID
+		) VALUES (
+		   	#{id,jdbcType=BIGINT},
+		   	#{name,jdbcType=VARCHAR},
+		   	#{url,jdbcType=VARCHAR},
+		   	#{sequence,jdbcType=INTEGER},
+		   	#{parentId,jdbcType=BIGINT}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_ICLOUD_SIDEBAR.nextval as id FROM dual
+		</selectKey>
+	</insert>
+
+	<!-- 更新实体 -->
+	<update id="update" parameterType="com.zhiyun.entity.IcloudSidebar">
+		UPDATE ICLOUD_SIDEBAR
+		<set>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				URL = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="sequence != null">
+				SEQUENCE = #{sequence,jdbcType=INTEGER},
+			</if>
+			<if test="parentId != null">
+				PARENT_ID = #{parentId,jdbcType=BIGINT},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 更新实体 -->
+	<update id="updateFields" parameterType="com.zhiyun.entity.IcloudSidebar">
+		UPDATE ICLOUD_SIDEBAR
+		<set>
+			NAME = #{name,jdbcType=VARCHAR},
+			URL = #{url,jdbcType=VARCHAR},
+			SEQUENCE = #{sequence,jdbcType=INTEGER},
+			PARENT_ID = #{parentId,jdbcType=BIGINT},
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 删除实体 -->
+	<update id="delete" parameterType="com.zhiyun.entity.IcloudSidebar">
+		DELETE FROM ICLOUD_SIDEBAR WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 查询字段 -->
+	<sql id="selectFieldSQL">
+		SELECT 
+		       ID id,
+		       NAME name,
+		       URL url,
+		       SEQUENCE sequence,
+		       PARENT_ID parentId
+	</sql>
+
+	<!-- 查询 -->
+	<select id="get" parameterType="map" resultType="com.zhiyun.entity.IcloudSidebar">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_SIDEBAR
+		 WHERE ID = #{id,jdbcType=INTEGER}
+	</select>
+
+	<!-- 查询 -->
+	<select id="find" parameterType="com.zhiyun.entity.IcloudSidebar" resultType="com.zhiyun.entity.IcloudSidebar">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_SIDEBAR
+		<where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="name != null and name != ''">
+				AND NAME = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="url != null and url != ''">
+				AND URL = #{url,jdbcType=VARCHAR}
+			</if>
+			<if test="sequence != null">
+				AND SEQUENCE = #{sequence,jdbcType=INTEGER}
+			</if>
+			<if test="parentId != null">
+				AND PARENT_ID = #{parentId,jdbcType=BIGINT}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询所有 -->
+	<select id="findAll" parameterType="map" resultType="com.zhiyun.entity.IcloudSidebar">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_SIDEBAR
+	</select>
+
+	<!-- 分页查询（条件） -->
+	<sql id="page_condition">
+		<where>
+				<if test="entity.name != null and entity.name != ''">
+					AND NAME = #{entity.name,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.url != null and entity.url != ''">
+					AND URL = #{entity.url,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.sequence != null">
+					AND SEQUENCE = #{entity.sequence,jdbcType=INTEGER}
+				</if>
+				<if test="entity.parentId != null">
+					AND PARENT_ID = #{entity.parentId,jdbcType=BIGINT}
+				</if>
+		</where>
+	</sql>
+
+	<!-- 分页查询（计数） -->
+	<select id="page_count" parameterType="map" resultType="int">
+		SELECT count(*)
+		  FROM ICLOUD_SIDEBAR
+		<include refid="page_condition" />
+	</select>
+
+	<!-- 分页查询（数据） -->
+	<select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.IcloudSidebar">
+		<include refid="mybatis.pageStartSQL" />
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_SIDEBAR
+		<include refid="page_condition" />
+		<include refid="mybatis.pageEndSQL" />
+	</select>
+	
+	<!-- Map查询所有 -->
+	<select id="findMapListAll" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_SIDEBAR
+	</select>
+	
+	<!-- Map条件查询 -->
+	<select id="findMapList" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_SIDEBAR
+		 <where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="name != null and name != ''">
+				AND NAME = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="url != null and url != ''">
+				AND URL = #{url,jdbcType=VARCHAR}
+			</if>
+			<if test="sequence != null">
+				AND SEQUENCE = #{sequence,jdbcType=INTEGER}
+			</if>
+			<if test="parentId != null">
+				AND PARENT_ID = #{parentId,jdbcType=BIGINT}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 插入实体map -->
+	<insert id="mapInsert" parameterType="map">
+		INSERT INTO ICLOUD_SIDEBAR (
+		   	ID,
+		   	NAME,
+		   	URL,
+		   	SEQUENCE,
+		   	PARENT_ID
+		) VALUES (
+		   	#{ id,jdbcType=BIGINT},
+		   	#{ name,jdbcType=VARCHAR},
+		   	#{ url,jdbcType=VARCHAR},
+		   	#{ sequence,jdbcType=INTEGER},
+		   	#{ parentId,jdbcType=BIGINT}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_ICLOUD_SIDEBAR.nextval as id FROM dual
+		</selectKey>
+	</insert>
+	
+	<!-- 更新实体Map -->
+	<update id="mapUpdate" parameterType="map">
+		UPDATE ICLOUD_SIDEBAR
+		<set>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				URL = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="sequence != null">
+				SEQUENCE = #{sequence,jdbcType=INTEGER},
+			</if>
+			<if test="parentId != null">
+				PARENT_ID = #{parentId,jdbcType=BIGINT},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper>   

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.IcloudMarketentrydatashareurlDaoImpl">
+
+	<!-- 插入实体 -->
+	<insert id="insert" parameterType="com.zhiyun.entity.IcloudMarketentrydatashareurl">
+		INSERT INTO ICLOUD_MARKETENTRYDATASHAREURL (
+		   	ID,
+		   	DATA_IMAGE_SHARE_URL,
+		   	ICLOUD_MARKET_ENTRY_ID,
+		   	DELETED,
+		   	CREATE_BY,
+		   	CREATE_TIME,
+		   	MODIFY_BY,
+		   	MODIFY_TIME
+		) VALUES (
+		   	#{id,jdbcType=BIGINT},
+		   	#{dataImageShareUrl,jdbcType=VARCHAR},
+		   	#{icloudMarketEntryId,jdbcType=BIGINT},
+		   	#{deleted,jdbcType=VARCHAR},
+		   	#{createBy,jdbcType=VARCHAR},
+		   	#{createTime,jdbcType=TIMESTAMP},
+		   	#{modifyBy,jdbcType=VARCHAR},
+		   	#{modifyTime,jdbcType=TIMESTAMP}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_ICLOUD_MARKETENTRYDATASHAREURL.nextval as id FROM dual
+		</selectKey>
+	</insert>
+
+	<!-- 更新实体 -->
+	<update id="update" parameterType="com.zhiyun.entity.IcloudMarketentrydatashareurl">
+		UPDATE ICLOUD_MARKETENTRYDATASHAREURL
+		<set>
+			<if test="dataImageShareUrl != null">
+				DATA_IMAGE_SHARE_URL = #{dataImageShareUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="icloudMarketEntryId != null">
+				ICLOUD_MARKET_ENTRY_ID = #{icloudMarketEntryId,jdbcType=BIGINT},
+			</if>
+			<if test="deleted != null">
+				DELETED = #{deleted,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyBy != null">
+				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 更新实体 -->
+	<update id="updateFields" parameterType="com.zhiyun.entity.IcloudMarketentrydatashareurl">
+		UPDATE ICLOUD_MARKETENTRYDATASHAREURL
+		<set>
+			DATA_IMAGE_SHARE_URL = #{dataImageShareUrl,jdbcType=VARCHAR},
+			ICLOUD_MARKET_ENTRY_ID = #{icloudMarketEntryId,jdbcType=BIGINT},
+			DELETED = #{deleted,jdbcType=VARCHAR},
+			CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+			MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 删除实体 -->
+	<update id="delete" parameterType="com.zhiyun.entity.IcloudMarketentrydatashareurl">
+		UPDATE ICLOUD_MARKETENTRYDATASHAREURL
+		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
+		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+		 WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 查询字段 -->
+	<sql id="selectFieldSQL">
+		SELECT 
+		       ID id,
+		       DATA_IMAGE_SHARE_URL dataImageShareUrl,
+		       ICLOUD_MARKET_ENTRY_ID icloudMarketEntryId,
+		       DELETED deleted,
+		       CREATE_BY createBy,
+		       CREATE_TIME createTime,
+		       MODIFY_BY modifyBy,
+		       MODIFY_TIME modifyTime
+	</sql>
+
+	<!-- 查询 -->
+	<select id="get" parameterType="map" resultType="com.zhiyun.entity.IcloudMarketentrydatashareurl">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_MARKETENTRYDATASHAREURL
+		 WHERE ID = #{id,jdbcType=INTEGER}
+		   AND DELETED = #{deleted,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 查询 -->
+	<select id="find" parameterType="com.zhiyun.entity.IcloudMarketentrydatashareurl" resultType="com.zhiyun.entity.IcloudMarketentrydatashareurl">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_MARKETENTRYDATASHAREURL
+		<where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="dataImageShareUrl != null and dataImageShareUrl != ''">
+				AND DATA_IMAGE_SHARE_URL = #{dataImageShareUrl,jdbcType=VARCHAR}
+			</if>
+			<if test="icloudMarketEntryId != null">
+				AND ICLOUD_MARKET_ENTRY_ID = #{icloudMarketEntryId,jdbcType=BIGINT}
+			</if>
+			<if test="deleted != null and deleted != ''">
+				AND DELETED = #{deleted,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询所有 -->
+	<select id="findAll" parameterType="map" resultType="com.zhiyun.entity.IcloudMarketentrydatashareurl">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_MARKETENTRYDATASHAREURL
+		 WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 分页查询（条件） -->
+	<sql id="page_condition">
+		<where>
+				<if test="entity.dataImageShareUrl != null and entity.dataImageShareUrl != ''">
+					AND DATA_IMAGE_SHARE_URL = #{entity.dataImageShareUrl,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.icloudMarketEntryId != null">
+					AND ICLOUD_MARKET_ENTRY_ID = #{entity.icloudMarketEntryId,jdbcType=BIGINT}
+				</if>
+				<if test="entity.deleted != null and entity.deleted != ''">
+					AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+				</if>
+		</where>
+	</sql>
+
+	<!-- 分页查询（计数） -->
+	<select id="page_count" parameterType="map" resultType="int">
+		SELECT count(*)
+		  FROM ICLOUD_MARKETENTRYDATASHAREURL
+		<include refid="page_condition" />
+	</select>
+
+	<!-- 分页查询（数据） -->
+	<select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.IcloudMarketentrydatashareurl">
+		<include refid="mybatis.pageStartSQL" />
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_MARKETENTRYDATASHAREURL
+		<include refid="page_condition" />
+		<include refid="mybatis.pageEndSQL" />
+	</select>
+	
+	<!-- Map查询所有 -->
+	<select id="findMapListAll" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_MARKETENTRYDATASHAREURL
+		 WHERE DELETED = "F"
+	</select>
+	
+	<!-- Map条件查询 -->
+	<select id="findMapList" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_MARKETENTRYDATASHAREURL
+		 <where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="dataImageShareUrl != null and dataImageShareUrl != ''">
+				AND DATA_IMAGE_SHARE_URL = #{dataImageShareUrl,jdbcType=VARCHAR}
+			</if>
+			<if test="icloudMarketEntryId != null">
+				AND ICLOUD_MARKET_ENTRY_ID = #{icloudMarketEntryId,jdbcType=BIGINT}
+			</if>
+			<if test="deleted != null and deleted != ''">
+				AND DELETED = #{deleted,jdbcType=VARCHAR}
+			</if>
+		 WHERE DELETED = "F"
+		</where>
+	</select>
+	
+	<!-- 插入实体map -->
+	<insert id="mapInsert" parameterType="map">
+		INSERT INTO ICLOUD_MARKETENTRYDATASHAREURL (
+		   	ID,
+		   	DATA_IMAGE_SHARE_URL,
+		   	ICLOUD_MARKET_ENTRY_ID,
+		   	DELETED,
+		   	CREATE_BY,
+		   	CREATE_TIME,
+		   	MODIFY_BY,
+		   	MODIFY_TIME
+		) VALUES (
+		   	#{ id,jdbcType=BIGINT},
+		   	#{ dataImageShareUrl,jdbcType=VARCHAR},
+		   	#{ icloudMarketEntryId,jdbcType=BIGINT},
+		   	#{ deleted,jdbcType=VARCHAR},
+		   	#{ createBy,jdbcType=VARCHAR},
+		   	#{ createTime,jdbcType=TIMESTAMP},
+		   	#{ modifyBy,jdbcType=VARCHAR},
+		   	#{ modifyTime,jdbcType=TIMESTAMP}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_ICLOUD_MARKETENTRYDATASHAREURL.nextval as id FROM dual
+		</selectKey>
+	</insert>
+	
+	<!-- 更新实体Map -->
+	<update id="mapUpdate" parameterType="map">
+		UPDATE ICLOUD_MARKETENTRYDATASHAREURL
+		<set>
+			<if test="dataImageShareUrl != null">
+				DATA_IMAGE_SHARE_URL = #{dataImageShareUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="icloudMarketEntryId != null">
+				ICLOUD_MARKET_ENTRY_ID = #{icloudMarketEntryId,jdbcType=BIGINT},
+			</if>
+			<if test="deleted != null">
+				DELETED = #{deleted,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyBy != null">
+				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper>   

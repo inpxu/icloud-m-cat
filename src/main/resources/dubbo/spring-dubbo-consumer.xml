@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd 
+        http://code.alibabatech.com/schema/dubbo 
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<description>消费者配置</description>
+	
+
+    
+	<dubbo:reference id="uniqueIdService" interface="com.zhiyun.internal.uniqueid.UniqueIdService" group="demo" 
+		version="1.0" retries="${UniqueIdService.retries}" timeout="30000" check="${UniqueIdService.check}"  init="true"/>
+		
+
+	<dubbo:reference id="approlvalInterface" interface="com.zhiyun.internal.server.oc.approlval.service.ApprolvalInterface" group="oc" 
+		version="1.0" retries="${UniqueIdService.retries}" timeout="10000" check="${UniqueIdService.check}" init="true"/>
+		
+	<dubbo:reference id="approlvalUpdateInterface" interface="com.zhiyun.internal.server.oc.approlval.service.ApprolvalUpdateInterface" group="oc" 
+		version="1.0" retries="${UniqueIdService.retries}" timeout="10000" check="${UniqueIdService.check}"  init="true"/>
+
+	<dubbo:reference id="interfaceForUser" interface="com.zhiyun.internal.server.auth.service.InterfaceForUser" group="authorization"
+					 version="1.0" retries="${UniqueIdService.retries}" timeout="10000" check="${UniqueIdService.check}"  init="true"/>
+
+</beans>

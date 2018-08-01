@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!--
+  ~ 嘉兴飞戎智云软件有限公司版权所有
+  ~ Copyright (c) 2018. zhiyun and/or its affiliates. All rights reserved.
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.IcloudApplicationentryDaoImpl">
+
+	 <!-- 更新实体 -->
+    <update id="updateByUserId" parameterType="com.zhiyun.entity.IcloudApplicationentry">
+        UPDATE ICLOUD_APPLICATIONENTRY
+        <set>
+            <if test="id != null">
+                ID = #{id,jdbcType=BIGINT},
+            </if>
+            <if test="createUserId != null">
+                CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                NAME = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="legalPerson != null">
+                LEGAL_PERSON = #{legalPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="property != null">
+                PROPERTY = #{property,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                TYPE = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="enterpriseScale != null">
+                ENTERPRISE_SCALE = #{enterpriseScale,jdbcType=INTEGER},
+            </if>
+            <if test="equipmentScale != null">
+                EQUIPMENT_SCALE = #{equipmentScale,jdbcType=INTEGER},
+            </if>
+            <if test="annualSales != null">
+                ANNUAL_SALES = #{annualSales,jdbcType=INTEGER},
+            </if>
+            <if test="siteImageShareUrl != null">
+                SITE_IMAGE_SHARE_URL = #{siteImageShareUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=INTEGER},
+            </if>
+                SENDED = 'F',
+			UPDATED = 'T',
+        </set>
+        WHERE CREATE_USER_ID = #{createUserId,jdbcType=BIGINT}
+    </update>
+    
+     <!-- 更新实体 -->
+    <update id="updateStatus" parameterType="com.zhiyun.entity.IcloudApplicationentry">
+        UPDATE ICLOUD_APPLICATIONENTRY
+        <set>
+             STATUS = #{status,jdbcType=INTEGER},
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+    
+    <!-- 查询字段 -->
+	<sql id="selectSQL">
+		SELECT 
+		       ID id,
+		       create_user_id createUserId,
+		       NAME name,
+		       LEGAL_PERSON legalPerson,
+		       PROPERTY property,
+		       TYPE type,
+		       ENTERPRISE_SCALE enterpriseScale,
+		       EQUIPMENT_SCALE equipmentScale,
+		       ANNUAL_SALES annualSales,
+		       SITE_IMAGE_SHARE_URL siteImageShareUrl,
+		       STATUS status,
+		       CREATE_TIME createTime,
+		       MODIFY_TIME modifyTime,
+		       DELETED deleted,
+		       CREATE_BY createBy,
+		       MODIFY_BY modifyBy,
+		       ORGANIZATION_ID organizationId,
+		       sended sended,
+		       updated updated,
+		       approval_opinion approvalOpinion,
+		       ZHENGJINGJI_NUM zhengjingjiNum,
+               JINGBIANJI_NUM jingbianjiNum,
+               QITA_NUM qitaNum
+	</sql>
+	
+	<!-- 查询 -->
+	<select id="findBySended" resultType="com.zhiyun.entity.IcloudApplicationentry">
+		<include refid="selectSQL" />
+		  FROM ICLOUD_APPLICATIONENTRY
+			where
+				DELETED = 'F'
+				AND SENDED = 'F'
+	</select>
+	
+	<!-- 查询 -->
+	<select id="findByUserId" resultType="com.zhiyun.entity.IcloudApplicationentry" parameterType="int">
+		<include refid="selectSQL" />
+		  FROM ICLOUD_APPLICATIONENTRY
+			where
+				DELETED = 'F'
+                and id in (SELECT applicationentry_id FROM ICLOUD_USER_APPLICATIONENTRY WHERE user_id = #{userId,jdbcType=BIGINT})
+	</select>
+
+    <!-- 查询 -->
+    <select id="findByOrganizationId" resultType="com.zhiyun.entity.IcloudApplicationentry" parameterType="int">
+        <include refid="selectSQL" />
+        FROM ICLOUD_APPLICATIONENTRY
+        where
+        DELETED = 'F'
+        and organization_id = #{organizationId,jdbcType=BIGINT}
+    </select>
+	
+	<update id="updateSended" parameterType="int">
+		 UPDATE ICLOUD_APPLICATIONENTRY
+        <set>
+             SENDED = 'T',
+             UPDATED = 'F'
+        </set>
+        WHERE ID = #{id,jdbcType=BIGINT}
+        and DELETED = 'F'
+	</update>
+
+</mapper>

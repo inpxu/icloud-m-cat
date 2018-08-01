@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.IcloudUserApplicationentryDaoImpl">
+
+    <update id="updateByApplicationEntryId" parameterType="Map">
+        UPDATE ICLOUD_USER_APPLICATIONENTRY
+        <set>
+            applicationentry_id = #{toApplicationEntryId,jdbcType=BIGINT},
+        </set>
+        WHERE applicationentry_id = #{fromApplicationEntryId,jdbcType=BIGINT}
+    </update>
+    
+    <select id="findUser" parameterType="java.lang.Long" resultType="int">
+    	SELECT 
+			COUNT(*)
+		FROM ICLOUD_USER_APPLICATIONENTRY
+			WHERE user_id = #{userId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByUserId" parameterType="int" >
+        DELETE FROM ICLOUD_USER_APPLICATIONENTRY
+        WHERE user_id = #{userId,jdbcType=BIGINT}
+    </delete>
+
+    <select id="listByApplicationentryId" resultType="com.zhiyun.entity.IcloudUserApplicationentry" parameterType="int">
+        <include refid="selectFieldSQL" />
+        FROM ICLOUD_USER_APPLICATIONENTRY
+        WHERE applicationentry_id = #{applicationentryId,jdbcType=BIGINT}
+    </select>
+
+</mapper>   

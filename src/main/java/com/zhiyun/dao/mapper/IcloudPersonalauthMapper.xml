@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.IcloudPersonalauthDaoImpl">
+
+	<!-- 插入实体 -->
+	<insert id="insert" parameterType="com.zhiyun.entity.IcloudPersonalauth">
+		INSERT INTO ICLOUD_PERSONALAUTH (
+		   	ID,
+		   	USER_ID,
+		   	NAME,
+		   	CERTIFICATE_TYPE,
+		   	CERTIFICATE,
+		   	SEX,
+		   	PROVINCE,
+		   	CITY,
+		   	DISTRICT,
+		   	DETAILED_ADDRESS,
+		   	CERTIFICATE_POSITIVE_SHARE_URL,
+		   	CERTIFICATE_NEGATIVE_SHARE_URL,
+		   	STATUS,
+		   	CREATE_TIME,
+		   	MODIFY_TIME,
+		   	DELETED,
+		   	CREATE_BY,
+		   	MODIFY_BY,
+		   	SENDED,
+		   	UPDATED,
+		   	APPROVAL_OPINION
+		) VALUES (
+		   	#{id,jdbcType=BIGINT},
+		   	#{userId,jdbcType=BIGINT},
+		   	#{name,jdbcType=VARCHAR},
+		   	#{certificateType,jdbcType=INTEGER},
+		   	#{certificate,jdbcType=VARCHAR},
+		   	#{sex,jdbcType=INTEGER},
+		   	#{province,jdbcType=VARCHAR},
+		   	#{city,jdbcType=VARCHAR},
+		   	#{district,jdbcType=VARCHAR},
+		   	#{detailedAddress,jdbcType=VARCHAR},
+		   	#{certificatePositiveShareUrl,jdbcType=VARCHAR},
+		   	#{certificateNegativeShareUrl,jdbcType=VARCHAR},
+		   	#{status,jdbcType=INTEGER},
+		   	#{createTime,jdbcType=TIMESTAMP},
+		   	#{modifyTime,jdbcType=TIMESTAMP},
+		   	#{deleted,jdbcType=VARCHAR},
+		   	#{createBy,jdbcType=VARCHAR},
+		   	#{modifyBy,jdbcType=VARCHAR},
+		   	#{sended,jdbcType=VARCHAR},
+		   	#{updated,jdbcType=VARCHAR},
+		   	#{approvalOpinion,jdbcType=VARCHAR}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_ICLOUD_PERSONALAUTH.nextval as id FROM dual
+		</selectKey>
+	</insert>
+
+	<!-- 更新实体 -->
+	<update id="update" parameterType="com.zhiyun.entity.IcloudPersonalauth">
+		UPDATE ICLOUD_PERSONALAUTH
+		<set>
+			<if test="userId != null">
+				USER_ID = #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="certificateType != null">
+				CERTIFICATE_TYPE = #{certificateType,jdbcType=INTEGER},
+			</if>
+			<if test="certificate != null">
+				CERTIFICATE = #{certificate,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				SEX = #{sex,jdbcType=INTEGER},
+			</if>
+			<if test="province != null">
+				PROVINCE = #{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				CITY = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="district != null">
+				DISTRICT = #{district,jdbcType=VARCHAR},
+			</if>
+			<if test="detailedAddress != null">
+				DETAILED_ADDRESS = #{detailedAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="certificatePositiveShareUrl != null">
+				CERTIFICATE_POSITIVE_SHARE_URL = #{certificatePositiveShareUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="certificateNegativeShareUrl != null">
+				CERTIFICATE_NEGATIVE_SHARE_URL = #{certificateNegativeShareUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleted != null">
+				DELETED = #{deleted,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyBy != null">
+				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+			</if>
+			<if test="sended != null">
+				SENDED = #{sended,jdbcType=VARCHAR},
+			</if>
+			<if test="updated != null">
+				UPDATED = #{updated,jdbcType=VARCHAR},
+			</if>
+			<if test="approvalOpinion != null">
+				APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 更新实体 -->
+	<update id="updateFields" parameterType="com.zhiyun.entity.IcloudPersonalauth">
+		UPDATE ICLOUD_PERSONALAUTH
+		<set>
+			USER_ID = #{userId,jdbcType=BIGINT},
+			NAME = #{name,jdbcType=VARCHAR},
+			CERTIFICATE_TYPE = #{certificateType,jdbcType=INTEGER},
+			CERTIFICATE = #{certificate,jdbcType=VARCHAR},
+			SEX = #{sex,jdbcType=INTEGER},
+			PROVINCE = #{province,jdbcType=VARCHAR},
+			CITY = #{city,jdbcType=VARCHAR},
+			DISTRICT = #{district,jdbcType=VARCHAR},
+			DETAILED_ADDRESS = #{detailedAddress,jdbcType=VARCHAR},
+			CERTIFICATE_POSITIVE_SHARE_URL = #{certificatePositiveShareUrl,jdbcType=VARCHAR},
+			CERTIFICATE_NEGATIVE_SHARE_URL = #{certificateNegativeShareUrl,jdbcType=VARCHAR},
+			STATUS = #{status,jdbcType=INTEGER},
+			CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+			DELETED = #{deleted,jdbcType=VARCHAR},
+			CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+			SENDED = #{sended,jdbcType=VARCHAR},
+			UPDATED = #{updated,jdbcType=VARCHAR},
+			APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR},
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 删除实体 -->
+	<update id="delete" parameterType="com.zhiyun.entity.IcloudPersonalauth">
+		UPDATE ICLOUD_PERSONALAUTH
+		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
+		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+		 WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 查询字段 -->
+	<sql id="selectFieldSQL">
+		SELECT 
+		       ID id,
+		       USER_ID userId,
+		       NAME name,
+		       CERTIFICATE_TYPE certificateType,
+		       CERTIFICATE certificate,
+		       SEX sex,
+		       PROVINCE province,
+		       CITY city,
+		       DISTRICT district,
+		       DETAILED_ADDRESS detailedAddress,
+		       CERTIFICATE_POSITIVE_SHARE_URL certificatePositiveShareUrl,
+		       CERTIFICATE_NEGATIVE_SHARE_URL certificateNegativeShareUrl,
+		       STATUS status,
+		       CREATE_TIME createTime,
+		       MODIFY_TIME modifyTime,
+		       DELETED deleted,
+		       CREATE_BY createBy,
+		       MODIFY_BY modifyBy,
+		       SENDED sended,
+		       UPDATED updated,
+		       APPROVAL_OPINION approvalOpinion
+	</sql>
+
+	<!-- 查询 -->
+	<select id="get" parameterType="map" resultType="com.zhiyun.entity.IcloudPersonalauth">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_PERSONALAUTH
+		 WHERE ID = #{id,jdbcType=INTEGER}
+		   AND DELETED = #{deleted,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 查询 -->
+	<select id="find" parameterType="com.zhiyun.entity.IcloudPersonalauth" resultType="com.zhiyun.entity.IcloudPersonalauth">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_PERSONALAUTH
+		<where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="userId != null">
+				AND USER_ID = #{userId,jdbcType=BIGINT}
+			</if>
+			<if test="name != null and name != ''">
+				AND NAME = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="certificateType != null">
+				AND CERTIFICATE_TYPE = #{certificateType,jdbcType=INTEGER}
+			</if>
+			<if test="certificate != null and certificate != ''">
+				AND CERTIFICATE = #{certificate,jdbcType=VARCHAR}
+			</if>
+			<if test="sex != null">
+				AND SEX = #{sex,jdbcType=INTEGER}
+			</if>
+			<if test="province != null and province != ''">
+				AND PROVINCE = #{province,jdbcType=VARCHAR}
+			</if>
+			<if test="city != null and city != ''">
+				AND CITY = #{city,jdbcType=VARCHAR}
+			</if>
+			<if test="district != null and district != ''">
+				AND DISTRICT = #{district,jdbcType=VARCHAR}
+			</if>
+			<if test="detailedAddress != null and detailedAddress != ''">
+				AND DETAILED_ADDRESS = #{detailedAddress,jdbcType=VARCHAR}
+			</if>
+			<if test="certificatePositiveShareUrl != null and certificatePositiveShareUrl != ''">
+				AND CERTIFICATE_POSITIVE_SHARE_URL = #{certificatePositiveShareUrl,jdbcType=VARCHAR}
+			</if>
+			<if test="certificateNegativeShareUrl != null and certificateNegativeShareUrl != ''">
+				AND CERTIFICATE_NEGATIVE_SHARE_URL = #{certificateNegativeShareUrl,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				AND STATUS = #{status,jdbcType=INTEGER}
+			</if>
+			<if test="deleted != null and deleted != ''">
+				AND DELETED = #{deleted,jdbcType=VARCHAR}
+			</if>
+			<if test="sended != null and sended != ''">
+				AND SENDED = #{sended,jdbcType=VARCHAR}
+			</if>
+			<if test="updated != null and updated != ''">
+				AND UPDATED = #{updated,jdbcType=VARCHAR}
+			</if>
+			<if test="approvalOpinion != null and approvalOpinion != ''">
+				AND APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询所有 -->
+	<select id="findAll" parameterType="map" resultType="com.zhiyun.entity.IcloudPersonalauth">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_PERSONALAUTH
+		 WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 分页查询（条件） -->
+	<sql id="page_condition">
+		<where>
+				<if test="entity.userId != null">
+					AND USER_ID = #{entity.userId,jdbcType=BIGINT}
+				</if>
+				<if test="entity.name != null and entity.name != ''">
+					AND NAME = #{entity.name,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.certificateType != null">
+					AND CERTIFICATE_TYPE = #{entity.certificateType,jdbcType=INTEGER}
+				</if>
+				<if test="entity.certificate != null and entity.certificate != ''">
+					AND CERTIFICATE = #{entity.certificate,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.sex != null">
+					AND SEX = #{entity.sex,jdbcType=INTEGER}
+				</if>
+				<if test="entity.province != null and entity.province != ''">
+					AND PROVINCE = #{entity.province,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.city != null and entity.city != ''">
+					AND CITY = #{entity.city,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.district != null and entity.district != ''">
+					AND DISTRICT = #{entity.district,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.detailedAddress != null and entity.detailedAddress != ''">
+					AND DETAILED_ADDRESS = #{entity.detailedAddress,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.certificatePositiveShareUrl != null and entity.certificatePositiveShareUrl != ''">
+					AND CERTIFICATE_POSITIVE_SHARE_URL = #{entity.certificatePositiveShareUrl,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.certificateNegativeShareUrl != null and entity.certificateNegativeShareUrl != ''">
+					AND CERTIFICATE_NEGATIVE_SHARE_URL = #{entity.certificateNegativeShareUrl,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.status != null">
+					AND STATUS = #{entity.status,jdbcType=INTEGER}
+				</if>
+				<if test="entity.deleted != null and entity.deleted != ''">
+					AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.sended != null and entity.sended != ''">
+					AND SENDED = #{entity.sended,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.updated != null and entity.updated != ''">
+					AND UPDATED = #{entity.updated,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.approvalOpinion != null and entity.approvalOpinion != ''">
+					AND APPROVAL_OPINION = #{entity.approvalOpinion,jdbcType=VARCHAR}
+				</if>
+		</where>
+	</sql>
+
+	<!-- 分页查询（计数） -->
+	<select id="page_count" parameterType="map" resultType="int">
+		SELECT count(*)
+		  FROM ICLOUD_PERSONALAUTH
+		<include refid="page_condition" />
+	</select>
+
+	<!-- 分页查询（数据） -->
+	<select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.IcloudPersonalauth">
+		<include refid="mybatis.pageStartSQL" />
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_PERSONALAUTH
+		<include refid="page_condition" />
+		<include refid="mybatis.pageEndSQL" />
+	</select>
+	
+	<!-- Map查询所有 -->
+	<select id="findMapListAll" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_PERSONALAUTH
+		 WHERE DELETED = "F"
+	</select>
+	
+	<!-- Map条件查询 -->
+	<select id="findMapList" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_PERSONALAUTH
+		 <where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="userId != null">
+				AND USER_ID = #{userId,jdbcType=BIGINT}
+			</if>
+			<if test="name != null and name != ''">
+				AND NAME = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="certificateType != null">
+				AND CERTIFICATE_TYPE = #{certificateType,jdbcType=INTEGER}
+			</if>
+			<if test="certificate != null and certificate != ''">
+				AND CERTIFICATE = #{certificate,jdbcType=VARCHAR}
+			</if>
+			<if test="sex != null">
+				AND SEX = #{sex,jdbcType=INTEGER}
+			</if>
+			<if test="province != null and province != ''">
+				AND PROVINCE = #{province,jdbcType=VARCHAR}
+			</if>
+			<if test="city != null and city != ''">
+				AND CITY = #{city,jdbcType=VARCHAR}
+			</if>
+			<if test="district != null and district != ''">
+				AND DISTRICT = #{district,jdbcType=VARCHAR}
+			</if>
+			<if test="detailedAddress != null and detailedAddress != ''">
+				AND DETAILED_ADDRESS = #{detailedAddress,jdbcType=VARCHAR}
+			</if>
+			<if test="certificatePositiveShareUrl != null and certificatePositiveShareUrl != ''">
+				AND CERTIFICATE_POSITIVE_SHARE_URL = #{certificatePositiveShareUrl,jdbcType=VARCHAR}
+			</if>
+			<if test="certificateNegativeShareUrl != null and certificateNegativeShareUrl != ''">
+				AND CERTIFICATE_NEGATIVE_SHARE_URL = #{certificateNegativeShareUrl,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				AND STATUS = #{status,jdbcType=INTEGER}
+			</if>
+			<if test="deleted != null and deleted != ''">
+				AND DELETED = #{deleted,jdbcType=VARCHAR}
+			</if>
+			<if test="sended != null and sended != ''">
+				AND SENDED = #{sended,jdbcType=VARCHAR}
+			</if>
+			<if test="updated != null and updated != ''">
+				AND UPDATED = #{updated,jdbcType=VARCHAR}
+			</if>
+			<if test="approvalOpinion != null and approvalOpinion != ''">
+				AND APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR}
+			</if>
+		 WHERE DELETED = "F"
+		</where>
+	</select>
+	
+	<!-- 插入实体map -->
+	<insert id="mapInsert" parameterType="map">
+		INSERT INTO ICLOUD_PERSONALAUTH (
+		   	ID,
+		   	USER_ID,
+		   	NAME,
+		   	CERTIFICATE_TYPE,
+		   	CERTIFICATE,
+		   	SEX,
+		   	PROVINCE,
+		   	CITY,
+		   	DISTRICT,
+		   	DETAILED_ADDRESS,
+		   	CERTIFICATE_POSITIVE_SHARE_URL,
+		   	CERTIFICATE_NEGATIVE_SHARE_URL,
+		   	STATUS,
+		   	CREATE_TIME,
+		   	MODIFY_TIME,
+		   	DELETED,
+		   	CREATE_BY,
+		   	MODIFY_BY,
+		   	SENDED,
+		   	UPDATED,
+		   	APPROVAL_OPINION
+		) VALUES (
+		   	#{ id,jdbcType=BIGINT},
+		   	#{ userId,jdbcType=BIGINT},
+		   	#{ name,jdbcType=VARCHAR},
+		   	#{ certificateType,jdbcType=INTEGER},
+		   	#{ certificate,jdbcType=VARCHAR},
+		   	#{ sex,jdbcType=INTEGER},
+		   	#{ province,jdbcType=VARCHAR},
+		   	#{ city,jdbcType=VARCHAR},
+		   	#{ district,jdbcType=VARCHAR},
+		   	#{ detailedAddress,jdbcType=VARCHAR},
+		   	#{ certificatePositiveShareUrl,jdbcType=VARCHAR},
+		   	#{ certificateNegativeShareUrl,jdbcType=VARCHAR},
+		   	#{ status,jdbcType=INTEGER},
+		   	#{ createTime,jdbcType=TIMESTAMP},
+		   	#{ modifyTime,jdbcType=TIMESTAMP},
+		   	#{ deleted,jdbcType=VARCHAR},
+		   	#{ createBy,jdbcType=VARCHAR},
+		   	#{ modifyBy,jdbcType=VARCHAR},
+		   	#{ sended,jdbcType=VARCHAR},
+		   	#{ updated,jdbcType=VARCHAR},
+		   	#{ approvalOpinion,jdbcType=VARCHAR}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_ICLOUD_PERSONALAUTH.nextval as id FROM dual
+		</selectKey>
+	</insert>
+	
+	<!-- 更新实体Map -->
+	<update id="mapUpdate" parameterType="map">
+		UPDATE ICLOUD_PERSONALAUTH
+		<set>
+			<if test="userId != null">
+				USER_ID = #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="certificateType != null">
+				CERTIFICATE_TYPE = #{certificateType,jdbcType=INTEGER},
+			</if>
+			<if test="certificate != null">
+				CERTIFICATE = #{certificate,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				SEX = #{sex,jdbcType=INTEGER},
+			</if>
+			<if test="province != null">
+				PROVINCE = #{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				CITY = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="district != null">
+				DISTRICT = #{district,jdbcType=VARCHAR},
+			</if>
+			<if test="detailedAddress != null">
+				DETAILED_ADDRESS = #{detailedAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="certificatePositiveShareUrl != null">
+				CERTIFICATE_POSITIVE_SHARE_URL = #{certificatePositiveShareUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="certificateNegativeShareUrl != null">
+				CERTIFICATE_NEGATIVE_SHARE_URL = #{certificateNegativeShareUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleted != null">
+				DELETED = #{deleted,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyBy != null">
+				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+			</if>
+			<if test="sended != null">
+				SENDED = #{sended,jdbcType=VARCHAR},
+			</if>
+			<if test="updated != null">
+				UPDATED = #{updated,jdbcType=VARCHAR},
+			</if>
+			<if test="approvalOpinion != null">
+				APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper>   

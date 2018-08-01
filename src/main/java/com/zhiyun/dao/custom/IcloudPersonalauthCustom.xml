@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.IcloudPersonalauthDaoImpl">
+
+ 	<!-- 查询字段 -->
+    <sql id="selectSQL">
+		SELECT 
+		       ID id,
+		       USER_ID userId,
+		       NAME name,
+		       CERTIFICATE_TYPE certificateType,
+		       CERTIFICATE certificate,
+		       SEX sex,
+		       PROVINCE province,
+		       CITY city,
+		       DISTRICT district,
+		       DETAILED_ADDRESS detailedAddress,
+		       CERTIFICATE_POSITIVE_SHARE_URL certificatePositiveShareUrl,
+		       CERTIFICATE_NEGATIVE_SHARE_URL certificateNegativeShareUrl,
+		       STATUS status,
+		       SENDED sended,
+		       CREATE_TIME createTime,
+		       MODIFY_TIME modifyTime,
+		       updated updated,
+		       approval_opinion approvalOpinion
+	</sql>
+
+	<!-- 查询 -->
+	<select id="findBySended" resultType="com.zhiyun.entity.IcloudPersonalauth">
+		<include refid="selectSQL" />
+        FROM ICLOUD_PERSONALAUTH
+			where
+				DELETED = 'F'
+				AND SENDED = 'F'
+	</select>
+	
+	<!-- 查询 -->
+	<select id="findByUserId" resultType="com.zhiyun.entity.IcloudPersonalauth" parameterType="int">
+		<include refid="selectSQL" />
+        FROM ICLOUD_PERSONALAUTH
+			where
+				DELETED = 'F'
+				and USER_ID = #{userId,jdbcType=BIGINT}
+	</select>
+	
+	<update id="updateSended" parameterType="int">
+        UPDATE ICLOUD_PERSONALAUTH
+        <set>
+             SENDED = 'T'
+        </set>
+        WHERE ID = #{id,jdbcType=BIGINT}
+        	and DELETED = 'F'
+	</update>
+
+	<!-- 删除实体 -->
+	<update id="deleteByUserId" parameterType="com.zhiyun.entity.IcloudPersonalauth">
+		UPDATE ICLOUD_PERSONALAUTH
+		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
+		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+		 WHERE user_id = #{userId,jdbcType=INTEGER}
+	</update>
+
+</mapper>   

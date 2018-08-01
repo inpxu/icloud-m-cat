@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.IcloudSidebarDaoImpl">
+
+	<!-- 查询 -->
+    <select id="listSidebarByRoleId" parameterType="map" resultType="com.zhiyun.entity.IcloudSidebar">
+        SELECT 
+               s.ID id,
+               s.NAME name,
+               s.URL url,
+               s.SEQUENCE sequence,
+               s.PARENT_ID parentid
+         FROM ICLOUD_SIDEBAR s right join ICLOUD_ROLESIDEBAR rs on s.ID = rs.ICLOUD_SIDEBAR_ID
+         right join ICLOUD_ROLE r on rs.ICLOUD_ROLE_ID = r.ID
+         WHERE r.ID = #{roleId,jdbcType=INTEGER}
+         order by s.SEQUENCE asc
+    </select>
+
+</mapper>   

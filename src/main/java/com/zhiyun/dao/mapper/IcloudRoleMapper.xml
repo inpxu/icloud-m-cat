@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.IcloudRoleDaoImpl">
+
+	<!-- 插入实体 -->
+	<insert id="insert" parameterType="com.zhiyun.entity.IcloudRole">
+		INSERT INTO ICLOUD_ROLE (
+		   	ID,
+		   	NAME,
+		   	STATE
+		) VALUES (
+		   	#{id,jdbcType=LONG},
+		   	#{name,jdbcType=VARCHAR},
+		   	#{state,jdbcType=INTEGER}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_ICLOUD_ROLE.nextval as id FROM dual
+		</selectKey>
+	</insert>
+
+	<!-- 更新实体 -->
+	<update id="update" parameterType="com.zhiyun.entity.IcloudRole">
+		UPDATE ICLOUD_ROLE
+		<set>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				STATE = #{state,jdbcType=INTEGER},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 更新实体 -->
+	<update id="updateFields" parameterType="com.zhiyun.entity.IcloudRole">
+		UPDATE ICLOUD_ROLE
+		<set>
+			NAME = #{name,jdbcType=VARCHAR},
+			STATE = #{state,jdbcType=INTEGER},
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 删除实体 -->
+	<update id="delete" parameterType="com.zhiyun.entity.IcloudRole">
+		DELETE FROM ICLOUD_ROLE WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 查询字段 -->
+	<sql id="selectFieldSQL">
+		SELECT 
+		       ID id,
+		       NAME name,
+		       STATE state
+	</sql>
+
+	<!-- 查询 -->
+	<select id="get" parameterType="map" resultType="com.zhiyun.entity.IcloudRole">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_ROLE
+		 WHERE ID = #{id,jdbcType=INTEGER}
+	</select>
+
+	<!-- 查询 -->
+	<select id="find" parameterType="com.zhiyun.entity.IcloudRole" resultType="com.zhiyun.entity.IcloudRole">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_ROLE
+		<where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="name != null and name != ''">
+				AND NAME = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="state != null">
+				AND STATE = #{state,jdbcType=INTEGER}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询所有 -->
+	<select id="findAll" parameterType="map" resultType="com.zhiyun.entity.IcloudRole">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_ROLE
+	</select>
+
+	<!-- 分页查询（条件） -->
+	<sql id="page_condition">
+		<where>
+				<if test="entity.name != null and entity.name != ''">
+					AND NAME = #{entity.name,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.state != null">
+					AND STATE = #{entity.state,jdbcType=INTEGER}
+				</if>
+		</where>
+	</sql>
+
+	<!-- 分页查询（计数） -->
+	<select id="page_count" parameterType="map" resultType="int">
+		SELECT count(*)
+		  FROM ICLOUD_ROLE
+		<include refid="page_condition" />
+	</select>
+
+	<!-- 分页查询（数据） -->
+	<select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.IcloudRole">
+		<include refid="mybatis.pageStartSQL" />
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_ROLE
+		<include refid="page_condition" />
+		<include refid="mybatis.pageEndSQL" />
+	</select>
+
+</mapper>   

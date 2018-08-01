@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.IcloudUserMarketentryDaoImpl">
+	
+	<select id="findId" parameterType="java.lang.Long" resultType="java.lang.Long">
+		SELECT 
+			ID id
+		FROM ICLOUD_USER_MARKETENTRY
+		WHERE MARKETENTRY_ID = #{marketentryId,jdbcType=BIGINT}
+	</select>
+
+
+	<update id="updateMarketentryId" parameterType="com.zhiyun.dto.IcloudUserMarketentryDto">
+		UPDATE ICLOUD_USER_MARKETENTRY
+		<set>
+			<if test="newId != null">
+				MARKETENTRY_ID = #{newId,jdbcType=BIGINT},
+			</if>
+		</set>
+		WHERE id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	 <select id="findUser" parameterType="java.lang.Long" resultType="int">
+    	SELECT 
+			COUNT(*)
+		FROM ICLOUD_USER_MARKETENTRY
+			WHERE user_id = #{userId,jdbcType=BIGINT}
+    </select>
+
+
+	<select id="getByMarketentryId" parameterType="java.lang.Long" resultType="com.zhiyun.entity.IcloudUserMarketentry">
+		<include refid="selectFieldSQL" />
+		FROM ICLOUD_USER_MARKETENTRY
+		WHERE MARKETENTRY_ID = #{marketentryId,jdbcType=BIGINT}
+	</select>
+
+</mapper>   

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.IcloudRolesidebarDaoImpl">
+
+	<!-- 插入实体 -->
+	<insert id="insert" parameterType="com.zhiyun.entity.IcloudRolesidebar">
+		INSERT INTO ICLOUD_ROLESIDEBAR (
+		   	ID,
+		   	ICLOUD_ROLE_ID,
+		   	ICLOUD_SIDEBAR_ID
+		) VALUES (
+		   	#{id,jdbcType=BIGINT},
+		   	#{icloudRoleId,jdbcType=BIGINT},
+		   	#{icloudSidebarId,jdbcType=BIGINT}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_ICLOUD_ROLESIDEBAR.nextval as id FROM dual
+		</selectKey>
+	</insert>
+
+	<!-- 更新实体 -->
+	<update id="update" parameterType="com.zhiyun.entity.IcloudRolesidebar">
+		UPDATE ICLOUD_ROLESIDEBAR
+		<set>
+			<if test="icloudRoleId != null">
+				ICLOUD_ROLE_ID = #{icloudRoleId,jdbcType=BIGINT},
+			</if>
+			<if test="icloudSidebarId != null">
+				ICLOUD_SIDEBAR_ID = #{icloudSidebarId,jdbcType=BIGINT},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 更新实体 -->
+	<update id="updateFields" parameterType="com.zhiyun.entity.IcloudRolesidebar">
+		UPDATE ICLOUD_ROLESIDEBAR
+		<set>
+			ICLOUD_ROLE_ID = #{icloudRoleId,jdbcType=BIGINT},
+			ICLOUD_SIDEBAR_ID = #{icloudSidebarId,jdbcType=BIGINT},
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 删除实体 -->
+	<update id="delete" parameterType="com.zhiyun.entity.IcloudRolesidebar">
+		DELETE FROM ICLOUD_ROLESIDEBAR WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 查询字段 -->
+	<sql id="selectFieldSQL">
+		SELECT 
+		       ID id,
+		       ICLOUD_ROLE_ID icloudRoleId,
+		       ICLOUD_SIDEBAR_ID icloudSidebarId
+	</sql>
+
+	<!-- 查询 -->
+	<select id="get" parameterType="map" resultType="com.zhiyun.entity.IcloudRolesidebar">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_ROLESIDEBAR
+		 WHERE ID = #{id,jdbcType=INTEGER}
+	</select>
+
+	<!-- 查询 -->
+	<select id="find" parameterType="com.zhiyun.entity.IcloudRolesidebar" resultType="com.zhiyun.entity.IcloudRolesidebar">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_ROLESIDEBAR
+		<where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="icloudRoleId != null">
+				AND ICLOUD_ROLE_ID = #{icloudRoleId,jdbcType=BIGINT}
+			</if>
+			<if test="icloudSidebarId != null">
+				AND ICLOUD_SIDEBAR_ID = #{icloudSidebarId,jdbcType=BIGINT}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询所有 -->
+	<select id="findAll" parameterType="map" resultType="com.zhiyun.entity.IcloudRolesidebar">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_ROLESIDEBAR
+	</select>
+
+	<!-- 分页查询（条件） -->
+	<sql id="page_condition">
+		<where>
+				<if test="entity.icloudRoleId != null">
+					AND ICLOUD_ROLE_ID = #{entity.icloudRoleId,jdbcType=BIGINT}
+				</if>
+				<if test="entity.icloudSidebarId != null">
+					AND ICLOUD_SIDEBAR_ID = #{entity.icloudSidebarId,jdbcType=BIGINT}
+				</if>
+		</where>
+	</sql>
+
+	<!-- 分页查询（计数） -->
+	<select id="page_count" parameterType="map" resultType="int">
+		SELECT count(*)
+		  FROM ICLOUD_ROLESIDEBAR
+		<include refid="page_condition" />
+	</select>
+
+	<!-- 分页查询（数据） -->
+	<select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.IcloudRolesidebar">
+		<include refid="mybatis.pageStartSQL" />
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_ROLESIDEBAR
+		<include refid="page_condition" />
+		<include refid="mybatis.pageEndSQL" />
+	</select>
+	
+	<!-- Map查询所有 -->
+	<select id="findMapListAll" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_ROLESIDEBAR
+	</select>
+	
+	<!-- Map条件查询 -->
+	<select id="findMapList" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_ROLESIDEBAR
+		 <where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="icloudRoleId != null">
+				AND ICLOUD_ROLE_ID = #{icloudRoleId,jdbcType=BIGINT}
+			</if>
+			<if test="icloudSidebarId != null">
+				AND ICLOUD_SIDEBAR_ID = #{icloudSidebarId,jdbcType=BIGINT}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 插入实体map -->
+	<insert id="mapInsert" parameterType="map">
+		INSERT INTO ICLOUD_ROLESIDEBAR (
+		   	ID,
+		   	ICLOUD_ROLE_ID,
+		   	ICLOUD_SIDEBAR_ID
+		) VALUES (
+		   	#{ id,jdbcType=BIGINT},
+		   	#{ icloudRoleId,jdbcType=BIGINT},
+		   	#{ icloudSidebarId,jdbcType=BIGINT}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_ICLOUD_ROLESIDEBAR.nextval as id FROM dual
+		</selectKey>
+	</insert>
+	
+	<!-- 更新实体Map -->
+	<update id="mapUpdate" parameterType="map">
+		UPDATE ICLOUD_ROLESIDEBAR
+		<set>
+			<if test="icloudRoleId != null">
+				ICLOUD_ROLE_ID = #{icloudRoleId,jdbcType=BIGINT},
+			</if>
+			<if test="icloudSidebarId != null">
+				ICLOUD_SIDEBAR_ID = #{icloudSidebarId,jdbcType=BIGINT},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper>   

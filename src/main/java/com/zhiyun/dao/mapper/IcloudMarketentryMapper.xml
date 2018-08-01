@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.IcloudMarketentryDaoImpl">
+
+	<!-- 插入实体 -->
+	<insert id="insert" parameterType="com.zhiyun.entity.IcloudMarketentry">
+		INSERT INTO ICLOUD_MARKETENTRY (
+		   	ID,
+		   	CREATE_USER_ID,
+		   	BUSINESS_TYPE,
+		   	MARKET_CLASS,
+		   	MARKET,
+		   	ENTERPRISE_PROFILE,
+		   	STATUS,
+		   	CREATE_TIME,
+		   	MODIFY_TIME,
+		   	DELETED,
+		   	CREATE_BY,
+		   	MODIFY_BY,
+		   	SENDED,
+		   	UPDATED,
+		   	APPROVAL_OPINION
+		) VALUES (
+		   	#{id,jdbcType=BIGINT},
+		   	#{createUserId,jdbcType=BIGINT},
+		   	#{businessType,jdbcType=INTEGER},
+		   	#{marketClass,jdbcType=INTEGER},
+		   	#{market,jdbcType=INTEGER},
+		   	#{enterpriseProfile,jdbcType=VARCHAR},
+		   	#{status,jdbcType=INTEGER},
+		   	#{createTime,jdbcType=TIMESTAMP},
+		   	#{modifyTime,jdbcType=TIMESTAMP},
+		   	#{deleted,jdbcType=VARCHAR},
+		   	#{createBy,jdbcType=VARCHAR},
+		   	#{modifyBy,jdbcType=VARCHAR},
+		   	#{sended,jdbcType=VARCHAR},
+		   	#{updated,jdbcType=VARCHAR},
+		   	#{approvalOpinion,jdbcType=VARCHAR}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_ICLOUD_MARKETENTRY.nextval as id FROM dual
+		</selectKey>
+	</insert>
+
+	<!-- 更新实体 -->
+	<update id="update" parameterType="com.zhiyun.entity.IcloudMarketentry">
+		UPDATE ICLOUD_MARKETENTRY
+		<set>
+			<if test="createUserId != null">
+				CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="businessType != null">
+				BUSINESS_TYPE = #{businessType,jdbcType=INTEGER},
+			</if>
+			<if test="marketClass != null">
+				MARKET_CLASS = #{marketClass,jdbcType=INTEGER},
+			</if>
+			<if test="market != null">
+				MARKET = #{market,jdbcType=INTEGER},
+			</if>
+			<if test="enterpriseProfile != null">
+				ENTERPRISE_PROFILE = #{enterpriseProfile,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleted != null">
+				DELETED = #{deleted,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyBy != null">
+				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+			</if>
+			<if test="sended != null">
+				SENDED = #{sended,jdbcType=VARCHAR},
+			</if>
+			<if test="updated != null">
+				UPDATED = #{updated,jdbcType=VARCHAR},
+			</if>
+			<if test="approvalOpinion != null">
+				APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 更新实体 -->
+	<update id="updateFields" parameterType="com.zhiyun.entity.IcloudMarketentry">
+		UPDATE ICLOUD_MARKETENTRY
+		<set>
+			CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+			BUSINESS_TYPE = #{businessType,jdbcType=INTEGER},
+			MARKET_CLASS = #{marketClass,jdbcType=INTEGER},
+			MARKET = #{market,jdbcType=INTEGER},
+			ENTERPRISE_PROFILE = #{enterpriseProfile,jdbcType=VARCHAR},
+			STATUS = #{status,jdbcType=INTEGER},
+			CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+			DELETED = #{deleted,jdbcType=VARCHAR},
+			CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+			SENDED = #{sended,jdbcType=VARCHAR},
+			UPDATED = #{updated,jdbcType=VARCHAR},
+			APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR},
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 删除实体 -->
+	<update id="delete" parameterType="com.zhiyun.entity.IcloudMarketentry">
+		UPDATE ICLOUD_MARKETENTRY
+		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
+		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+		 WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 查询字段 -->
+	<sql id="selectFieldSQL">
+		SELECT 
+		       ID id,
+		       CREATE_USER_ID createUserId,
+		       BUSINESS_TYPE businessType,
+		       MARKET_CLASS marketClass,
+		       MARKET market,
+		       ENTERPRISE_PROFILE enterpriseProfile,
+		       STATUS status,
+		       CREATE_TIME createTime,
+		       MODIFY_TIME modifyTime,
+		       DELETED deleted,
+		       CREATE_BY createBy,
+		       MODIFY_BY modifyBy,
+		       SENDED sended,
+		       UPDATED updated,
+		       APPROVAL_OPINION approvalOpinion
+	</sql>
+
+	<!-- 查询 -->
+	<select id="get" parameterType="map" resultType="com.zhiyun.entity.IcloudMarketentry">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_MARKETENTRY
+		 WHERE ID = #{id,jdbcType=INTEGER}
+		   AND DELETED = #{deleted,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 查询 -->
+	<select id="find" parameterType="com.zhiyun.entity.IcloudMarketentry" resultType="com.zhiyun.entity.IcloudMarketentry">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_MARKETENTRY
+		<where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="createUserId != null">
+				AND CREATE_USER_ID = #{createUserId,jdbcType=BIGINT}
+			</if>
+			<if test="businessType != null">
+				AND BUSINESS_TYPE = #{businessType,jdbcType=INTEGER}
+			</if>
+			<if test="marketClass != null">
+				AND MARKET_CLASS = #{marketClass,jdbcType=INTEGER}
+			</if>
+			<if test="market != null">
+				AND MARKET = #{market,jdbcType=INTEGER}
+			</if>
+			<if test="enterpriseProfile != null and enterpriseProfile != ''">
+				AND ENTERPRISE_PROFILE = #{enterpriseProfile,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				AND STATUS = #{status,jdbcType=INTEGER}
+			</if>
+			<if test="deleted != null and deleted != ''">
+				AND DELETED = #{deleted,jdbcType=VARCHAR}
+			</if>
+			<if test="sended != null and sended != ''">
+				AND SENDED = #{sended,jdbcType=VARCHAR}
+			</if>
+			<if test="updated != null and updated != ''">
+				AND UPDATED = #{updated,jdbcType=VARCHAR}
+			</if>
+			<if test="approvalOpinion != null and approvalOpinion != ''">
+				AND APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询所有 -->
+	<select id="findAll" parameterType="map" resultType="com.zhiyun.entity.IcloudMarketentry">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_MARKETENTRY
+		 WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 分页查询（条件） -->
+	<sql id="page_condition">
+		<where>
+				<if test="entity.createUserId != null">
+					AND CREATE_USER_ID = #{entity.createUserId,jdbcType=BIGINT}
+				</if>
+				<if test="entity.businessType != null">
+					AND BUSINESS_TYPE = #{entity.businessType,jdbcType=INTEGER}
+				</if>
+				<if test="entity.marketClass != null">
+					AND MARKET_CLASS = #{entity.marketClass,jdbcType=INTEGER}
+				</if>
+				<if test="entity.market != null">
+					AND MARKET = #{entity.market,jdbcType=INTEGER}
+				</if>
+				<if test="entity.enterpriseProfile != null and entity.enterpriseProfile != ''">
+					AND ENTERPRISE_PROFILE = #{entity.enterpriseProfile,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.status != null">
+					AND STATUS = #{entity.status,jdbcType=INTEGER}
+				</if>
+				<if test="entity.deleted != null and entity.deleted != ''">
+					AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.sended != null and entity.sended != ''">
+					AND SENDED = #{entity.sended,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.updated != null and entity.updated != ''">
+					AND UPDATED = #{entity.updated,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.approvalOpinion != null and entity.approvalOpinion != ''">
+					AND APPROVAL_OPINION = #{entity.approvalOpinion,jdbcType=VARCHAR}
+				</if>
+		</where>
+	</sql>
+
+	<!-- 分页查询（计数） -->
+	<select id="page_count" parameterType="map" resultType="int">
+		SELECT count(*)
+		  FROM ICLOUD_MARKETENTRY
+		<include refid="page_condition" />
+	</select>
+
+	<!-- 分页查询（数据） -->
+	<select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.IcloudMarketentry">
+		<include refid="mybatis.pageStartSQL" />
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_MARKETENTRY
+		<include refid="page_condition" />
+		<include refid="mybatis.pageEndSQL" />
+	</select>
+	
+	<!-- Map查询所有 -->
+	<select id="findMapListAll" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_MARKETENTRY
+		 WHERE DELETED = "F"
+	</select>
+	
+	<!-- Map条件查询 -->
+	<select id="findMapList" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_MARKETENTRY
+		 <where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="createUserId != null">
+				AND CREATE_USER_ID = #{createUserId,jdbcType=BIGINT}
+			</if>
+			<if test="businessType != null">
+				AND BUSINESS_TYPE = #{businessType,jdbcType=INTEGER}
+			</if>
+			<if test="marketClass != null">
+				AND MARKET_CLASS = #{marketClass,jdbcType=INTEGER}
+			</if>
+			<if test="market != null">
+				AND MARKET = #{market,jdbcType=INTEGER}
+			</if>
+			<if test="enterpriseProfile != null and enterpriseProfile != ''">
+				AND ENTERPRISE_PROFILE = #{enterpriseProfile,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				AND STATUS = #{status,jdbcType=INTEGER}
+			</if>
+			<if test="deleted != null and deleted != ''">
+				AND DELETED = #{deleted,jdbcType=VARCHAR}
+			</if>
+			<if test="sended != null and sended != ''">
+				AND SENDED = #{sended,jdbcType=VARCHAR}
+			</if>
+			<if test="updated != null and updated != ''">
+				AND UPDATED = #{updated,jdbcType=VARCHAR}
+			</if>
+			<if test="approvalOpinion != null and approvalOpinion != ''">
+				AND APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR}
+			</if>
+		 WHERE DELETED = "F"
+		</where>
+	</select>
+	
+	<!-- 插入实体map -->
+	<insert id="mapInsert" parameterType="map">
+		INSERT INTO ICLOUD_MARKETENTRY (
+		   	ID,
+		   	CREATE_USER_ID,
+		   	BUSINESS_TYPE,
+		   	MARKET_CLASS,
+		   	MARKET,
+		   	ENTERPRISE_PROFILE,
+		   	STATUS,
+		   	CREATE_TIME,
+		   	MODIFY_TIME,
+		   	DELETED,
+		   	CREATE_BY,
+		   	MODIFY_BY,
+		   	SENDED,
+		   	UPDATED,
+		   	APPROVAL_OPINION
+		) VALUES (
+		   	#{ id,jdbcType=BIGINT},
+		   	#{ createUserId,jdbcType=BIGINT},
+		   	#{ businessType,jdbcType=INTEGER},
+		   	#{ marketClass,jdbcType=INTEGER},
+		   	#{ market,jdbcType=INTEGER},
+		   	#{ enterpriseProfile,jdbcType=VARCHAR},
+		   	#{ status,jdbcType=INTEGER},
+		   	#{ createTime,jdbcType=TIMESTAMP},
+		   	#{ modifyTime,jdbcType=TIMESTAMP},
+		   	#{ deleted,jdbcType=VARCHAR},
+		   	#{ createBy,jdbcType=VARCHAR},
+		   	#{ modifyBy,jdbcType=VARCHAR},
+		   	#{ sended,jdbcType=VARCHAR},
+		   	#{ updated,jdbcType=VARCHAR},
+		   	#{ approvalOpinion,jdbcType=VARCHAR}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_ICLOUD_MARKETENTRY.nextval as id FROM dual
+		</selectKey>
+	</insert>
+	
+	<!-- 更新实体Map -->
+	<update id="mapUpdate" parameterType="map">
+		UPDATE ICLOUD_MARKETENTRY
+		<set>
+			<if test="createUserId != null">
+				CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="businessType != null">
+				BUSINESS_TYPE = #{businessType,jdbcType=INTEGER},
+			</if>
+			<if test="marketClass != null">
+				MARKET_CLASS = #{marketClass,jdbcType=INTEGER},
+			</if>
+			<if test="market != null">
+				MARKET = #{market,jdbcType=INTEGER},
+			</if>
+			<if test="enterpriseProfile != null">
+				ENTERPRISE_PROFILE = #{enterpriseProfile,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleted != null">
+				DELETED = #{deleted,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyBy != null">
+				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+			</if>
+			<if test="sended != null">
+				SENDED = #{sended,jdbcType=VARCHAR},
+			</if>
+			<if test="updated != null">
+				UPDATED = #{updated,jdbcType=VARCHAR},
+			</if>
+			<if test="approvalOpinion != null">
+				APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper>   

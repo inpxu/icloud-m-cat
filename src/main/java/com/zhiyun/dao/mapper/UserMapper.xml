@@ -1,0 +1,1010 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.UserDaoImpl">
+
+	<!-- 插入实体 -->
+	<insert id="insert" parameterType="com.zhiyun.entity.User">
+		INSERT INTO USER_ (
+		   	MVCCVERSION,
+		   	UUID_,
+		   	USERID,
+		   	COMPANYID,
+		   	CREATEDATE,
+		   	MODIFIEDDATE,
+		   	DEFAULTUSER,
+		   	CONTACTID,
+		   	PASSWORD_,
+		   	PASSWORDENCRYPTED,
+		   	PASSWORDRESET,
+		   	PASSWORDMODIFIEDDATE,
+		   	DIGEST,
+		   	REMINDERQUERYQUESTION,
+		   	REMINDERQUERYANSWER,
+		   	GRACELOGINCOUNT,
+		   	SCREENNAME,
+		   	EMAILADDRESS,
+		   	FACEBOOKID,
+		   	GOOGLEUSERID,
+		   	LDAPSERVERID,
+		   	OPENID,
+		   	PORTRAITID,
+		   	LANGUAGEID,
+		   	TIMEZONEID,
+		   	GREETING,
+		   	COMMENTS,
+		   	FIRSTNAME,
+		   	MIDDLENAME,
+		   	LASTNAME,
+		   	JOBTITLE,
+		   	LOGINDATE,
+		   	LOGINIP,
+		   	LASTLOGINDATE,
+		   	LASTLOGINIP,
+		   	LASTFAILEDLOGINDATE,
+		   	FAILEDLOGINATTEMPTS,
+		   	LOCKOUT,
+		   	LOCKOUTDATE,
+		   	AGREEDTOTERMSOFUSE,
+		   	EMAILADDRESSVERIFIED,
+		   	STATUS
+		) VALUES (
+		   	#{mvccversion,jdbcType=BIGINT},
+		   	#{uuid,jdbcType=VARCHAR},
+		   	#{userid,jdbcType=BIGINT},
+		   	#{companyid,jdbcType=BIGINT},
+		   	#{createdate,jdbcType=DATETIME},
+		   	#{modifieddate,jdbcType=DATETIME},
+		   	#{defaultuser,jdbcType=TINYINT},
+		   	#{contactid,jdbcType=BIGINT},
+		   	#{password,jdbcType=VARCHAR},
+		   	#{passwordencrypted,jdbcType=TINYINT},
+		   	#{passwordreset,jdbcType=TINYINT},
+		   	#{passwordmodifieddate,jdbcType=DATETIME},
+		   	#{digest,jdbcType=VARCHAR},
+		   	#{reminderqueryquestion,jdbcType=VARCHAR},
+		   	#{reminderqueryanswer,jdbcType=VARCHAR},
+		   	#{gracelogincount,jdbcType=INTEGER},
+		   	#{screenname,jdbcType=VARCHAR},
+		   	#{emailaddress,jdbcType=VARCHAR},
+		   	#{facebookid,jdbcType=BIGINT},
+		   	#{googleuserid,jdbcType=VARCHAR},
+		   	#{ldapserverid,jdbcType=BIGINT},
+		   	#{openid,jdbcType=VARCHAR},
+		   	#{portraitid,jdbcType=BIGINT},
+		   	#{languageid,jdbcType=VARCHAR},
+		   	#{timezoneid,jdbcType=VARCHAR},
+		   	#{greeting,jdbcType=VARCHAR},
+		   	#{comments,jdbcType=LONGTEXT},
+		   	#{firstname,jdbcType=VARCHAR},
+		   	#{middlename,jdbcType=VARCHAR},
+		   	#{lastname,jdbcType=VARCHAR},
+		   	#{jobtitle,jdbcType=VARCHAR},
+		   	#{logindate,jdbcType=DATETIME},
+		   	#{loginip,jdbcType=VARCHAR},
+		   	#{lastlogindate,jdbcType=DATETIME},
+		   	#{lastloginip,jdbcType=VARCHAR},
+		   	#{lastfailedlogindate,jdbcType=DATETIME},
+		   	#{failedloginattempts,jdbcType=INTEGER},
+		   	#{lockout,jdbcType=TINYINT},
+		   	#{lockoutdate,jdbcType=DATETIME},
+		   	#{agreedtotermsofuse,jdbcType=TINYINT},
+		   	#{emailaddressverified,jdbcType=TINYINT},
+		   	#{status,jdbcType=INTEGER}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_USER_.nextval as id FROM dual
+		</selectKey>
+	</insert>
+
+	<!-- 更新实体 -->
+	<update id="update" parameterType="com.zhiyun.entity.User">
+		UPDATE USER_
+		<set>
+			<if test="mvccversion != null">
+				MVCCVERSION = #{mvccversion,jdbcType=BIGINT},
+			</if>
+			<if test="uuid != null">
+				UUID_ = #{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="userid != null">
+				USERID = #{userid,jdbcType=BIGINT},
+			</if>
+			<if test="companyid != null">
+				COMPANYID = #{companyid,jdbcType=BIGINT},
+			</if>
+			<if test="createdate != null">
+				CREATEDATE = #{createdate,jdbcType=DATETIME},
+			</if>
+			<if test="modifieddate != null">
+				MODIFIEDDATE = #{modifieddate,jdbcType=DATETIME},
+			</if>
+			<if test="defaultuser != null">
+				DEFAULTUSER = #{defaultuser,jdbcType=TINYINT},
+			</if>
+			<if test="contactid != null">
+				CONTACTID = #{contactid,jdbcType=BIGINT},
+			</if>
+			<if test="password != null">
+				PASSWORD_ = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="passwordencrypted != null">
+				PASSWORDENCRYPTED = #{passwordencrypted,jdbcType=TINYINT},
+			</if>
+			<if test="passwordreset != null">
+				PASSWORDRESET = #{passwordreset,jdbcType=TINYINT},
+			</if>
+			<if test="passwordmodifieddate != null">
+				PASSWORDMODIFIEDDATE = #{passwordmodifieddate,jdbcType=DATETIME},
+			</if>
+			<if test="digest != null">
+				DIGEST = #{digest,jdbcType=VARCHAR},
+			</if>
+			<if test="reminderqueryquestion != null">
+				REMINDERQUERYQUESTION = #{reminderqueryquestion,jdbcType=VARCHAR},
+			</if>
+			<if test="reminderqueryanswer != null">
+				REMINDERQUERYANSWER = #{reminderqueryanswer,jdbcType=VARCHAR},
+			</if>
+			<if test="gracelogincount != null">
+				GRACELOGINCOUNT = #{gracelogincount,jdbcType=INTEGER},
+			</if>
+			<if test="screenname != null">
+				SCREENNAME = #{screenname,jdbcType=VARCHAR},
+			</if>
+			<if test="emailaddress != null">
+				EMAILADDRESS = #{emailaddress,jdbcType=VARCHAR},
+			</if>
+			<if test="facebookid != null">
+				FACEBOOKID = #{facebookid,jdbcType=BIGINT},
+			</if>
+			<if test="googleuserid != null">
+				GOOGLEUSERID = #{googleuserid,jdbcType=VARCHAR},
+			</if>
+			<if test="ldapserverid != null">
+				LDAPSERVERID = #{ldapserverid,jdbcType=BIGINT},
+			</if>
+			<if test="openid != null">
+				OPENID = #{openid,jdbcType=VARCHAR},
+			</if>
+			<if test="portraitid != null">
+				PORTRAITID = #{portraitid,jdbcType=BIGINT},
+			</if>
+			<if test="languageid != null">
+				LANGUAGEID = #{languageid,jdbcType=VARCHAR},
+			</if>
+			<if test="timezoneid != null">
+				TIMEZONEID = #{timezoneid,jdbcType=VARCHAR},
+			</if>
+			<if test="greeting != null">
+				GREETING = #{greeting,jdbcType=VARCHAR},
+			</if>
+			<if test="comments != null">
+				COMMENTS = #{comments,jdbcType=LONGTEXT},
+			</if>
+			<if test="firstname != null">
+				FIRSTNAME = #{firstname,jdbcType=VARCHAR},
+			</if>
+			<if test="middlename != null">
+				MIDDLENAME = #{middlename,jdbcType=VARCHAR},
+			</if>
+			<if test="lastname != null">
+				LASTNAME = #{lastname,jdbcType=VARCHAR},
+			</if>
+			<if test="jobtitle != null">
+				JOBTITLE = #{jobtitle,jdbcType=VARCHAR},
+			</if>
+			<if test="logindate != null">
+				LOGINDATE = #{logindate,jdbcType=DATETIME},
+			</if>
+			<if test="loginip != null">
+				LOGINIP = #{loginip,jdbcType=VARCHAR},
+			</if>
+			<if test="lastlogindate != null">
+				LASTLOGINDATE = #{lastlogindate,jdbcType=DATETIME},
+			</if>
+			<if test="lastloginip != null">
+				LASTLOGINIP = #{lastloginip,jdbcType=VARCHAR},
+			</if>
+			<if test="lastfailedlogindate != null">
+				LASTFAILEDLOGINDATE = #{lastfailedlogindate,jdbcType=DATETIME},
+			</if>
+			<if test="failedloginattempts != null">
+				FAILEDLOGINATTEMPTS = #{failedloginattempts,jdbcType=INTEGER},
+			</if>
+			<if test="lockout != null">
+				LOCKOUT = #{lockout,jdbcType=TINYINT},
+			</if>
+			<if test="lockoutdate != null">
+				LOCKOUTDATE = #{lockoutdate,jdbcType=DATETIME},
+			</if>
+			<if test="agreedtotermsofuse != null">
+				AGREEDTOTERMSOFUSE = #{agreedtotermsofuse,jdbcType=TINYINT},
+			</if>
+			<if test="emailaddressverified != null">
+				EMAILADDRESSVERIFIED = #{emailaddressverified,jdbcType=TINYINT},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=INTEGER},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 更新实体 -->
+	<update id="updateFields" parameterType="com.zhiyun.entity.User">
+		UPDATE USER_
+		<set>
+			MVCCVERSION = #{mvccversion,jdbcType=BIGINT},
+			UUID_ = #{uuid,jdbcType=VARCHAR},
+			USERID = #{userid,jdbcType=BIGINT},
+			COMPANYID = #{companyid,jdbcType=BIGINT},
+			CREATEDATE = #{createdate,jdbcType=DATETIME},
+			MODIFIEDDATE = #{modifieddate,jdbcType=DATETIME},
+			DEFAULTUSER = #{defaultuser,jdbcType=TINYINT},
+			CONTACTID = #{contactid,jdbcType=BIGINT},
+			PASSWORD_ = #{password,jdbcType=VARCHAR},
+			PASSWORDENCRYPTED = #{passwordencrypted,jdbcType=TINYINT},
+			PASSWORDRESET = #{passwordreset,jdbcType=TINYINT},
+			PASSWORDMODIFIEDDATE = #{passwordmodifieddate,jdbcType=DATETIME},
+			DIGEST = #{digest,jdbcType=VARCHAR},
+			REMINDERQUERYQUESTION = #{reminderqueryquestion,jdbcType=VARCHAR},
+			REMINDERQUERYANSWER = #{reminderqueryanswer,jdbcType=VARCHAR},
+			GRACELOGINCOUNT = #{gracelogincount,jdbcType=INTEGER},
+			SCREENNAME = #{screenname,jdbcType=VARCHAR},
+			EMAILADDRESS = #{emailaddress,jdbcType=VARCHAR},
+			FACEBOOKID = #{facebookid,jdbcType=BIGINT},
+			GOOGLEUSERID = #{googleuserid,jdbcType=VARCHAR},
+			LDAPSERVERID = #{ldapserverid,jdbcType=BIGINT},
+			OPENID = #{openid,jdbcType=VARCHAR},
+			PORTRAITID = #{portraitid,jdbcType=BIGINT},
+			LANGUAGEID = #{languageid,jdbcType=VARCHAR},
+			TIMEZONEID = #{timezoneid,jdbcType=VARCHAR},
+			GREETING = #{greeting,jdbcType=VARCHAR},
+			COMMENTS = #{comments,jdbcType=LONGTEXT},
+			FIRSTNAME = #{firstname,jdbcType=VARCHAR},
+			MIDDLENAME = #{middlename,jdbcType=VARCHAR},
+			LASTNAME = #{lastname,jdbcType=VARCHAR},
+			JOBTITLE = #{jobtitle,jdbcType=VARCHAR},
+			LOGINDATE = #{logindate,jdbcType=DATETIME},
+			LOGINIP = #{loginip,jdbcType=VARCHAR},
+			LASTLOGINDATE = #{lastlogindate,jdbcType=DATETIME},
+			LASTLOGINIP = #{lastloginip,jdbcType=VARCHAR},
+			LASTFAILEDLOGINDATE = #{lastfailedlogindate,jdbcType=DATETIME},
+			FAILEDLOGINATTEMPTS = #{failedloginattempts,jdbcType=INTEGER},
+			LOCKOUT = #{lockout,jdbcType=TINYINT},
+			LOCKOUTDATE = #{lockoutdate,jdbcType=DATETIME},
+			AGREEDTOTERMSOFUSE = #{agreedtotermsofuse,jdbcType=TINYINT},
+			EMAILADDRESSVERIFIED = #{emailaddressverified,jdbcType=TINYINT},
+			STATUS = #{status,jdbcType=INTEGER},
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 删除实体 -->
+	<update id="delete" parameterType="com.zhiyun.entity.User">
+		DELETE FROM USER_ WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 查询字段 -->
+	<sql id="selectFieldSQL">
+		SELECT 
+		       MVCCVERSION mvccversion,
+		       UUID_ uuid,
+		       USERID userid,
+		       COMPANYID companyid,
+		       CREATEDATE createdate,
+		       MODIFIEDDATE modifieddate,
+		       DEFAULTUSER defaultuser,
+		       CONTACTID contactid,
+		       PASSWORD_ password,
+		       PASSWORDENCRYPTED passwordencrypted,
+		       PASSWORDRESET passwordreset,
+		       PASSWORDMODIFIEDDATE passwordmodifieddate,
+		       DIGEST digest,
+		       REMINDERQUERYQUESTION reminderqueryquestion,
+		       REMINDERQUERYANSWER reminderqueryanswer,
+		       GRACELOGINCOUNT gracelogincount,
+		       SCREENNAME screenname,
+		       EMAILADDRESS emailaddress,
+		       FACEBOOKID facebookid,
+		       GOOGLEUSERID googleuserid,
+		       LDAPSERVERID ldapserverid,
+		       OPENID openid,
+		       PORTRAITID portraitid,
+		       LANGUAGEID languageid,
+		       TIMEZONEID timezoneid,
+		       GREETING greeting,
+		       COMMENTS comments,
+		       FIRSTNAME firstname,
+		       MIDDLENAME middlename,
+		       LASTNAME lastname,
+		       JOBTITLE jobtitle,
+		       LOGINDATE logindate,
+		       LOGINIP loginip,
+		       LASTLOGINDATE lastlogindate,
+		       LASTLOGINIP lastloginip,
+		       LASTFAILEDLOGINDATE lastfailedlogindate,
+		       FAILEDLOGINATTEMPTS failedloginattempts,
+		       LOCKOUT lockout,
+		       LOCKOUTDATE lockoutdate,
+		       AGREEDTOTERMSOFUSE agreedtotermsofuse,
+		       EMAILADDRESSVERIFIED emailaddressverified,
+		       STATUS status
+	</sql>
+
+	<!-- 查询 -->
+	<select id="get" parameterType="map" resultType="com.zhiyun.entity.User">
+		<include refid="selectFieldSQL" />
+		  FROM USER_
+		 WHERE ID = #{id,jdbcType=INTEGER}
+	</select>
+
+	<!-- 查询 -->
+	<select id="find" parameterType="com.zhiyun.entity.User" resultType="com.zhiyun.entity.User">
+		<include refid="selectFieldSQL" />
+		  FROM USER_
+		<where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="mvccversion != null">
+				AND MVCCVERSION = #{mvccversion,jdbcType=BIGINT}
+			</if>
+			<if test="uuid != null and uuid != ''">
+				AND UUID_ = #{uuid,jdbcType=VARCHAR}
+			</if>
+			<if test="userid != null">
+				AND USERID = #{userid,jdbcType=BIGINT}
+			</if>
+			<if test="companyid != null">
+				AND COMPANYID = #{companyid,jdbcType=BIGINT}
+			</if>
+			<if test="createdate != null">
+				AND CREATEDATE = #{createdate,jdbcType=DATETIME}
+			</if>
+			<if test="modifieddate != null">
+				AND MODIFIEDDATE = #{modifieddate,jdbcType=DATETIME}
+			</if>
+			<if test="defaultuser != null">
+				AND DEFAULTUSER = #{defaultuser,jdbcType=TINYINT}
+			</if>
+			<if test="contactid != null">
+				AND CONTACTID = #{contactid,jdbcType=BIGINT}
+			</if>
+			<if test="password != null and password != ''">
+				AND PASSWORD_ = #{password,jdbcType=VARCHAR}
+			</if>
+			<if test="passwordencrypted != null">
+				AND PASSWORDENCRYPTED = #{passwordencrypted,jdbcType=TINYINT}
+			</if>
+			<if test="passwordreset != null">
+				AND PASSWORDRESET = #{passwordreset,jdbcType=TINYINT}
+			</if>
+			<if test="passwordmodifieddate != null">
+				AND PASSWORDMODIFIEDDATE = #{passwordmodifieddate,jdbcType=DATETIME}
+			</if>
+			<if test="digest != null and digest != ''">
+				AND DIGEST = #{digest,jdbcType=VARCHAR}
+			</if>
+			<if test="reminderqueryquestion != null and reminderqueryquestion != ''">
+				AND REMINDERQUERYQUESTION = #{reminderqueryquestion,jdbcType=VARCHAR}
+			</if>
+			<if test="reminderqueryanswer != null and reminderqueryanswer != ''">
+				AND REMINDERQUERYANSWER = #{reminderqueryanswer,jdbcType=VARCHAR}
+			</if>
+			<if test="gracelogincount != null">
+				AND GRACELOGINCOUNT = #{gracelogincount,jdbcType=INTEGER}
+			</if>
+			<if test="screenname != null and screenname != ''">
+				AND SCREENNAME = #{screenname,jdbcType=VARCHAR}
+			</if>
+			<if test="emailaddress != null and emailaddress != ''">
+				AND EMAILADDRESS = #{emailaddress,jdbcType=VARCHAR}
+			</if>
+			<if test="facebookid != null">
+				AND FACEBOOKID = #{facebookid,jdbcType=BIGINT}
+			</if>
+			<if test="googleuserid != null and googleuserid != ''">
+				AND GOOGLEUSERID = #{googleuserid,jdbcType=VARCHAR}
+			</if>
+			<if test="ldapserverid != null">
+				AND LDAPSERVERID = #{ldapserverid,jdbcType=BIGINT}
+			</if>
+			<if test="openid != null and openid != ''">
+				AND OPENID = #{openid,jdbcType=VARCHAR}
+			</if>
+			<if test="portraitid != null">
+				AND PORTRAITID = #{portraitid,jdbcType=BIGINT}
+			</if>
+			<if test="languageid != null and languageid != ''">
+				AND LANGUAGEID = #{languageid,jdbcType=VARCHAR}
+			</if>
+			<if test="timezoneid != null and timezoneid != ''">
+				AND TIMEZONEID = #{timezoneid,jdbcType=VARCHAR}
+			</if>
+			<if test="greeting != null and greeting != ''">
+				AND GREETING = #{greeting,jdbcType=VARCHAR}
+			</if>
+			<if test="comments != null and comments != ''">
+				AND COMMENTS = #{comments,jdbcType=LONGTEXT}
+			</if>
+			<if test="firstname != null and firstname != ''">
+				AND FIRSTNAME = #{firstname,jdbcType=VARCHAR}
+			</if>
+			<if test="middlename != null and middlename != ''">
+				AND MIDDLENAME = #{middlename,jdbcType=VARCHAR}
+			</if>
+			<if test="lastname != null and lastname != ''">
+				AND LASTNAME = #{lastname,jdbcType=VARCHAR}
+			</if>
+			<if test="jobtitle != null and jobtitle != ''">
+				AND JOBTITLE = #{jobtitle,jdbcType=VARCHAR}
+			</if>
+			<if test="logindate != null">
+				AND LOGINDATE = #{logindate,jdbcType=DATETIME}
+			</if>
+			<if test="loginip != null and loginip != ''">
+				AND LOGINIP = #{loginip,jdbcType=VARCHAR}
+			</if>
+			<if test="lastlogindate != null">
+				AND LASTLOGINDATE = #{lastlogindate,jdbcType=DATETIME}
+			</if>
+			<if test="lastloginip != null and lastloginip != ''">
+				AND LASTLOGINIP = #{lastloginip,jdbcType=VARCHAR}
+			</if>
+			<if test="lastfailedlogindate != null">
+				AND LASTFAILEDLOGINDATE = #{lastfailedlogindate,jdbcType=DATETIME}
+			</if>
+			<if test="failedloginattempts != null">
+				AND FAILEDLOGINATTEMPTS = #{failedloginattempts,jdbcType=INTEGER}
+			</if>
+			<if test="lockout != null">
+				AND LOCKOUT = #{lockout,jdbcType=TINYINT}
+			</if>
+			<if test="lockoutdate != null">
+				AND LOCKOUTDATE = #{lockoutdate,jdbcType=DATETIME}
+			</if>
+			<if test="agreedtotermsofuse != null">
+				AND AGREEDTOTERMSOFUSE = #{agreedtotermsofuse,jdbcType=TINYINT}
+			</if>
+			<if test="emailaddressverified != null">
+				AND EMAILADDRESSVERIFIED = #{emailaddressverified,jdbcType=TINYINT}
+			</if>
+			<if test="status != null">
+				AND STATUS = #{status,jdbcType=INTEGER}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询所有 -->
+	<select id="findAll" parameterType="map" resultType="com.zhiyun.entity.User">
+		<include refid="selectFieldSQL" />
+		  FROM USER_
+	</select>
+
+	<!-- 分页查询（条件） -->
+	<sql id="page_condition">
+		<where>
+				<if test="entity.mvccversion != null">
+					AND MVCCVERSION = #{entity.mvccversion,jdbcType=BIGINT}
+				</if>
+				<if test="entity.uuid != null and entity.uuid != ''">
+					AND UUID_ = #{entity.uuid,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.userid != null">
+					AND USERID = #{entity.userid,jdbcType=BIGINT}
+				</if>
+				<if test="entity.companyid != null">
+					AND COMPANYID = #{entity.companyid,jdbcType=BIGINT}
+				</if>
+				<if test="entity.createdate != null">
+					AND CREATEDATE = #{entity.createdate,jdbcType=DATETIME}
+				</if>
+				<if test="entity.modifieddate != null">
+					AND MODIFIEDDATE = #{entity.modifieddate,jdbcType=DATETIME}
+				</if>
+				<if test="entity.defaultuser != null">
+					AND DEFAULTUSER = #{entity.defaultuser,jdbcType=TINYINT}
+				</if>
+				<if test="entity.contactid != null">
+					AND CONTACTID = #{entity.contactid,jdbcType=BIGINT}
+				</if>
+				<if test="entity.password != null and entity.password != ''">
+					AND PASSWORD_ = #{entity.password,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.passwordencrypted != null">
+					AND PASSWORDENCRYPTED = #{entity.passwordencrypted,jdbcType=TINYINT}
+				</if>
+				<if test="entity.passwordreset != null">
+					AND PASSWORDRESET = #{entity.passwordreset,jdbcType=TINYINT}
+				</if>
+				<if test="entity.passwordmodifieddate != null">
+					AND PASSWORDMODIFIEDDATE = #{entity.passwordmodifieddate,jdbcType=DATETIME}
+				</if>
+				<if test="entity.digest != null and entity.digest != ''">
+					AND DIGEST = #{entity.digest,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.reminderqueryquestion != null and entity.reminderqueryquestion != ''">
+					AND REMINDERQUERYQUESTION = #{entity.reminderqueryquestion,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.reminderqueryanswer != null and entity.reminderqueryanswer != ''">
+					AND REMINDERQUERYANSWER = #{entity.reminderqueryanswer,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.gracelogincount != null">
+					AND GRACELOGINCOUNT = #{entity.gracelogincount,jdbcType=INTEGER}
+				</if>
+				<if test="entity.screenname != null and entity.screenname != ''">
+					AND SCREENNAME = #{entity.screenname,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.emailaddress != null and entity.emailaddress != ''">
+					AND EMAILADDRESS = #{entity.emailaddress,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.facebookid != null">
+					AND FACEBOOKID = #{entity.facebookid,jdbcType=BIGINT}
+				</if>
+				<if test="entity.googleuserid != null and entity.googleuserid != ''">
+					AND GOOGLEUSERID = #{entity.googleuserid,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.ldapserverid != null">
+					AND LDAPSERVERID = #{entity.ldapserverid,jdbcType=BIGINT}
+				</if>
+				<if test="entity.openid != null and entity.openid != ''">
+					AND OPENID = #{entity.openid,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.portraitid != null">
+					AND PORTRAITID = #{entity.portraitid,jdbcType=BIGINT}
+				</if>
+				<if test="entity.languageid != null and entity.languageid != ''">
+					AND LANGUAGEID = #{entity.languageid,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.timezoneid != null and entity.timezoneid != ''">
+					AND TIMEZONEID = #{entity.timezoneid,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.greeting != null and entity.greeting != ''">
+					AND GREETING = #{entity.greeting,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.comments != null and entity.comments != ''">
+					AND COMMENTS = #{entity.comments,jdbcType=LONGTEXT}
+				</if>
+				<if test="entity.firstname != null and entity.firstname != ''">
+					AND FIRSTNAME = #{entity.firstname,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.middlename != null and entity.middlename != ''">
+					AND MIDDLENAME = #{entity.middlename,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.lastname != null and entity.lastname != ''">
+					AND LASTNAME = #{entity.lastname,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.jobtitle != null and entity.jobtitle != ''">
+					AND JOBTITLE = #{entity.jobtitle,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.logindate != null">
+					AND LOGINDATE = #{entity.logindate,jdbcType=DATETIME}
+				</if>
+				<if test="entity.loginip != null and entity.loginip != ''">
+					AND LOGINIP = #{entity.loginip,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.lastlogindate != null">
+					AND LASTLOGINDATE = #{entity.lastlogindate,jdbcType=DATETIME}
+				</if>
+				<if test="entity.lastloginip != null and entity.lastloginip != ''">
+					AND LASTLOGINIP = #{entity.lastloginip,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.lastfailedlogindate != null">
+					AND LASTFAILEDLOGINDATE = #{entity.lastfailedlogindate,jdbcType=DATETIME}
+				</if>
+				<if test="entity.failedloginattempts != null">
+					AND FAILEDLOGINATTEMPTS = #{entity.failedloginattempts,jdbcType=INTEGER}
+				</if>
+				<if test="entity.lockout != null">
+					AND LOCKOUT = #{entity.lockout,jdbcType=TINYINT}
+				</if>
+				<if test="entity.lockoutdate != null">
+					AND LOCKOUTDATE = #{entity.lockoutdate,jdbcType=DATETIME}
+				</if>
+				<if test="entity.agreedtotermsofuse != null">
+					AND AGREEDTOTERMSOFUSE = #{entity.agreedtotermsofuse,jdbcType=TINYINT}
+				</if>
+				<if test="entity.emailaddressverified != null">
+					AND EMAILADDRESSVERIFIED = #{entity.emailaddressverified,jdbcType=TINYINT}
+				</if>
+				<if test="entity.status != null">
+					AND STATUS = #{entity.status,jdbcType=INTEGER}
+				</if>
+		</where>
+	</sql>
+
+	<!-- 分页查询（计数） -->
+	<select id="page_count" parameterType="map" resultType="int">
+		SELECT count(*)
+		  FROM USER_
+		<include refid="page_condition" />
+	</select>
+
+	<!-- 分页查询（数据） -->
+	<select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.User">
+		<include refid="mybatis.pageStartSQL" />
+		<include refid="selectFieldSQL" />
+		  FROM USER_
+		<include refid="page_condition" />
+		<include refid="mybatis.pageEndSQL" />
+	</select>
+	
+	<!-- Map查询所有 -->
+	<select id="findMapListAll" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM USER_
+	</select>
+	
+	<!-- Map条件查询 -->
+	<select id="findMapList" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM USER_
+		 <where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="mvccversion != null">
+				AND MVCCVERSION = #{mvccversion,jdbcType=BIGINT}
+			</if>
+			<if test="uuid != null and uuid != ''">
+				AND UUID_ = #{uuid,jdbcType=VARCHAR}
+			</if>
+			<if test="userid != null">
+				AND USERID = #{userid,jdbcType=BIGINT}
+			</if>
+			<if test="companyid != null">
+				AND COMPANYID = #{companyid,jdbcType=BIGINT}
+			</if>
+			<if test="createdate != null">
+				AND CREATEDATE = #{createdate,jdbcType=DATETIME}
+			</if>
+			<if test="modifieddate != null">
+				AND MODIFIEDDATE = #{modifieddate,jdbcType=DATETIME}
+			</if>
+			<if test="defaultuser != null">
+				AND DEFAULTUSER = #{defaultuser,jdbcType=TINYINT}
+			</if>
+			<if test="contactid != null">
+				AND CONTACTID = #{contactid,jdbcType=BIGINT}
+			</if>
+			<if test="password != null and password != ''">
+				AND PASSWORD_ = #{password,jdbcType=VARCHAR}
+			</if>
+			<if test="passwordencrypted != null">
+				AND PASSWORDENCRYPTED = #{passwordencrypted,jdbcType=TINYINT}
+			</if>
+			<if test="passwordreset != null">
+				AND PASSWORDRESET = #{passwordreset,jdbcType=TINYINT}
+			</if>
+			<if test="passwordmodifieddate != null">
+				AND PASSWORDMODIFIEDDATE = #{passwordmodifieddate,jdbcType=DATETIME}
+			</if>
+			<if test="digest != null and digest != ''">
+				AND DIGEST = #{digest,jdbcType=VARCHAR}
+			</if>
+			<if test="reminderqueryquestion != null and reminderqueryquestion != ''">
+				AND REMINDERQUERYQUESTION = #{reminderqueryquestion,jdbcType=VARCHAR}
+			</if>
+			<if test="reminderqueryanswer != null and reminderqueryanswer != ''">
+				AND REMINDERQUERYANSWER = #{reminderqueryanswer,jdbcType=VARCHAR}
+			</if>
+			<if test="gracelogincount != null">
+				AND GRACELOGINCOUNT = #{gracelogincount,jdbcType=INTEGER}
+			</if>
+			<if test="screenname != null and screenname != ''">
+				AND SCREENNAME = #{screenname,jdbcType=VARCHAR}
+			</if>
+			<if test="emailaddress != null and emailaddress != ''">
+				AND EMAILADDRESS = #{emailaddress,jdbcType=VARCHAR}
+			</if>
+			<if test="facebookid != null">
+				AND FACEBOOKID = #{facebookid,jdbcType=BIGINT}
+			</if>
+			<if test="googleuserid != null and googleuserid != ''">
+				AND GOOGLEUSERID = #{googleuserid,jdbcType=VARCHAR}
+			</if>
+			<if test="ldapserverid != null">
+				AND LDAPSERVERID = #{ldapserverid,jdbcType=BIGINT}
+			</if>
+			<if test="openid != null and openid != ''">
+				AND OPENID = #{openid,jdbcType=VARCHAR}
+			</if>
+			<if test="portraitid != null">
+				AND PORTRAITID = #{portraitid,jdbcType=BIGINT}
+			</if>
+			<if test="languageid != null and languageid != ''">
+				AND LANGUAGEID = #{languageid,jdbcType=VARCHAR}
+			</if>
+			<if test="timezoneid != null and timezoneid != ''">
+				AND TIMEZONEID = #{timezoneid,jdbcType=VARCHAR}
+			</if>
+			<if test="greeting != null and greeting != ''">
+				AND GREETING = #{greeting,jdbcType=VARCHAR}
+			</if>
+			<if test="comments != null and comments != ''">
+				AND COMMENTS = #{comments,jdbcType=LONGTEXT}
+			</if>
+			<if test="firstname != null and firstname != ''">
+				AND FIRSTNAME = #{firstname,jdbcType=VARCHAR}
+			</if>
+			<if test="middlename != null and middlename != ''">
+				AND MIDDLENAME = #{middlename,jdbcType=VARCHAR}
+			</if>
+			<if test="lastname != null and lastname != ''">
+				AND LASTNAME = #{lastname,jdbcType=VARCHAR}
+			</if>
+			<if test="jobtitle != null and jobtitle != ''">
+				AND JOBTITLE = #{jobtitle,jdbcType=VARCHAR}
+			</if>
+			<if test="logindate != null">
+				AND LOGINDATE = #{logindate,jdbcType=DATETIME}
+			</if>
+			<if test="loginip != null and loginip != ''">
+				AND LOGINIP = #{loginip,jdbcType=VARCHAR}
+			</if>
+			<if test="lastlogindate != null">
+				AND LASTLOGINDATE = #{lastlogindate,jdbcType=DATETIME}
+			</if>
+			<if test="lastloginip != null and lastloginip != ''">
+				AND LASTLOGINIP = #{lastloginip,jdbcType=VARCHAR}
+			</if>
+			<if test="lastfailedlogindate != null">
+				AND LASTFAILEDLOGINDATE = #{lastfailedlogindate,jdbcType=DATETIME}
+			</if>
+			<if test="failedloginattempts != null">
+				AND FAILEDLOGINATTEMPTS = #{failedloginattempts,jdbcType=INTEGER}
+			</if>
+			<if test="lockout != null">
+				AND LOCKOUT = #{lockout,jdbcType=TINYINT}
+			</if>
+			<if test="lockoutdate != null">
+				AND LOCKOUTDATE = #{lockoutdate,jdbcType=DATETIME}
+			</if>
+			<if test="agreedtotermsofuse != null">
+				AND AGREEDTOTERMSOFUSE = #{agreedtotermsofuse,jdbcType=TINYINT}
+			</if>
+			<if test="emailaddressverified != null">
+				AND EMAILADDRESSVERIFIED = #{emailaddressverified,jdbcType=TINYINT}
+			</if>
+			<if test="status != null">
+				AND STATUS = #{status,jdbcType=INTEGER}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 插入实体map -->
+	<insert id="mapInsert" parameterType="map">
+		INSERT INTO USER_ (
+		   	MVCCVERSION,
+		   	UUID_,
+		   	USERID,
+		   	COMPANYID,
+		   	CREATEDATE,
+		   	MODIFIEDDATE,
+		   	DEFAULTUSER,
+		   	CONTACTID,
+		   	PASSWORD_,
+		   	PASSWORDENCRYPTED,
+		   	PASSWORDRESET,
+		   	PASSWORDMODIFIEDDATE,
+		   	DIGEST,
+		   	REMINDERQUERYQUESTION,
+		   	REMINDERQUERYANSWER,
+		   	GRACELOGINCOUNT,
+		   	SCREENNAME,
+		   	EMAILADDRESS,
+		   	FACEBOOKID,
+		   	GOOGLEUSERID,
+		   	LDAPSERVERID,
+		   	OPENID,
+		   	PORTRAITID,
+		   	LANGUAGEID,
+		   	TIMEZONEID,
+		   	GREETING,
+		   	COMMENTS,
+		   	FIRSTNAME,
+		   	MIDDLENAME,
+		   	LASTNAME,
+		   	JOBTITLE,
+		   	LOGINDATE,
+		   	LOGINIP,
+		   	LASTLOGINDATE,
+		   	LASTLOGINIP,
+		   	LASTFAILEDLOGINDATE,
+		   	FAILEDLOGINATTEMPTS,
+		   	LOCKOUT,
+		   	LOCKOUTDATE,
+		   	AGREEDTOTERMSOFUSE,
+		   	EMAILADDRESSVERIFIED,
+		   	STATUS
+		) VALUES (
+		   	#{ mvccversion,jdbcType=BIGINT},
+		   	#{ uuid,jdbcType=VARCHAR},
+		   	#{ userid,jdbcType=BIGINT},
+		   	#{ companyid,jdbcType=BIGINT},
+		   	#{ createdate,jdbcType=DATETIME},
+		   	#{ modifieddate,jdbcType=DATETIME},
+		   	#{ defaultuser,jdbcType=TINYINT},
+		   	#{ contactid,jdbcType=BIGINT},
+		   	#{ password,jdbcType=VARCHAR},
+		   	#{ passwordencrypted,jdbcType=TINYINT},
+		   	#{ passwordreset,jdbcType=TINYINT},
+		   	#{ passwordmodifieddate,jdbcType=DATETIME},
+		   	#{ digest,jdbcType=VARCHAR},
+		   	#{ reminderqueryquestion,jdbcType=VARCHAR},
+		   	#{ reminderqueryanswer,jdbcType=VARCHAR},
+		   	#{ gracelogincount,jdbcType=INTEGER},
+		   	#{ screenname,jdbcType=VARCHAR},
+		   	#{ emailaddress,jdbcType=VARCHAR},
+		   	#{ facebookid,jdbcType=BIGINT},
+		   	#{ googleuserid,jdbcType=VARCHAR},
+		   	#{ ldapserverid,jdbcType=BIGINT},
+		   	#{ openid,jdbcType=VARCHAR},
+		   	#{ portraitid,jdbcType=BIGINT},
+		   	#{ languageid,jdbcType=VARCHAR},
+		   	#{ timezoneid,jdbcType=VARCHAR},
+		   	#{ greeting,jdbcType=VARCHAR},
+		   	#{ comments,jdbcType=LONGTEXT},
+		   	#{ firstname,jdbcType=VARCHAR},
+		   	#{ middlename,jdbcType=VARCHAR},
+		   	#{ lastname,jdbcType=VARCHAR},
+		   	#{ jobtitle,jdbcType=VARCHAR},
+		   	#{ logindate,jdbcType=DATETIME},
+		   	#{ loginip,jdbcType=VARCHAR},
+		   	#{ lastlogindate,jdbcType=DATETIME},
+		   	#{ lastloginip,jdbcType=VARCHAR},
+		   	#{ lastfailedlogindate,jdbcType=DATETIME},
+		   	#{ failedloginattempts,jdbcType=INTEGER},
+		   	#{ lockout,jdbcType=TINYINT},
+		   	#{ lockoutdate,jdbcType=DATETIME},
+		   	#{ agreedtotermsofuse,jdbcType=TINYINT},
+		   	#{ emailaddressverified,jdbcType=TINYINT},
+		   	#{ status,jdbcType=INTEGER}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_USER_.nextval as id FROM dual
+		</selectKey>
+	</insert>
+	
+	<!-- 更新实体Map -->
+	<update id="mapUpdate" parameterType="map">
+		UPDATE USER_
+		<set>
+			<if test="mvccversion != null">
+				MVCCVERSION = #{mvccversion,jdbcType=BIGINT},
+			</if>
+			<if test="uuid != null">
+				UUID_ = #{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="userid != null">
+				USERID = #{userid,jdbcType=BIGINT},
+			</if>
+			<if test="companyid != null">
+				COMPANYID = #{companyid,jdbcType=BIGINT},
+			</if>
+			<if test="createdate != null">
+				CREATEDATE = #{createdate,jdbcType=DATETIME},
+			</if>
+			<if test="modifieddate != null">
+				MODIFIEDDATE = #{modifieddate,jdbcType=DATETIME},
+			</if>
+			<if test="defaultuser != null">
+				DEFAULTUSER = #{defaultuser,jdbcType=TINYINT},
+			</if>
+			<if test="contactid != null">
+				CONTACTID = #{contactid,jdbcType=BIGINT},
+			</if>
+			<if test="password != null">
+				PASSWORD_ = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="passwordencrypted != null">
+				PASSWORDENCRYPTED = #{passwordencrypted,jdbcType=TINYINT},
+			</if>
+			<if test="passwordreset != null">
+				PASSWORDRESET = #{passwordreset,jdbcType=TINYINT},
+			</if>
+			<if test="passwordmodifieddate != null">
+				PASSWORDMODIFIEDDATE = #{passwordmodifieddate,jdbcType=DATETIME},
+			</if>
+			<if test="digest != null">
+				DIGEST = #{digest,jdbcType=VARCHAR},
+			</if>
+			<if test="reminderqueryquestion != null">
+				REMINDERQUERYQUESTION = #{reminderqueryquestion,jdbcType=VARCHAR},
+			</if>
+			<if test="reminderqueryanswer != null">
+				REMINDERQUERYANSWER = #{reminderqueryanswer,jdbcType=VARCHAR},
+			</if>
+			<if test="gracelogincount != null">
+				GRACELOGINCOUNT = #{gracelogincount,jdbcType=INTEGER},
+			</if>
+			<if test="screenname != null">
+				SCREENNAME = #{screenname,jdbcType=VARCHAR},
+			</if>
+			<if test="emailaddress != null">
+				EMAILADDRESS = #{emailaddress,jdbcType=VARCHAR},
+			</if>
+			<if test="facebookid != null">
+				FACEBOOKID = #{facebookid,jdbcType=BIGINT},
+			</if>
+			<if test="googleuserid != null">
+				GOOGLEUSERID = #{googleuserid,jdbcType=VARCHAR},
+			</if>
+			<if test="ldapserverid != null">
+				LDAPSERVERID = #{ldapserverid,jdbcType=BIGINT},
+			</if>
+			<if test="openid != null">
+				OPENID = #{openid,jdbcType=VARCHAR},
+			</if>
+			<if test="portraitid != null">
+				PORTRAITID = #{portraitid,jdbcType=BIGINT},
+			</if>
+			<if test="languageid != null">
+				LANGUAGEID = #{languageid,jdbcType=VARCHAR},
+			</if>
+			<if test="timezoneid != null">
+				TIMEZONEID = #{timezoneid,jdbcType=VARCHAR},
+			</if>
+			<if test="greeting != null">
+				GREETING = #{greeting,jdbcType=VARCHAR},
+			</if>
+			<if test="comments != null">
+				COMMENTS = #{comments,jdbcType=LONGTEXT},
+			</if>
+			<if test="firstname != null">
+				FIRSTNAME = #{firstname,jdbcType=VARCHAR},
+			</if>
+			<if test="middlename != null">
+				MIDDLENAME = #{middlename,jdbcType=VARCHAR},
+			</if>
+			<if test="lastname != null">
+				LASTNAME = #{lastname,jdbcType=VARCHAR},
+			</if>
+			<if test="jobtitle != null">
+				JOBTITLE = #{jobtitle,jdbcType=VARCHAR},
+			</if>
+			<if test="logindate != null">
+				LOGINDATE = #{logindate,jdbcType=DATETIME},
+			</if>
+			<if test="loginip != null">
+				LOGINIP = #{loginip,jdbcType=VARCHAR},
+			</if>
+			<if test="lastlogindate != null">
+				LASTLOGINDATE = #{lastlogindate,jdbcType=DATETIME},
+			</if>
+			<if test="lastloginip != null">
+				LASTLOGINIP = #{lastloginip,jdbcType=VARCHAR},
+			</if>
+			<if test="lastfailedlogindate != null">
+				LASTFAILEDLOGINDATE = #{lastfailedlogindate,jdbcType=DATETIME},
+			</if>
+			<if test="failedloginattempts != null">
+				FAILEDLOGINATTEMPTS = #{failedloginattempts,jdbcType=INTEGER},
+			</if>
+			<if test="lockout != null">
+				LOCKOUT = #{lockout,jdbcType=TINYINT},
+			</if>
+			<if test="lockoutdate != null">
+				LOCKOUTDATE = #{lockoutdate,jdbcType=DATETIME},
+			</if>
+			<if test="agreedtotermsofuse != null">
+				AGREEDTOTERMSOFUSE = #{agreedtotermsofuse,jdbcType=TINYINT},
+			</if>
+			<if test="emailaddressverified != null">
+				EMAILADDRESSVERIFIED = #{emailaddressverified,jdbcType=TINYINT},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=INTEGER},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper>   

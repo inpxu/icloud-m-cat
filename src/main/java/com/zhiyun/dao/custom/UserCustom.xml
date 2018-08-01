@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.UserDaoImpl">
+
+	<resultMap type="com.zhiyun.entity.User" id="User">
+	    <id column="userId" property="userid" />
+	    <result column="screenName" property="screenname" />
+	    <result column="facebookId" property="facebookid" />
+	    <result column="lastLoginDate" property="lastlogindate" />
+	    <result column="emailAddress" property="emailaddress" />
+	    <result column="firstName" property="firstname" />
+	    <result column="lastName" property="lastname" />
+	    <association property="icloudApplicationentry" resultMap="Applicationentry" columnPrefix="iae_"></association>
+	    <association property="icloudMarketentry" resultMap="Marketentry" columnPrefix="ime_"></association>
+	    <association property="icloudEnterpriseauth" resultMap="Enterpriseauth" columnPrefix="iea_"/>
+	    <association property="icloudPersonalauth" resultMap="Personalauth" columnPrefix="ipa_"/>
+	</resultMap>
+	
+	<resultMap type="com.zhiyun.entity.IcloudApplicationentry" id="Applicationentry">
+	    <id column="id" property="id" />
+	    <result column="user_id" property="userId" />
+	    <result column="name" property="name" />
+	    <result column="legal_person" property="legalPerson" />
+	    <result column="type" property="type" />
+	    <result column="enterprise_scale" property="enterpriseScale" />
+	    <result column="equipment_scale" property="equipmentScale" />
+	    <result column="annual_sales" property="annualSales" />
+	    <result column="site_image_share_url" property="siteImageShareUrl" />
+	    <result column="status" property="status" />
+	</resultMap>
+	
+	<resultMap type="com.zhiyun.entity.IcloudMarketentry" id="Marketentry">
+
+	    <id column="id" property="id" />
+	    <result column="user_id" property="userId" />
+	    <result column="business_type" property="businessType" />
+	    <result column="marketClass" property="marketClass" />
+	    <result column="market" property="market" />
+	    <result column="enterpriseProfile" property="enterpriseProfile" />
+	    <result column="dataImageShareUrl" property="dataImageShareUrl" />
+	    <result column="status" property="status" />
+	</resultMap>
+	
+	<resultMap type="com.zhiyun.entity.IcloudEnterpriseauth" id="Enterpriseauth">
+
+	    <id column="id" property="id" />
+	    <result column="userId" property="userId" />
+	    <result column="name" property="name" />
+	    <result column="province" property="province" />
+	    <result column="city" property="city" />
+	    <result column="district" property="district" />
+	    <result column="detailedAddress" property="detailedAddress" />
+	    <result column="contactPerson" property="contactPerson" />
+	    <result column="contactPhone" property="contactPhone" />
+	    <result column="legalPerson" property="legalPerson" />
+	    <result column="legalPersonPhone" property="legalPersonPhone" />
+	    <result column="legalPersonIdentiyCard" property="legalPersonIdentiyCard" />
+	    <result column="certificatePositiveShareUrl" property="certificatePositiveShareUrl" />
+	    <result column="certificateNegativeShareUrl" property="certificateNegativeShareUrl" />
+	    <result column="socialCreditCode" property="socialCreditCode" />
+	    <result column="businessLicenceShareUrl" property="businessLicenceShareUrl" />
+	    <result column="status" property="status" />
+	</resultMap>
+	
+	<resultMap type="com.zhiyun.entity.IcloudPersonalauth" id="Personalauth">
+	 
+
+	    <id column="id" property="id" />
+	    <result column="userId" property="userId" />
+	    <result column="name" property="name" />
+	    <result column="certificateType" property="certificateType" />
+	    <result column="certificate" property="certificate" />
+	    <result column="sex" property="sex" />
+	    <result column="province" property="province" />
+	    <result column="city" property="city" />
+	    <result column="district" property="district" />
+	    <result column="detailedAddress" property="detailedAddress" />
+	    <result column="certificatePositiveShareUrl" property="certificatePositiveShareUrl" />
+	    <result column="certificateNegativeShareUrl" property="certificateNegativeShareUrl" />
+	    <result column="status" property="status" />
+	</resultMap>
+	
+	<!-- 查询字段 -->
+	<sql id="mySelectFieldSQL">
+		SELECT 
+		       MVCCVERSION mvccversion,
+		       UUID_ uuid,
+		       USERID userid,
+		       COMPANYID companyid,
+		       CREATEDATE createdate,
+		       MODIFIEDDATE modifieddate,
+		       DEFAULTUSER defaultuser,
+		       CONTACTID contactid,
+		       PASSWORD_ password,
+		       PASSWORDENCRYPTED passwordencrypted,
+		       PASSWORDRESET passwordreset,
+		       PASSWORDMODIFIEDDATE passwordmodifieddate,
+		       DIGEST digest,
+		       REMINDERQUERYQUESTION reminderqueryquestion,
+		       REMINDERQUERYANSWER reminderqueryanswer,
+		       GRACELOGINCOUNT gracelogincount,
+		       SCREENNAME screenname,
+		       EMAILADDRESS emailaddress,
+		       FACEBOOKID facebookid,
+		       GOOGLEUSERID googleuserid,
+		       LDAPSERVERID ldapserverid,
+		       OPENID openid,
+		       PORTRAITID portraitid,
+		       LANGUAGEID languageid,
+		       TIMEZONEID timezoneid,
+		       GREETING greeting,
+		       COMMENTS comments,
+		       FIRSTNAME firstname,
+		       MIDDLENAME middlename,
+		       LASTNAME lastname,
+		       JOBTITLE jobtitle,
+		       LOGINDATE logindate,
+		       LOGINIP loginip,
+		       LASTLOGINDATE lastlogindate,
+		       LASTLOGINIP lastloginip,
+		       LASTFAILEDLOGINDATE lastfailedlogindate,
+		       FAILEDLOGINATTEMPTS failedloginattempts,
+		       LOCKOUT lockout,
+		       LOCKOUTDATE lockoutdate,
+		       AGREEDTOTERMSOFUSE agreedtotermsofuse,
+		       EMAILADDRESSVERIFIED emailaddressverified,
+		       STATUS status
+	</sql>
+	
+	    	
+	<select id="findUserByScreenName" parameterType="map" resultType="com.zhiyun.entity.User">
+		<include refid="mySelectFieldSQL" />
+		  FROM USER_
+		 WHERE screenName = #{screenName,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findUserByUserId" parameterType="map" resultType="com.zhiyun.entity.User">
+		<include refid="mySelectFieldSQL" />
+		  FROM USER_
+		 WHERE userId = #{userId,jdbcType=BIGINT}
+	</select>
+	
+	<select id="findUserByScreenNameAndEmail" parameterType="map" resultType="com.zhiyun.entity.User">
+		<include refid="mySelectFieldSQL" />
+		  FROM USER_
+		 WHERE screenName = #{account,jdbcType=VARCHAR} or
+		 	   emailAddress = #{account,jdbcType=VARCHAR} 
+	</select>
+	
+	<select id="findUserStatus" parameterType="map" resultMap="User" >
+		    SELECT  u.userId , 
+		  		  u.screenName , 
+		  		  u.facebookId ,
+		  		  u.lastLoginDate , 
+		  		  u.emailAddress ,
+		  		  u.firstName,
+		  		  u.lastName,
+		  		  p.status ipa_status,
+		  		  e.status iea_status,
+		  		  a.status iae_status,
+		  		  m.status ime_status
+		  		  
+		  FROM 
+		  	   USER_ u LEFT JOIN (select * from ICLOUD_PERSONALAUTH where deleted = 'F' )p on u.USERID = p.USER_ID
+		  LEFT JOIN  (select * from ICLOUD_ENTERPRISEAUTH where deleted = 'F' )e on u.USERID = e.USER_ID
+		  LEFT JOIN  (select * from ICLOUD_APPLICATIONENTRY where deleted = 'F' )a on u.USERID = a.CREATE_USER_ID
+		  LEFT JOIN  (select * from ICLOUD_MARKETENTRY where deleted = 'F' ) m on u.USERID = m.CREATE_USER_ID
+		  WHERE 1=1
+	  	<if test="userId != null">
+			AND u.USERID = #{userId,jdbcType=BIGINT}
+		</if>
+		<if test="screenName != null">
+			AND u.SCREENNAME = #{screenName,jdbcType=VARCHAR}
+		</if>
+	</select>
+	
+	<select id="findByUserId" parameterType="com.zhiyun.entity.User" resultType="com.zhiyun.entity.User">
+		SELECT
+			userId userid,
+			password_ password,
+
+			screenName screenname,
+			emailAddress emailaddress,
+			firstName firstname,
+			lastName lastname,
+			emailAddressVerified emailaddressverified
+		  FROM USER_
+		 WHERE userid = #{userId,jdbcType=BIGINT}
+		 
+	</select>
+	
+	<update id="updatePhone" parameterType="com.zhiyun.entity.User">
+		update user_ set 
+			SCREENNAME = #{screenname,jdbcType=VARCHAR}
+		where USERID = #{userid,jdbcType=BIGINT}
+	</update>
+	
+	<update id="updateUrl" parameterType="com.zhiyun.liferay.model.FriendlyUrl">
+		update group_ set 
+			friendlyURL = #{newUrl,jdbcType=VARCHAR}
+		where friendlyURL = #{formerUrl,jdbcType=VARCHAR}
+	</update>
+
+</mapper>   

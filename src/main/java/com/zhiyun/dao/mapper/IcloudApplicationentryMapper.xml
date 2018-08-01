@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.IcloudApplicationentryDaoImpl">
+
+	<!-- 插入实体 -->
+	<insert id="insert" parameterType="com.zhiyun.entity.IcloudApplicationentry">
+		INSERT INTO ICLOUD_APPLICATIONENTRY (
+		   	ID,
+		   	CREATE_USER_ID,
+		   	NAME,
+		   	LEGAL_PERSON,
+		   	PROPERTY,
+		   	TYPE,
+		   	ENTERPRISE_SCALE,
+		   	EQUIPMENT_SCALE,
+		   	ANNUAL_SALES,
+		   	SITE_IMAGE_SHARE_URL,
+		   	STATUS,
+		   	CREATE_TIME,
+		   	MODIFY_TIME,
+		   	DELETED,
+		   	CREATE_BY,
+		   	MODIFY_BY,
+		   	ORGANIZATION_ID,
+		   	SENDED,
+		   	UPDATED,
+		   	APPROVAL_OPINION,
+		   	ZHENGJINGJI_NUM,
+		   	JINGBIANJI_NUM,
+		   	QITA_NUM
+		) VALUES (
+		   	#{id,jdbcType=BIGINT},
+		   	#{createUserId,jdbcType=BIGINT},
+		   	#{name,jdbcType=VARCHAR},
+		   	#{legalPerson,jdbcType=VARCHAR},
+		   	#{property,jdbcType=INTEGER},
+		   	#{type,jdbcType=INTEGER},
+		   	#{enterpriseScale,jdbcType=INTEGER},
+		   	#{equipmentScale,jdbcType=INTEGER},
+		   	#{annualSales,jdbcType=INTEGER},
+		   	#{siteImageShareUrl,jdbcType=VARCHAR},
+		   	#{status,jdbcType=INTEGER},
+		   	#{createTime,jdbcType=TIMESTAMP},
+		   	#{modifyTime,jdbcType=TIMESTAMP},
+		   	#{deleted,jdbcType=VARCHAR},
+		   	#{createBy,jdbcType=VARCHAR},
+		   	#{modifyBy,jdbcType=VARCHAR},
+		   	#{organizationId,jdbcType=BIGINT},
+		   	#{sended,jdbcType=VARCHAR},
+		   	#{updated,jdbcType=VARCHAR},
+		   	#{approvalOpinion,jdbcType=VARCHAR},
+		   	#{zhengjingjiNum,jdbcType=VARCHAR},
+		   	#{jingbianjiNum,jdbcType=VARCHAR},
+		   	#{qitaNum,jdbcType=VARCHAR}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_ICLOUD_APPLICATIONENTRY.nextval as id FROM dual
+		</selectKey>
+	</insert>
+
+	<!-- 更新实体 -->
+	<update id="update" parameterType="com.zhiyun.entity.IcloudApplicationentry">
+		UPDATE ICLOUD_APPLICATIONENTRY
+		<set>
+			<if test="createUserId != null">
+				CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="legalPerson != null">
+				LEGAL_PERSON = #{legalPerson,jdbcType=VARCHAR},
+			</if>
+			<if test="property != null">
+				PROPERTY = #{property,jdbcType=INTEGER},
+			</if>
+			<if test="type != null">
+				TYPE = #{type,jdbcType=INTEGER},
+			</if>
+			<if test="enterpriseScale != null">
+				ENTERPRISE_SCALE = #{enterpriseScale,jdbcType=INTEGER},
+			</if>
+			<if test="equipmentScale != null">
+				EQUIPMENT_SCALE = #{equipmentScale,jdbcType=INTEGER},
+			</if>
+			<if test="annualSales != null">
+				ANNUAL_SALES = #{annualSales,jdbcType=INTEGER},
+			</if>
+			<if test="siteImageShareUrl != null">
+				SITE_IMAGE_SHARE_URL = #{siteImageShareUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleted != null">
+				DELETED = #{deleted,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyBy != null">
+				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+			</if>
+			<if test="organizationId != null">
+				ORGANIZATION_ID = #{organizationId,jdbcType=BIGINT},
+			</if>
+			<if test="sended != null">
+				SENDED = #{sended,jdbcType=VARCHAR},
+			</if>
+			<if test="updated != null">
+				UPDATED = #{updated,jdbcType=VARCHAR},
+			</if>
+			<if test="approvalOpinion != null">
+				APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR},
+			</if>
+			<if test="zhengjingjiNum != null">
+				ZHENGJINGJI_NUM = #{zhengjingjiNum,jdbcType=VARCHAR},
+			</if>
+			<if test="jingbianjiNum != null">
+				JINGBIANJI_NUM = #{jingbianjiNum,jdbcType=VARCHAR},
+			</if>
+			<if test="qitaNum != null">
+				QITA_NUM = #{qitaNum,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 更新实体 -->
+	<update id="updateFields" parameterType="com.zhiyun.entity.IcloudApplicationentry">
+		UPDATE ICLOUD_APPLICATIONENTRY
+		<set>
+			CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+			NAME = #{name,jdbcType=VARCHAR},
+			LEGAL_PERSON = #{legalPerson,jdbcType=VARCHAR},
+			PROPERTY = #{property,jdbcType=INTEGER},
+			TYPE = #{type,jdbcType=INTEGER},
+			ENTERPRISE_SCALE = #{enterpriseScale,jdbcType=INTEGER},
+			EQUIPMENT_SCALE = #{equipmentScale,jdbcType=INTEGER},
+			ANNUAL_SALES = #{annualSales,jdbcType=INTEGER},
+			SITE_IMAGE_SHARE_URL = #{siteImageShareUrl,jdbcType=VARCHAR},
+			STATUS = #{status,jdbcType=INTEGER},
+			CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+			DELETED = #{deleted,jdbcType=VARCHAR},
+			CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+			ORGANIZATION_ID = #{organizationId,jdbcType=BIGINT},
+			SENDED = #{sended,jdbcType=VARCHAR},
+			UPDATED = #{updated,jdbcType=VARCHAR},
+			APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR},
+			ZHENGJINGJI_NUM = #{zhengjingjiNum,jdbcType=VARCHAR},
+			JINGBIANJI_NUM = #{jingbianjiNum,jdbcType=VARCHAR},
+			QITA_NUM = #{qitaNum,jdbcType=VARCHAR},
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 删除实体 -->
+	<update id="delete" parameterType="com.zhiyun.entity.IcloudApplicationentry">
+		UPDATE ICLOUD_APPLICATIONENTRY
+		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
+		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+		 WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 查询字段 -->
+	<sql id="selectFieldSQL">
+		SELECT 
+		       ID id,
+		       CREATE_USER_ID createUserId,
+		       NAME name,
+		       LEGAL_PERSON legalPerson,
+		       PROPERTY property,
+		       TYPE type,
+		       ENTERPRISE_SCALE enterpriseScale,
+		       EQUIPMENT_SCALE equipmentScale,
+		       ANNUAL_SALES annualSales,
+		       SITE_IMAGE_SHARE_URL siteImageShareUrl,
+		       STATUS status,
+		       CREATE_TIME createTime,
+		       MODIFY_TIME modifyTime,
+		       DELETED deleted,
+		       CREATE_BY createBy,
+		       MODIFY_BY modifyBy,
+		       ORGANIZATION_ID organizationId,
+		       SENDED sended,
+		       UPDATED updated,
+		       APPROVAL_OPINION approvalOpinion,
+		       ZHENGJINGJI_NUM zhengjingjiNum,
+		       JINGBIANJI_NUM jingbianjiNum,
+		       QITA_NUM qitaNum
+	</sql>
+
+	<!-- 查询 -->
+	<select id="get" parameterType="map" resultType="com.zhiyun.entity.IcloudApplicationentry">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_APPLICATIONENTRY
+		 WHERE ID = #{id,jdbcType=INTEGER}
+		   AND DELETED = #{deleted,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 查询 -->
+	<select id="find" parameterType="com.zhiyun.entity.IcloudApplicationentry" resultType="com.zhiyun.entity.IcloudApplicationentry">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_APPLICATIONENTRY
+		<where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="createUserId != null">
+				AND CREATE_USER_ID = #{createUserId,jdbcType=BIGINT}
+			</if>
+			<if test="name != null and name != ''">
+				AND NAME = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="legalPerson != null and legalPerson != ''">
+				AND LEGAL_PERSON = #{legalPerson,jdbcType=VARCHAR}
+			</if>
+			<if test="property != null">
+				AND PROPERTY = #{property,jdbcType=INTEGER}
+			</if>
+			<if test="type != null">
+				AND TYPE = #{type,jdbcType=INTEGER}
+			</if>
+			<if test="enterpriseScale != null">
+				AND ENTERPRISE_SCALE = #{enterpriseScale,jdbcType=INTEGER}
+			</if>
+			<if test="equipmentScale != null">
+				AND EQUIPMENT_SCALE = #{equipmentScale,jdbcType=INTEGER}
+			</if>
+			<if test="annualSales != null">
+				AND ANNUAL_SALES = #{annualSales,jdbcType=INTEGER}
+			</if>
+			<if test="siteImageShareUrl != null and siteImageShareUrl != ''">
+				AND SITE_IMAGE_SHARE_URL = #{siteImageShareUrl,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				AND STATUS = #{status,jdbcType=INTEGER}
+			</if>
+			<if test="deleted != null and deleted != ''">
+				AND DELETED = #{deleted,jdbcType=VARCHAR}
+			</if>
+			<if test="organizationId != null">
+				AND ORGANIZATION_ID = #{organizationId,jdbcType=BIGINT}
+			</if>
+			<if test="sended != null and sended != ''">
+				AND SENDED = #{sended,jdbcType=VARCHAR}
+			</if>
+			<if test="updated != null and updated != ''">
+				AND UPDATED = #{updated,jdbcType=VARCHAR}
+			</if>
+			<if test="approvalOpinion != null and approvalOpinion != ''">
+				AND APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR}
+			</if>
+			<if test="zhengjingjiNum != null and zhengjingjiNum != ''">
+				AND ZHENGJINGJI_NUM = #{zhengjingjiNum,jdbcType=VARCHAR}
+			</if>
+			<if test="jingbianjiNum != null and jingbianjiNum != ''">
+				AND JINGBIANJI_NUM = #{jingbianjiNum,jdbcType=VARCHAR}
+			</if>
+			<if test="qitaNum != null and qitaNum != ''">
+				AND QITA_NUM = #{qitaNum,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询所有 -->
+	<select id="findAll" parameterType="map" resultType="com.zhiyun.entity.IcloudApplicationentry">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_APPLICATIONENTRY
+		 WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 分页查询（条件） -->
+	<sql id="page_condition">
+		<where>
+				<if test="entity.createUserId != null">
+					AND CREATE_USER_ID = #{entity.createUserId,jdbcType=BIGINT}
+				</if>
+				<if test="entity.name != null and entity.name != ''">
+					AND NAME = #{entity.name,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.legalPerson != null and entity.legalPerson != ''">
+					AND LEGAL_PERSON = #{entity.legalPerson,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.property != null">
+					AND PROPERTY = #{entity.property,jdbcType=INTEGER}
+				</if>
+				<if test="entity.type != null">
+					AND TYPE = #{entity.type,jdbcType=INTEGER}
+				</if>
+				<if test="entity.enterpriseScale != null">
+					AND ENTERPRISE_SCALE = #{entity.enterpriseScale,jdbcType=INTEGER}
+				</if>
+				<if test="entity.equipmentScale != null">
+					AND EQUIPMENT_SCALE = #{entity.equipmentScale,jdbcType=INTEGER}
+				</if>
+				<if test="entity.annualSales != null">
+					AND ANNUAL_SALES = #{entity.annualSales,jdbcType=INTEGER}
+				</if>
+				<if test="entity.siteImageShareUrl != null and entity.siteImageShareUrl != ''">
+					AND SITE_IMAGE_SHARE_URL = #{entity.siteImageShareUrl,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.status != null">
+					AND STATUS = #{entity.status,jdbcType=INTEGER}
+				</if>
+				<if test="entity.deleted != null and entity.deleted != ''">
+					AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.organizationId != null">
+					AND ORGANIZATION_ID = #{entity.organizationId,jdbcType=BIGINT}
+				</if>
+				<if test="entity.sended != null and entity.sended != ''">
+					AND SENDED = #{entity.sended,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.updated != null and entity.updated != ''">
+					AND UPDATED = #{entity.updated,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.approvalOpinion != null and entity.approvalOpinion != ''">
+					AND APPROVAL_OPINION = #{entity.approvalOpinion,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.zhengjingjiNum != null and entity.zhengjingjiNum != ''">
+					AND ZHENGJINGJI_NUM = #{entity.zhengjingjiNum,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.jingbianjiNum != null and entity.jingbianjiNum != ''">
+					AND JINGBIANJI_NUM = #{entity.jingbianjiNum,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.qitaNum != null and entity.qitaNum != ''">
+					AND QITA_NUM = #{entity.qitaNum,jdbcType=VARCHAR}
+				</if>
+		</where>
+	</sql>
+
+	<!-- 分页查询（计数） -->
+	<select id="page_count" parameterType="map" resultType="int">
+		SELECT count(*)
+		  FROM ICLOUD_APPLICATIONENTRY
+		<include refid="page_condition" />
+	</select>
+
+	<!-- 分页查询（数据） -->
+	<select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.IcloudApplicationentry">
+		<include refid="mybatis.pageStartSQL" />
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_APPLICATIONENTRY
+		<include refid="page_condition" />
+		<include refid="mybatis.pageEndSQL" />
+	</select>
+	
+	<!-- Map查询所有 -->
+	<select id="findMapListAll" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_APPLICATIONENTRY
+		 WHERE DELETED = "F"
+	</select>
+	
+	<!-- Map条件查询 -->
+	<select id="findMapList" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_APPLICATIONENTRY
+		 <where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="createUserId != null">
+				AND CREATE_USER_ID = #{createUserId,jdbcType=BIGINT}
+			</if>
+			<if test="name != null and name != ''">
+				AND NAME = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="legalPerson != null and legalPerson != ''">
+				AND LEGAL_PERSON = #{legalPerson,jdbcType=VARCHAR}
+			</if>
+			<if test="property != null">
+				AND PROPERTY = #{property,jdbcType=INTEGER}
+			</if>
+			<if test="type != null">
+				AND TYPE = #{type,jdbcType=INTEGER}
+			</if>
+			<if test="enterpriseScale != null">
+				AND ENTERPRISE_SCALE = #{enterpriseScale,jdbcType=INTEGER}
+			</if>
+			<if test="equipmentScale != null">
+				AND EQUIPMENT_SCALE = #{equipmentScale,jdbcType=INTEGER}
+			</if>
+			<if test="annualSales != null">
+				AND ANNUAL_SALES = #{annualSales,jdbcType=INTEGER}
+			</if>
+			<if test="siteImageShareUrl != null and siteImageShareUrl != ''">
+				AND SITE_IMAGE_SHARE_URL = #{siteImageShareUrl,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				AND STATUS = #{status,jdbcType=INTEGER}
+			</if>
+			<if test="deleted != null and deleted != ''">
+				AND DELETED = #{deleted,jdbcType=VARCHAR}
+			</if>
+			<if test="organizationId != null">
+				AND ORGANIZATION_ID = #{organizationId,jdbcType=BIGINT}
+			</if>
+			<if test="sended != null and sended != ''">
+				AND SENDED = #{sended,jdbcType=VARCHAR}
+			</if>
+			<if test="updated != null and updated != ''">
+				AND UPDATED = #{updated,jdbcType=VARCHAR}
+			</if>
+			<if test="approvalOpinion != null and approvalOpinion != ''">
+				AND APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR}
+			</if>
+			<if test="zhengjingjiNum != null and zhengjingjiNum != ''">
+				AND ZHENGJINGJI_NUM = #{zhengjingjiNum,jdbcType=VARCHAR}
+			</if>
+			<if test="jingbianjiNum != null and jingbianjiNum != ''">
+				AND JINGBIANJI_NUM = #{jingbianjiNum,jdbcType=VARCHAR}
+			</if>
+			<if test="qitaNum != null and qitaNum != ''">
+				AND QITA_NUM = #{qitaNum,jdbcType=VARCHAR}
+			</if>
+		 WHERE DELETED = "F"
+		</where>
+	</select>
+	
+	<!-- 插入实体map -->
+	<insert id="mapInsert" parameterType="map">
+		INSERT INTO ICLOUD_APPLICATIONENTRY (
+		   	ID,
+		   	CREATE_USER_ID,
+		   	NAME,
+		   	LEGAL_PERSON,
+		   	PROPERTY,
+		   	TYPE,
+		   	ENTERPRISE_SCALE,
+		   	EQUIPMENT_SCALE,
+		   	ANNUAL_SALES,
+		   	SITE_IMAGE_SHARE_URL,
+		   	STATUS,
+		   	CREATE_TIME,
+		   	MODIFY_TIME,
+		   	DELETED,
+		   	CREATE_BY,
+		   	MODIFY_BY,
+		   	ORGANIZATION_ID,
+		   	SENDED,
+		   	UPDATED,
+		   	APPROVAL_OPINION,
+		   	ZHENGJINGJI_NUM,
+		   	JINGBIANJI_NUM,
+		   	QITA_NUM
+		) VALUES (
+		   	#{ id,jdbcType=BIGINT},
+		   	#{ createUserId,jdbcType=BIGINT},
+		   	#{ name,jdbcType=VARCHAR},
+		   	#{ legalPerson,jdbcType=VARCHAR},
+		   	#{ property,jdbcType=INTEGER},
+		   	#{ type,jdbcType=INTEGER},
+		   	#{ enterpriseScale,jdbcType=INTEGER},
+		   	#{ equipmentScale,jdbcType=INTEGER},
+		   	#{ annualSales,jdbcType=INTEGER},
+		   	#{ siteImageShareUrl,jdbcType=VARCHAR},
+		   	#{ status,jdbcType=INTEGER},
+		   	#{ createTime,jdbcType=TIMESTAMP},
+		   	#{ modifyTime,jdbcType=TIMESTAMP},
+		   	#{ deleted,jdbcType=VARCHAR},
+		   	#{ createBy,jdbcType=VARCHAR},
+		   	#{ modifyBy,jdbcType=VARCHAR},
+		   	#{ organizationId,jdbcType=BIGINT},
+		   	#{ sended,jdbcType=VARCHAR},
+		   	#{ updated,jdbcType=VARCHAR},
+		   	#{ approvalOpinion,jdbcType=VARCHAR},
+		   	#{ zhengjingjiNum,jdbcType=VARCHAR},
+		   	#{ jingbianjiNum,jdbcType=VARCHAR},
+		   	#{ qitaNum,jdbcType=VARCHAR}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_ICLOUD_APPLICATIONENTRY.nextval as id FROM dual
+		</selectKey>
+	</insert>
+	
+	<!-- 更新实体Map -->
+	<update id="mapUpdate" parameterType="map">
+		UPDATE ICLOUD_APPLICATIONENTRY
+		<set>
+			<if test="createUserId != null">
+				CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="legalPerson != null">
+				LEGAL_PERSON = #{legalPerson,jdbcType=VARCHAR},
+			</if>
+			<if test="property != null">
+				PROPERTY = #{property,jdbcType=INTEGER},
+			</if>
+			<if test="type != null">
+				TYPE = #{type,jdbcType=INTEGER},
+			</if>
+			<if test="enterpriseScale != null">
+				ENTERPRISE_SCALE = #{enterpriseScale,jdbcType=INTEGER},
+			</if>
+			<if test="equipmentScale != null">
+				EQUIPMENT_SCALE = #{equipmentScale,jdbcType=INTEGER},
+			</if>
+			<if test="annualSales != null">
+				ANNUAL_SALES = #{annualSales,jdbcType=INTEGER},
+			</if>
+			<if test="siteImageShareUrl != null">
+				SITE_IMAGE_SHARE_URL = #{siteImageShareUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deleted != null">
+				DELETED = #{deleted,jdbcType=VARCHAR},
+			</if>
+			<if test="createBy != null">
+				CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyBy != null">
+				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+			</if>
+			<if test="organizationId != null">
+				ORGANIZATION_ID = #{organizationId,jdbcType=BIGINT},
+			</if>
+			<if test="sended != null">
+				SENDED = #{sended,jdbcType=VARCHAR},
+			</if>
+			<if test="updated != null">
+				UPDATED = #{updated,jdbcType=VARCHAR},
+			</if>
+			<if test="approvalOpinion != null">
+				APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR},
+			</if>
+			<if test="zhengjingjiNum != null">
+				ZHENGJINGJI_NUM = #{zhengjingjiNum,jdbcType=VARCHAR},
+			</if>
+			<if test="jingbianjiNum != null">
+				JINGBIANJI_NUM = #{jingbianjiNum,jdbcType=VARCHAR},
+			</if>
+			<if test="qitaNum != null">
+				QITA_NUM = #{qitaNum,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper>   

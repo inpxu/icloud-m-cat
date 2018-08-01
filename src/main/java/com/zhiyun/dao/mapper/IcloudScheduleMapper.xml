@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.IcloudScheduleDaoImpl">
+
+	<!-- 插入实体 -->
+	<insert id="insert" parameterType="com.zhiyun.entity.IcloudSchedule">
+		INSERT INTO ICLOUD_SCHEDULE (
+		   	ID_,
+		   	USERID,
+		   	GROUPID,
+		   	CREATEDATE,
+		   	MODIFIEDDATE,
+		   	TITLE,
+		   	START_,
+		   	END_,
+		   	ALLDAY,
+		   	COLOR
+		) VALUES (
+		   	#{id,jdbcType=BIGINT},
+		   	#{userid,jdbcType=BIGINT},
+		   	#{groupid,jdbcType=BIGINT},
+		   	#{createdate,jdbcType=DATETIME},
+		   	#{modifieddate,jdbcType=DATETIME},
+		   	#{title,jdbcType=VARCHAR},
+		   	#{start,jdbcType=DATETIME},
+		   	#{end,jdbcType=DATETIME},
+		   	#{allday,jdbcType=TINYINT},
+		   	#{color,jdbcType=VARCHAR}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_ICLOUD_SCHEDULE.nextval as id FROM dual
+		</selectKey>
+	</insert>
+
+	<!-- 更新实体 -->
+	<update id="update" parameterType="com.zhiyun.entity.IcloudSchedule">
+		UPDATE ICLOUD_SCHEDULE
+		<set>
+			<if test="id != null">
+				ID_ = #{id,jdbcType=BIGINT},
+			</if>
+			<if test="userid != null">
+				USERID = #{userid,jdbcType=BIGINT},
+			</if>
+			<if test="groupid != null">
+				GROUPID = #{groupid,jdbcType=BIGINT},
+			</if>
+			<if test="createdate != null">
+				CREATEDATE = #{createdate,jdbcType=DATETIME},
+			</if>
+			<if test="modifieddate != null">
+				MODIFIEDDATE = #{modifieddate,jdbcType=DATETIME},
+			</if>
+			<if test="title != null">
+				TITLE = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="start != null">
+				START_ = #{start,jdbcType=DATETIME},
+			</if>
+			<if test="end != null">
+				END_ = #{end,jdbcType=DATETIME},
+			</if>
+			<if test="allday != null">
+				ALLDAY = #{allday,jdbcType=TINYINT},
+			</if>
+			<if test="color != null">
+				COLOR = #{color,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 更新实体 -->
+	<update id="updateFields" parameterType="com.zhiyun.entity.IcloudSchedule">
+		UPDATE ICLOUD_SCHEDULE
+		<set>
+			ID_ = #{id,jdbcType=BIGINT},
+			USERID = #{userid,jdbcType=BIGINT},
+			GROUPID = #{groupid,jdbcType=BIGINT},
+			CREATEDATE = #{createdate,jdbcType=DATETIME},
+			MODIFIEDDATE = #{modifieddate,jdbcType=DATETIME},
+			TITLE = #{title,jdbcType=VARCHAR},
+			START_ = #{start,jdbcType=DATETIME},
+			END_ = #{end,jdbcType=DATETIME},
+			ALLDAY = #{allday,jdbcType=TINYINT},
+			COLOR = #{color,jdbcType=VARCHAR},
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 删除实体 -->
+	<update id="delete" parameterType="com.zhiyun.entity.IcloudSchedule">
+		DELETE FROM ICLOUD_SCHEDULE WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 查询字段 -->
+	<sql id="selectFieldSQL">
+		SELECT 
+		       ID_ id,
+		       USERID userid,
+		       GROUPID groupid,
+		       CREATEDATE createdate,
+		       MODIFIEDDATE modifieddate,
+		       TITLE title,
+		       START_ start,
+		       END_ end,
+		       ALLDAY allday,
+		       COLOR color
+	</sql>
+
+	<!-- 查询 -->
+	<select id="get" parameterType="map" resultType="com.zhiyun.entity.IcloudSchedule">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_SCHEDULE
+		 WHERE ID = #{id,jdbcType=INTEGER}
+	</select>
+
+	<!-- 查询 -->
+	<select id="find" parameterType="com.zhiyun.entity.IcloudSchedule" resultType="com.zhiyun.entity.IcloudSchedule">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_SCHEDULE
+		<where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="userid != null">
+				AND USERID = #{userid,jdbcType=BIGINT}
+			</if>
+			<if test="groupid != null">
+				AND GROUPID = #{groupid,jdbcType=BIGINT}
+			</if>
+			<if test="createdate != null">
+				AND CREATEDATE = #{createdate,jdbcType=DATETIME}
+			</if>
+			<if test="modifieddate != null">
+				AND MODIFIEDDATE = #{modifieddate,jdbcType=DATETIME}
+			</if>
+			<if test="title != null and title != ''">
+				AND TITLE = #{title,jdbcType=VARCHAR}
+			</if>
+			<if test="start != null">
+				AND START_ = #{start,jdbcType=DATETIME}
+			</if>
+			<if test="end != null">
+				AND END_ = #{end,jdbcType=DATETIME}
+			</if>
+			<if test="allday != null">
+				AND ALLDAY = #{allday,jdbcType=TINYINT}
+			</if>
+			<if test="color != null and color != ''">
+				AND COLOR = #{color,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询所有 -->
+	<select id="findAll" parameterType="map" resultType="com.zhiyun.entity.IcloudSchedule">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_SCHEDULE
+	</select>
+
+	<!-- 分页查询（条件） -->
+	<sql id="page_condition">
+		<where>
+				<if test="entity.userid != null">
+					AND USERID = #{entity.userid,jdbcType=BIGINT}
+				</if>
+				<if test="entity.groupid != null">
+					AND GROUPID = #{entity.groupid,jdbcType=BIGINT}
+				</if>
+				<if test="entity.createdate != null">
+					AND CREATEDATE = #{entity.createdate,jdbcType=DATETIME}
+				</if>
+				<if test="entity.modifieddate != null">
+					AND MODIFIEDDATE = #{entity.modifieddate,jdbcType=DATETIME}
+				</if>
+				<if test="entity.title != null and entity.title != ''">
+					AND TITLE = #{entity.title,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.start != null">
+					AND START_ = #{entity.start,jdbcType=DATETIME}
+				</if>
+				<if test="entity.end != null">
+					AND END_ = #{entity.end,jdbcType=DATETIME}
+				</if>
+				<if test="entity.allday != null">
+					AND ALLDAY = #{entity.allday,jdbcType=TINYINT}
+				</if>
+				<if test="entity.color != null and entity.color != ''">
+					AND COLOR = #{entity.color,jdbcType=VARCHAR}
+				</if>
+		</where>
+	</sql>
+
+	<!-- 分页查询（计数） -->
+	<select id="page_count" parameterType="map" resultType="int">
+		SELECT count(*)
+		  FROM ICLOUD_SCHEDULE
+		<include refid="page_condition" />
+	</select>
+
+	<!-- 分页查询（数据） -->
+	<select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.IcloudSchedule">
+		<include refid="mybatis.pageStartSQL" />
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_SCHEDULE
+		<include refid="page_condition" />
+		<include refid="mybatis.pageEndSQL" />
+	</select>
+	
+	<!-- Map查询所有 -->
+	<select id="findMapListAll" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_SCHEDULE
+	</select>
+	
+	<!-- Map条件查询 -->
+	<select id="findMapList" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM ICLOUD_SCHEDULE
+		 <where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="userid != null">
+				AND USERID = #{userid,jdbcType=BIGINT}
+			</if>
+			<if test="groupid != null">
+				AND GROUPID = #{groupid,jdbcType=BIGINT}
+			</if>
+			<if test="createdate != null">
+				AND CREATEDATE = #{createdate,jdbcType=DATETIME}
+			</if>
+			<if test="modifieddate != null">
+				AND MODIFIEDDATE = #{modifieddate,jdbcType=DATETIME}
+			</if>
+			<if test="title != null and title != ''">
+				AND TITLE = #{title,jdbcType=VARCHAR}
+			</if>
+			<if test="start != null">
+				AND START_ = #{start,jdbcType=DATETIME}
+			</if>
+			<if test="end != null">
+				AND END_ = #{end,jdbcType=DATETIME}
+			</if>
+			<if test="allday != null">
+				AND ALLDAY = #{allday,jdbcType=TINYINT}
+			</if>
+			<if test="color != null and color != ''">
+				AND COLOR = #{color,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 插入实体map -->
+	<insert id="mapInsert" parameterType="map">
+		INSERT INTO ICLOUD_SCHEDULE (
+		   	ID_,
+		   	USERID,
+		   	GROUPID,
+		   	CREATEDATE,
+		   	MODIFIEDDATE,
+		   	TITLE,
+		   	START_,
+		   	END_,
+		   	ALLDAY,
+		   	COLOR
+		) VALUES (
+		   	#{ id,jdbcType=BIGINT},
+		   	#{ userid,jdbcType=BIGINT},
+		   	#{ groupid,jdbcType=BIGINT},
+		   	#{ createdate,jdbcType=DATETIME},
+		   	#{ modifieddate,jdbcType=DATETIME},
+		   	#{ title,jdbcType=VARCHAR},
+		   	#{ start,jdbcType=DATETIME},
+		   	#{ end,jdbcType=DATETIME},
+		   	#{ allday,jdbcType=TINYINT},
+		   	#{ color,jdbcType=VARCHAR}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_ICLOUD_SCHEDULE.nextval as id FROM dual
+		</selectKey>
+	</insert>
+	
+	<!-- 更新实体Map -->
+	<update id="mapUpdate" parameterType="map">
+		UPDATE ICLOUD_SCHEDULE
+		<set>
+			<if test="id != null">
+				ID_ = #{id,jdbcType=BIGINT},
+			</if>
+			<if test="userid != null">
+				USERID = #{userid,jdbcType=BIGINT},
+			</if>
+			<if test="groupid != null">
+				GROUPID = #{groupid,jdbcType=BIGINT},
+			</if>
+			<if test="createdate != null">
+				CREATEDATE = #{createdate,jdbcType=DATETIME},
+			</if>
+			<if test="modifieddate != null">
+				MODIFIEDDATE = #{modifieddate,jdbcType=DATETIME},
+			</if>
+			<if test="title != null">
+				TITLE = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="start != null">
+				START_ = #{start,jdbcType=DATETIME},
+			</if>
+			<if test="end != null">
+				END_ = #{end,jdbcType=DATETIME},
+			</if>
+			<if test="allday != null">
+				ALLDAY = #{allday,jdbcType=TINYINT},
+			</if>
+			<if test="color != null">
+				COLOR = #{color,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper>   
