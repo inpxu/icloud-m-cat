@@ -5,26 +5,23 @@
 
 package com.zhiyun.service.impl;
 
-import javax.annotation.Resource;
-
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.zhiyun.base.dao.BaseDao;
 import com.zhiyun.base.exception.BusinessException;
+import com.zhiyun.base.service.BaseServiceImpl;
 import com.zhiyun.client.UserHolder;
 import com.zhiyun.constants.AuditState;
-import com.zhiyun.dao.IcloudUserApplicationagencyDao;
-import com.zhiyun.dao.IcloudUserApplicationentryDao;
-import com.zhiyun.entity.*;
-import com.zhiyun.liferay.constants.LiferayErrorCodeConstant;
-import com.zhiyun.liferay.model.LiferayInvokerResult;
-import org.springframework.stereotype.Service;
-
-import com.zhiyun.base.dao.BaseDao;
-import com.zhiyun.base.service.BaseServiceImpl;
 import com.zhiyun.dao.IcloudApplicationagencyDao;
+import com.zhiyun.dao.IcloudApplicationentryDao;
+import com.zhiyun.dao.IcloudUserApplicationagencyDao;
+import com.zhiyun.dto.AgencyUserCheckDto;
+import com.zhiyun.entity.IcloudApplicationagency;
+import com.zhiyun.entity.IcloudApplicationentry;
+import com.zhiyun.entity.IcloudUserApplicationagency;
 import com.zhiyun.service.IcloudApplicationagencyService;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +37,8 @@ public class IcloudApplicationagencyServiceImpl extends BaseServiceImpl<IcloudAp
 
 	@Resource
 	private IcloudApplicationagencyDao icloudApplicationagencyDao;
+	@Resource
+	private IcloudApplicationentryDao icloudApplicationentryDao;
 
 	@Resource
 	private IcloudUserApplicationagencyDao icloudUserApplicationagencyDao;
@@ -116,5 +115,31 @@ public class IcloudApplicationagencyServiceImpl extends BaseServiceImpl<IcloudAp
 	@Override
 	public List<Object> getAgencyAreaByParams(Map params) {
 		return icloudApplicationagencyDao.getAgencyAreaByParams(params);
+	}
+
+	@Override
+	public List<AgencyUserCheckDto> getAgencyUserCheckByparams(Map params) {
+		return icloudApplicationagencyDao.getUserCheckByparams(params);
+	}
+
+	@Override
+	public int getAgencyUserCheckByparamsCount(Map params) {
+		return icloudApplicationagencyDao.getUserCheckByparamsCount(params);
+	}
+
+	@Override
+	public IcloudApplicationentry agencyApprove(IcloudApplicationentry icloudApplicationentry) {
+		icloudApplicationagencyDao.agencyApprove(icloudApplicationentry);
+		return icloudApplicationentryDao.get(icloudApplicationentry.getId()) ;
+	}
+
+	@Override
+	public List<IcloudApplicationagency> findBySended() {
+		return icloudApplicationagencyDao.findBySended();
+	}
+
+	@Override
+	public void updateSended(Long id) {
+		icloudApplicationagencyDao.updateSended(id);
 	}
 }

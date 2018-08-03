@@ -6,6 +6,7 @@
 package com.zhiyun.service;
 
 import com.zhiyun.base.service.BaseService;
+import com.zhiyun.dto.AgencyUserCheckDto;
 import com.zhiyun.entity.IcloudApplicationagency;
 import com.zhiyun.entity.IcloudApplicationentry;
 
@@ -27,4 +28,13 @@ public interface IcloudApplicationagencyService extends BaseService<IcloudApplic
 
     List<Object> getAgencyAreaByParams(Map params);
 
+    List<AgencyUserCheckDto> getAgencyUserCheckByparams(Map params);
+
+    int getAgencyUserCheckByparamsCount(Map params);
+
+    IcloudApplicationentry agencyApprove(IcloudApplicationentry icloudApplicationentry);
+
+    List<IcloudApplicationagency> findBySended();
+
+    void updateSended(Long id);
 }

@@ -8,6 +8,8 @@ package com.zhiyun.dao;
 import com.zhiyun.base.dao.BaseDao;
 import com.zhiyun.entity.IcloudUserApplicationagency;
 
+import java.util.List;
+
 /**
  * IcloudUserApplicationagencyDao接口
  *
@@ -17,6 +19,8 @@ import com.zhiyun.entity.IcloudUserApplicationagency;
  */
 public interface IcloudUserApplicationagencyDao extends BaseDao<IcloudUserApplicationagency, Long> {
 
-    void updateByApplicationAgencyId(Long fromApplicationAgenctId,Long toApplicationAgencyId);
+    void updateByApplicationAgencyId(Long fromApplicationAgenctId, Long toApplicationAgencyId);
+
+    List<IcloudUserApplicationagency> listByApplicationagencyId(Long organizationId);
 
 }

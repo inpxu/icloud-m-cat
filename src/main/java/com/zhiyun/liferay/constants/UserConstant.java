@@ -58,6 +58,9 @@ public interface UserConstant {
 	//todo
 	long IC_VIP_USER_ID = 223736L;
 
+	//todo
+	long IC_AGENCY_USER_ID = 223739L;
+
 	long OWNER_ROLE_ID = 20123L;
 
 	long POWER_USER_ROLE_ID = 20124L;

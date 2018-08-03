@@ -15,10 +15,10 @@
 		version="1.0" retries="${UniqueIdService.retries}" timeout="30000" check="${UniqueIdService.check}"  init="true"/>
 		
 
-	<dubbo:reference id="approlvalInterface" interface="com.zhiyun.internal.server.oc.approlval.service.ApprolvalInterface" group="oc" 
+	<dubbo:reference id="approlvalInterface" interface="com.zhiyun.internal.server.oc.approlval.service.ApprolvalInterface" group="newoc"
 		version="1.0" retries="${UniqueIdService.retries}" timeout="10000" check="${UniqueIdService.check}" init="true"/>
 		
-	<dubbo:reference id="approlvalUpdateInterface" interface="com.zhiyun.internal.server.oc.approlval.service.ApprolvalUpdateInterface" group="oc" 
+	<dubbo:reference id="approlvalUpdateInterface" interface="com.zhiyun.internal.server.oc.approlval.service.ApprolvalUpdateInterface" group="newoc"
 		version="1.0" retries="${UniqueIdService.retries}" timeout="10000" check="${UniqueIdService.check}"  init="true"/>
 
 	<dubbo:reference id="interfaceForUser" interface="com.zhiyun.internal.server.auth.service.InterfaceForUser" group="authorization"

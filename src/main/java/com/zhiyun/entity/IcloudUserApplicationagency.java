@@ -6,7 +6,7 @@
 package com.zhiyun.entity;
 
 import com.zhiyun.base.entity.BaseEntity;
-import javax.validation.constraints.Pattern;
+
 import javax.validation.constraints.Max;
 
 /**
