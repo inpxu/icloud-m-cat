@@ -21,4 +21,6 @@ public interface RoleIdConstant {
 
 	int PERSONAL_AUTHORIZED_ROLE_ID = 3;
 
+	int AGENCY__AUTHORIZED_ROLE_ID = 4;
+
 }

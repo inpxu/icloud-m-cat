@@ -10,23 +10,34 @@
 	    <result column="emailAddress" property="emailaddress" />
 	    <result column="firstName" property="firstname" />
 	    <result column="lastName" property="lastname" />
+		<association property="icloudApplicationagency" resultMap="Applicationagency" columnPrefix="iag_"></association>
 	    <association property="icloudApplicationentry" resultMap="Applicationentry" columnPrefix="iae_"></association>
 	    <association property="icloudMarketentry" resultMap="Marketentry" columnPrefix="ime_"></association>
 	    <association property="icloudEnterpriseauth" resultMap="Enterpriseauth" columnPrefix="iea_"/>
 	    <association property="icloudPersonalauth" resultMap="Personalauth" columnPrefix="ipa_"/>
 	</resultMap>
-	
+
+	<resultMap type="com.zhiyun.entity.IcloudApplicationagency" id="Applicationagency">
+		<id column="id" property="id" />
+		<result column="user_id" property="userId" />
+		<result column="name" property="name" />
+		<result column="agency_type" property="agencyType" />
+		<result column="agency_area" property="agencyArea" />
+		<result column="quality_image_share_url" property="qualityImageShareUrl" />
+		<result column="status" property="status" />
+	</resultMap>
+
 	<resultMap type="com.zhiyun.entity.IcloudApplicationentry" id="Applicationentry">
-	    <id column="id" property="id" />
-	    <result column="user_id" property="userId" />
-	    <result column="name" property="name" />
-	    <result column="legal_person" property="legalPerson" />
-	    <result column="type" property="type" />
-	    <result column="enterprise_scale" property="enterpriseScale" />
-	    <result column="equipment_scale" property="equipmentScale" />
-	    <result column="annual_sales" property="annualSales" />
-	    <result column="site_image_share_url" property="siteImageShareUrl" />
-	    <result column="status" property="status" />
+		<id column="id" property="id" />
+		<result column="user_id" property="userId" />
+		<result column="name" property="name" />
+		<result column="legal_person" property="legalPerson" />
+		<result column="type" property="type" />
+		<result column="enterprise_scale" property="enterpriseScale" />
+		<result column="equipment_scale" property="equipmentScale" />
+		<result column="annual_sales" property="annualSales" />
+		<result column="site_image_share_url" property="siteImageShareUrl" />
+		<result column="status" property="status" />
 	</resultMap>
 	
 	<resultMap type="com.zhiyun.entity.IcloudMarketentry" id="Marketentry">
@@ -158,13 +169,14 @@
 		  		  p.status ipa_status,
 		  		  e.status iea_status,
 		  		  a.status iae_status,
-		  		  m.status ime_status
-		  		  
+		  		  m.status ime_status,
+		  		  ag.status iag_status
 		  FROM 
 		  	   USER_ u LEFT JOIN (select * from ICLOUD_PERSONALAUTH where deleted = 'F' )p on u.USERID = p.USER_ID
 		  LEFT JOIN  (select * from ICLOUD_ENTERPRISEAUTH where deleted = 'F' )e on u.USERID = e.USER_ID
 		  LEFT JOIN  (select * from ICLOUD_APPLICATIONENTRY where deleted = 'F' )a on u.USERID = a.CREATE_USER_ID
 		  LEFT JOIN  (select * from ICLOUD_MARKETENTRY where deleted = 'F' ) m on u.USERID = m.CREATE_USER_ID
+		  LEFT JOIN  (select DISTINCT user_id,2 as `status` from ICLOUD_APPLICATIONAGENCY where deleted = 'F' AND `status` = '2' )ag on u.USERID = ag.USER_ID
 		  WHERE 1=1
 	  	<if test="userId != null">
 			AND u.USERID = #{userId,jdbcType=BIGINT}

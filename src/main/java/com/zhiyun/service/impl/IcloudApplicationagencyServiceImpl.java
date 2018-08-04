@@ -52,6 +52,7 @@ public class IcloudApplicationagencyServiceImpl extends BaseServiceImpl<IcloudAp
 	@Transactional
 	public void save(IcloudApplicationagency icloudApplicationagency) {
 		icloudApplicationagency.setUserId(UserHolder.getId());
+		icloudApplicationagency.setName(UserHolder.getUserName());
 		icloudApplicationagency.setStatus(AuditState.AUDITING);
 		icloudApplicationagency.setSended("F");
 		icloudApplicationagency.setUpdated("F");
