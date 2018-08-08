@@ -5,15 +5,14 @@
 
 package com.zhiyun.service.impl;
 
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.zhiyun.base.dao.BaseDao;
 import com.zhiyun.base.service.BaseServiceImpl;
 import com.zhiyun.dao.IcloudUserApplicationagencyDao;
 import com.zhiyun.entity.IcloudUserApplicationagency;
 import com.zhiyun.service.IcloudUserApplicationagencyService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * Service接口实现类。

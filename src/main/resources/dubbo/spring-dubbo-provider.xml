@@ -13,6 +13,8 @@
 	<dubbo:service interface="com.zhiyun.internal.server.gateway.TestTwoInterface" ref="testTwoInterface" executes="${dubbo.providerExecutes}" /> -->
 	<!-- 入驻 -->
 	<dubbo:service interface="com.zhiyun.internal.server.icloud.service.ApplicationEntryInterface" ref="applicationEntryInterface" executes="${dubbo.providerExecutes}" />
+	<!-- 代理 -->
+	<dubbo:service interface="com.zhiyun.internal.server.icloud.service.ApplicationAgencyInterface" ref="applicationAgencyInterface" executes="${dubbo.providerExecutes}" />
 	<!-- 企业认证 -->
 	<dubbo:service interface="com.zhiyun.internal.server.icloud.service.EntrypriseAuthInterface" ref="entrypriseAuthInterface" executes="${dubbo.providerExecutes}" />
 	<!-- 入市 -->

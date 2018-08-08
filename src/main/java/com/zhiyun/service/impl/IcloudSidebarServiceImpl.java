@@ -46,13 +46,23 @@ public class IcloudSidebarServiceImpl extends BaseServiceImpl<IcloudSidebar, Lon
 
 		List<IcloudSidebar> icloudSidebars = null;
 
+		List<IcloudSidebar> agencySidebars = null;
+
 		if (user.getIcloudEnterpriseauth() != null
 		
 				&& user.getIcloudEnterpriseauth().getStatus() == AuditState.AUDITED) {
 			icloudSidebars = icloudSidebarDao.listSidebarByRoleId(RoleIdConstant.ENTERPRISE_AUTHORIZED_ROLE_ID);
+			if (user.getIcloudApplicationagency() != null && user.getIcloudApplicationagency().getStatus() == AuditState.AUDITED){
+				agencySidebars = icloudSidebarDao.listSidebarByRoleId(RoleIdConstant.AGENCY__AUTHORIZED_ROLE_ID);
+				icloudSidebars.addAll(agencySidebars);
+			}
 		} else if (user.getIcloudPersonalauth() != null
 				&& user.getIcloudPersonalauth().getStatus() == AuditState.AUDITED) {
 			icloudSidebars = icloudSidebarDao.listSidebarByRoleId(RoleIdConstant.PERSONAL_AUTHORIZED_ROLE_ID);
+			if (user.getIcloudApplicationagency() != null && user.getIcloudApplicationagency().getStatus() == AuditState.AUDITED){
+				agencySidebars = icloudSidebarDao.listSidebarByRoleId(RoleIdConstant.AGENCY__AUTHORIZED_ROLE_ID);
+				icloudSidebars.addAll(agencySidebars);
+			}
 		} else {
 			icloudSidebars = icloudSidebarDao.listSidebarByRoleId(RoleIdConstant.UN_AUTHORIZED_ROLE_ID);
 		}

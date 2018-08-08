@@ -10,4 +10,13 @@
         WHERE applicationagency_id = #{fromApplicationAgencyId,jdbcType=BIGINT}
     </update>
 
+    <select id="listByApplicationagencyId" resultType="com.zhiyun.entity.IcloudUserApplicationagency" parameterType="int">
+        SELECT
+		       ID id,
+		       USER_ID userId,
+		       APPLICATIONAGENCY_ID applicationagencyId
+        FROM ICLOUD_USER_APPLICATIONAGENCY
+        WHERE applicationagency_id = #{applicationagencyId,jdbcType=BIGINT}
+    </select>
+
 </mapper>   

@@ -17,5 +17,154 @@
             </if>
         </where>
     </select>
+    <!-- 查询 -->
+    <select id="findBySended" resultType="com.zhiyun.entity.IcloudApplicationagency">
+        <include refid="selectFieldSQL" />
+        FROM ICLOUD_APPLICATIONAGENCY
+        where
+        DELETED = 'F'
+        AND SENDED = 'F'
+    </select>
+    <select id="getUserCheckByparams" parameterType="java.util.Map" resultType="com.zhiyun.dto.AgencyUserCheckDto">
+        SELECT
+            ae.id as id,
+            ae.create_user_id as userId,
+            ae.`name` as companyName,
+            ae.property as property,
+            ae.legal_person as legalPerson,
+            ea.province as inProvince,
+            ea.city as inCity,
+            ae.type as `type`,
+            ae.enterprise_scale as enterpriseScale,
+            ae.zhengjingji_num as zhengjingjiNum,
+            ae.jingbianji_num as jingbianjiNum,
+            ae.qita_num as qitaNum,
+            ae.create_time as authDate,
+            ae.`status` as  `status`,
+            ae.site_image_share_url as imageUrl
+        FROM
+            icloud_applicationentry AS ae
+            LEFT JOIN icloud_enterpriseauth AS ea ON ae.create_user_id = ea.user_id
+        <where>
+            ae.deleted = 'F'
+            AND ea.id != ''
+            <if test="provinceAndType != null">
+                and (
+                <foreach collection="provinceAndType" separator="or" item="item" index="index">
+                    (ea.province LIKE CONCAT(#{item.province},'%') and ae.type = #{item.type})
+                </foreach>
+                )
+            </if>
+            <if test="inProvince != null" >
+                AND ea.province like CONCAT('%',#{inProvince},'%')
+            </if>
+            <if test="inCity != null" >
+                AND ea.city like CONCAT('%',#{inCity},'%')
+            </if>
+            <if test="companyNature != null" >
+                AND  ae.property in
+                <foreach collection="companyNature" item="companyNatureId" index="index"
+                         open="(" close=")" separator=",">
+                    #{companyNatureId}
+                </foreach>
+            </if>
+            <if test="companyModel != null" >
+                AND ae.enterprise_scale = #{companyModel}
+            </if>
+            <if test="zhengjingjiNum != null" >
+                AND ae.zhengjingji_num >= #{zhengjingjiNum}
+            </if>
+            <if test="jingbianjiNum != null" >
+                AND ae.jingbianji_num >= #{jingbianjiNum}
+            </if>
+            <if test="qitaNum != null" >
+                AND ae.qita_num >= #{qitaNum}
+            </if>
+            <if test="authType != null" >
+                AND ae.`status` = #{authType}
+            </if>
+            <if test=" authDateL != null and authDateH != null">
+              AND  (ae.create_time BETWEEN #{authDateL} AND #{authDateH})
+            </if>
+        </where>
+        ORDER BY
+            ae.create_time DESC,
+            ae.`status` ASC
+        <if test="pageNum != null and pageSize != null">
+            LIMIT #{pageNum}, #{pageSize}
+        </if>
+    </select>
+    <select id="getUserCheckByparamsCount" parameterType="java.util.Map" resultType="map">
+        SELECT
+        ae.id as id
+        FROM
+        icloud_applicationentry AS ae
+        LEFT JOIN icloud_enterpriseauth AS ea ON ae.create_user_id = ea.user_id
+        <where>
+            ae.deleted = 'F'
+            AND ea.id != ''
+            <if test="provinceAndType != null">
+                and (
+                <foreach collection="provinceAndType" separator="or" item="item" index="index">
+                    (ea.province LIKE CONCAT(#{item.province},'%') and ae.type = #{item.type})
+                </foreach>
+                )
+            </if>
+            <if test="inProvince != null" >
+                AND ea.province like CONCAT('%',#{inProvince},'%')
+            </if>
+            <if test="inCity != null" >
+                AND ea.city like CONCAT('%',#{inCity},'%')
+            </if>
+            <if test="companyNature != null" >
+                AND  ae.property in
+                <foreach collection="companyNature" item="companyNatureId" index="index"
+                         open="(" close=")" separator=",">
+                    #{companyNatureId}
+                </foreach>
+            </if>
+            <if test="companyModel != null" >
+                AND ae.enterprise_scale = #{companyModel}
+            </if>
+            <if test="zhengjingjiNum != null" >
+                AND ae.zhengjingji_num >= #{zhengjingjiNum}
+            </if>
+            <if test="jingbianjiNum != null" >
+                AND ae.jingbianji_num >= #{jingbianjiNum}
+            </if>
+            <if test="qitaNum != null" >
+                AND ae.qita_num >= #{qitaNum}
+            </if>
+            <if test="authType != null" >
+                AND ae.`status` = #{authType}
+            </if>
+            <if test=" authDateL != null and authDateH != null">
+                AND  (ae.create_time BETWEEN #{authDateL} AND #{authDateH})
+            </if>
+        </where>
+    </select>
+
+    <update id="agencyApprove" parameterType="com.zhiyun.entity.IcloudApplicationentry" >
+            UPDATE ICLOUD_APPLICATIONENTRY
+            <set>
+                <if test="status != null">
+                    STATUS = #{status,jdbcType=INTEGER},
+                </if>
+                <if test="approvalOpinion">
+                    approval_opinion = #{approvalOpinion,jdbcType=VARCHAR}
+                </if>
+            </set>
+            WHERE ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateSended" parameterType="int">
+        UPDATE ICLOUD_APPLICATIONAGENCY
+        <set>
+            SENDED = 'T',
+            UPDATED = 'F'
+        </set>
+        WHERE ID = #{id,jdbcType=BIGINT}
+        and DELETED = 'F'
+    </update>
 
 </mapper>   

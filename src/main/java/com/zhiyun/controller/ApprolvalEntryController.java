@@ -4,37 +4,29 @@
  */
 package com.zhiyun.controller;
 
-import java.util.Date;
-import java.util.List;
-
-import javax.annotation.Resource;
-
 import com.alibaba.fastjson.JSON;
-import com.zhiyun.constants.AuditState;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
-
 import com.alibaba.fastjson.JSONObject;
 import com.zhiyun.base.dto.BaseResult;
 import com.zhiyun.base.exception.BusinessException;
 import com.zhiyun.base.util.CommonUtils;
+import com.zhiyun.constants.AuditState;
 import com.zhiyun.constants.EnterpriseConstant;
-import com.zhiyun.entity.IcloudApplicationentry;
-import com.zhiyun.entity.IcloudEnterpriseauth;
-import com.zhiyun.entity.IcloudMarketentry;
-import com.zhiyun.entity.IcloudMarketentrydatashareurl;
-import com.zhiyun.entity.IcloudPersonalauth;
+import com.zhiyun.entity.*;
 import com.zhiyun.internal.server.oc.approlval.service.ApprolvalInterface;
 import com.zhiyun.internal.server.oc.approlval.service.ApprolvalUpdateInterface;
 import com.zhiyun.internal.server.oc.entity.ApprolvalAuthentication;
 import com.zhiyun.internal.server.oc.entity.ApprolvalEntry;
 import com.zhiyun.internal.server.oc.entity.ApprolvalEntryMarket;
-import com.zhiyun.service.IcloudApplicationentryService;
-import com.zhiyun.service.IcloudEnterpriseauthService;
-import com.zhiyun.service.IcloudMarketentryService;
-import com.zhiyun.service.IcloudPersonalauthService;
+import com.zhiyun.internal.server.oc.entity.IcloudApplicationagency;
+import com.zhiyun.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 审核新增
@@ -61,6 +53,8 @@ public class ApprolvalEntryController {
     private IcloudPersonalauthService personalauthService;
     @Resource
     private ApprolvalUpdateInterface approlvalUpdateInterface;
+    @Resource
+	private IcloudApplicationagencyService applicationagencyService;
     /**
      * 入驻
      *
@@ -138,6 +132,81 @@ public class ApprolvalEntryController {
     		baseResult.setMessage(e.getMessage());
     	}
     }
+
+	/**
+	 * 代理
+	 *
+	 * @param: @return
+	 * @return: BaseResult<String>
+	 * @author: 祝天洋
+	 * @date: 2018-8-2 下午10:04:54
+	 */
+	@Scheduled(cron = "0 */1 * * * ?")
+	public void insertApprolvalAgency() {
+		BaseResult<IcloudApplicationagency> baseResult = new BaseResult<IcloudApplicationagency>();
+		try {
+			List<com.zhiyun.entity.IcloudApplicationagency> agencys = applicationagencyService.findBySended();
+			if (!CommonUtils.isEmpty(agencys)) {
+				for (com.zhiyun.entity.IcloudApplicationagency ic : agencys) {
+					IcloudApplicationagency app = new IcloudApplicationagency();
+					Long id = ic.getId();
+					Long userId = ic.getUserId();
+					/*IcloudPersonalauth icPerson = personalauthService
+							.findByUserId(userId);
+					IcloudEnterpriseauth icEnter = enterpriseauthService
+							.findByUserId(userId);
+					if (icPerson != null) {
+						app.setUserName(icPerson.getName());
+						app.setInCity(icPerson.getCity());
+						app.setInDistrict(icPerson.getDistrict());
+						app.setInProvince(icPerson.getProvince());
+					}
+					if (icEnter != null) {
+						app.setInCity(icEnter.getCity());
+						app.setInDistrict(icEnter.getDistrict());
+						app.setInProvince(icEnter.getProvince());
+					}*/
+					app.setId(id);
+					app.setUserId(userId);
+					app.setAgencyArea(ic.getAgencyArea());
+					app.setAgencyLevel(ic.getAgencyLevel());
+					app.setAgencyType(ic.getAgencyType());
+					app.setName(ic.getName());
+					app.setQualityImageShareUrl(ic.getQualityImageShareUrl());
+					app.setStatus(ic.getStatus());
+					app.setCreateTime(ic.getCreateTime());
+					app.setModifyBy(ic.getModifyBy());
+					app.setCompanyId(ic.getOrganizationId());
+					app.setAuthDate(new Date());
+
+					// 判断是新增还是更新的信息
+
+					System.out.println(JSON.toJSONString(app));
+
+					String updated = ic.getUpdated();
+					if ("F".equals(updated)) {
+						baseResult = approlvalInterface.insertIcloudApplicationagency(app);
+					} else if ("T".equals(updated)) {
+						baseResult = approlvalUpdateInterface.updateIcloudApplicationagency(app);
+					}
+					if (baseResult.getResult()) {
+						applicationagencyService.updateSended(id);
+					}
+					if (!baseResult.getResult()) {
+						throw new BusinessException(baseResult.getMessage());
+					}
+				}
+			}
+		} catch (BusinessException be) {
+			baseResult.setResult(false);
+			baseResult.setMessage(be.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.debug(e.getMessage());
+			baseResult.setResult(false);
+			baseResult.setMessage(e.getMessage());
+		}
+	}
 
     /**
      * 个人认证

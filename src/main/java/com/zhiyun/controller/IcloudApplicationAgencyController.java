@@ -17,7 +17,10 @@ import com.zhiyun.constants.AuditState;
 import com.zhiyun.constants.EnterpriseConstant;
 import com.zhiyun.dto.ApplicationAgencyDto;
 import com.zhiyun.entity.IcloudApplicationagency;
-import com.zhiyun.service.*;
+import com.zhiyun.service.IcloudApplicationagencyService;
+import com.zhiyun.service.IcloudEnterpriseauthService;
+import com.zhiyun.service.IcloudPersonalauthService;
+import com.zhiyun.service.IcloudUserApplicationentryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -178,7 +181,7 @@ public class IcloudApplicationAgencyController extends BaseController {
 					applicationAgencyDto.setName(item.getName());
 					applicationAgencyDto.setAgencyType(item.getAgencyType());
 					try {
-						applicationAgencyDto.setAgencyTypeDesc(EnterpriseConstant.BusinessType.getBusinessType(Integer.parseInt(item.getAgencyType())));
+						applicationAgencyDto.setAgencyTypeDesc(EnterpriseConstant.Industry.getIndustryDesc(item.getAgencyType()));
 					}catch (Exception e){
 						applicationAgencyDto.setAgencyTypeDesc("未知");
 					}
@@ -294,11 +297,11 @@ public class IcloudApplicationAgencyController extends BaseController {
 		JSONArray businessTypes = new JSONArray();
 		try {
 			baseResult.setResult(true);
-			EnterpriseConstant.BusinessType[] values = EnterpriseConstant.BusinessType.values();
-			for (EnterpriseConstant.BusinessType businessType : values) {
+			EnterpriseConstant.Industry[] values = EnterpriseConstant.Industry.values();
+			for (EnterpriseConstant.Industry businessType : values) {
 				JSONObject pObj = new JSONObject();
-				pObj.put("id", businessType.getId());
-				pObj.put("name", businessType.getDesc());
+				pObj.put("id", businessType.id);
+				pObj.put("name", businessType.label);
 				businessTypes.add(pObj);
 			}
 		} catch (BusinessException be) {

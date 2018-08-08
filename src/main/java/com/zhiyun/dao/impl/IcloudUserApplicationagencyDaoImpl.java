@@ -5,12 +5,13 @@
 
 package com.zhiyun.dao.impl;
 
-import com.zhiyun.base.model.Params;
-import org.springframework.stereotype.Repository;
-
 import com.zhiyun.base.dao.BaseDaoImpl;
+import com.zhiyun.base.model.Params;
 import com.zhiyun.dao.IcloudUserApplicationagencyDao;
 import com.zhiyun.entity.IcloudUserApplicationagency;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * IcloudUserApplicationagencyDao接口实现类
@@ -28,5 +29,10 @@ public class IcloudUserApplicationagencyDaoImpl extends BaseDaoImpl<IcloudUserAp
         params.add("fromApplicationAgencyId",fromApplicationAgenctId);
         params.add("toApplicationAgencyId",toApplicationAgencyId);
         this.update(getMethodName(), params);
+    }
+
+    @Override
+    public List<IcloudUserApplicationagency> listByApplicationagencyId(Long applicationagencyId) {
+        return this.selectList(getMethodName(),applicationagencyId);
     }
 }

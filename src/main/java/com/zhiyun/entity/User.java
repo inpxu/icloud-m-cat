@@ -131,9 +131,12 @@ public class User extends BaseEntity<Long> {
     private boolean agreedtotermsofuse;
     //
     private boolean emailaddressverified;
+
     //
     @Max(value = 99999999999L, message = "字段过长")
     private Integer status;
+
+    private IcloudApplicationagency icloudApplicationagency;
 
     private IcloudApplicationentry icloudApplicationentry;
 
@@ -734,6 +737,13 @@ public class User extends BaseEntity<Long> {
         return this.status;
     }
 
+    public IcloudApplicationagency getIcloudApplicationagency() {
+        return icloudApplicationagency;
+    }
+
+    public void setIcloudApplicationagency(IcloudApplicationagency icloudApplicationagency) {
+        this.icloudApplicationagency = icloudApplicationagency;
+    }
     /**
      *
      */
