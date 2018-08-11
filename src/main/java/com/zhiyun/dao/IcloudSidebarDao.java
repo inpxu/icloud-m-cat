@@ -9,4 +9,6 @@ public interface IcloudSidebarDao extends BaseDao<IcloudSidebar, Long> {
 
 	List<IcloudSidebar> listSidebarByRoleId(long roleId);
 
+	List<IcloudSidebar> listByRoleIds(List<Long> roleIdList);
+
 }

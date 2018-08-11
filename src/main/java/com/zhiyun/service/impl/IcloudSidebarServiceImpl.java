@@ -1,24 +1,33 @@
 
 package com.zhiyun.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.zhiyun.base.dao.BaseDao;
 import com.zhiyun.base.service.BaseServiceImpl;
 import com.zhiyun.constants.AuditState;
 import com.zhiyun.constants.RoleIdConstant;
+import com.zhiyun.context.OnlineUser;
 import com.zhiyun.dao.IcloudSidebarDao;
 import com.zhiyun.dao.UserDao;
 import com.zhiyun.dto.IcloudSidebarDto;
 import com.zhiyun.dto.IcloudSidebarDto.SideBar;
 import com.zhiyun.entity.IcloudSidebar;
 import com.zhiyun.entity.User;
-
+import com.zhiyun.internal.server.icloud.constant.ErrorCode;
+import com.zhiyun.liferay.impl.RoleInvoker;
+import com.zhiyun.liferay.model.LiferayInvokerResult;
 import com.zhiyun.service.IcloudRoleService;
 import com.zhiyun.service.IcloudSidebarService;
 
@@ -33,6 +42,9 @@ public class IcloudSidebarServiceImpl extends BaseServiceImpl<IcloudSidebar, Lon
 
 	@Resource
 	private UserDao userDao;
+	
+	@Resource
+	private RoleInvoker roleInvoker;
 
 	@Override
 	protected BaseDao<IcloudSidebar, Long> getBaseDao() {
@@ -95,6 +107,58 @@ public class IcloudSidebarServiceImpl extends BaseServiceImpl<IcloudSidebar, Lon
 			}
 
 		}
+
+		return icloudSidebarDto;
+	}
+	
+	
+	@Override
+	public IcloudSidebarDto listByUser(OnlineUser user) {
+
+		LiferayInvokerResult result =roleInvoker.getUserRoles(user.getId());
+		List<Long> roleIdList = new ArrayList<Long>();
+		if(result.getResult() != null){
+			JSONArray roleArr = (JSONArray) result.getResult();
+			 for (Iterator iter = roleArr.iterator(); iter.hasNext();) { 
+		          JSONObject roleJson = (JSONObject) iter.next(); 
+		          roleIdList.add(roleJson.getLongValue("roleId"));
+			 } 
+        }
+		List<IcloudSidebar> icloudSidebarList =  icloudSidebarDao.listByRoleIds(roleIdList);
+
+		Map<Long,List<IcloudSidebar>> parentIdRefMap = new HashMap<Long,List<IcloudSidebar>>();
+		for(IcloudSidebar sideBar: icloudSidebarList) {
+			if(parentIdRefMap.containsKey(sideBar.getParentid())){
+				parentIdRefMap.get(sideBar.getParentid()).add(sideBar);
+			}else {
+				List<IcloudSidebar> tempList = new ArrayList<IcloudSidebar>();
+				tempList.add(sideBar);
+				parentIdRefMap.put(sideBar.getParentid(), tempList);
+			}
+		}
+		
+		//获取 parentId =0 
+		IcloudSidebarDto icloudSidebarDto = new IcloudSidebarDto();
+		
+		List<IcloudSidebar> list = parentIdRefMap.get(0L);
+		for(IcloudSidebar bar : list) {
+			List<IcloudSidebar> children = parentIdRefMap.get(bar.getId());
+			IcloudSidebarDto.SideBar sideBar = new IcloudSidebarDto.SideBar();
+			
+			for(IcloudSidebar child: children) {
+				IcloudSidebarDto.Item item = new IcloudSidebarDto.Item();
+				item.setId(child.getId());
+				item.setLink(child.getUrl());
+				item.setName(child.getName());
+				sideBar.getChildrens().add(item);
+			}
+			
+			sideBar.setTitle(bar.getName());
+			sideBar.setId(bar.getId());
+			icloudSidebarDto.getNavList().add(sideBar);
+		}
+
+	
 
 		return icloudSidebarDto;
 	}

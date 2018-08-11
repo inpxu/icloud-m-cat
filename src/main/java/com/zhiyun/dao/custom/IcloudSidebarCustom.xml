@@ -15,5 +15,21 @@
          WHERE r.ID = #{roleId,jdbcType=INTEGER}
          order by s.SEQUENCE asc
     </select>
-
+	
+	<!-- 查询 -->
+    <select id="listByRoleIds" parameterType="map" resultType="com.zhiyun.entity.IcloudSidebar">
+       SELECT 
+     		id,
+            name,
+            url,
+            sequence,
+           	parent_id parentId
+         FROM icloud_sidebar
+			where  
+				<foreach collection="roleIdList" index="index" item="roleId" open="(" separator="OR" close=")">
+		             locate(#{roleId}, role_ids)>0 
+		        </foreach>
+				order by parent_id,sequence
+    </select>
 </mapper>   
+

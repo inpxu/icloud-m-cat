@@ -36,7 +36,7 @@ import java.util.List;
 
 /**
  * 企业认证controller
- *
+ * 认证
  * @author 邓艺
  * @version v1.0
  * @date 2018-06-08 09:34

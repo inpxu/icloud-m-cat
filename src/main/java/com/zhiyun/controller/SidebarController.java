@@ -17,6 +17,7 @@ import com.zhiyun.base.controller.BaseController;
 import com.zhiyun.base.dto.BaseResult;
 import com.zhiyun.base.exception.BusinessException;
 import com.zhiyun.client.UserHolder;
+import com.zhiyun.context.OnlineUser;
 import com.zhiyun.dto.IcloudSidebarDto;
 import com.zhiyun.service.IcloudSidebarService;
 
@@ -53,7 +54,45 @@ public class SidebarController extends BaseController {
 		BaseResult<IcloudSidebarDto> baseResult = new BaseResult<>();
 		try {
 			String screenName = UserHolder.getUser().getAccountName();
+			
+			
 			IcloudSidebarDto icloudSidebarDto = icloudSidebarService.listSidebarByScreenName(screenName);
+
+			baseResult.setResult(true);
+			baseResult.setModel(icloudSidebarDto);
+		} catch (BusinessException be) {
+			LOGGER.debug("业务异常" + be);
+			baseResult.setResult(false);
+			baseResult.setMessage(be.getMessage());
+		} catch (Exception e) {
+			LOGGER.debug("系统异常" + e);
+			baseResult.setResult(false);
+			baseResult.setMessage("系统异常");
+		}
+		return baseResult;
+
+	}
+	
+	
+	/**
+	 * 
+	 * @Title: getSidebar   
+	 * @Description: 获取侧边导航栏 
+	 * @author: 孙云涛  
+	 * @param: @return      
+	 * @return: Object      
+	 * @throws
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/get1", method = { RequestMethod.GET, RequestMethod.POST })
+	public Object getSidebarList() {
+
+		BaseResult<IcloudSidebarDto> baseResult = new BaseResult<>();
+		try {
+			OnlineUser user = UserHolder.getUser();
+			
+			
+			IcloudSidebarDto icloudSidebarDto = icloudSidebarService.listByUser(user);
 
 			baseResult.setResult(true);
 			baseResult.setModel(icloudSidebarDto);

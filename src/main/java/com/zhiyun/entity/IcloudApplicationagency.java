@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
 
 /**
  * 实体类
- *
+ *代理
  * @author auto
  * @version v1.0
  * @date
