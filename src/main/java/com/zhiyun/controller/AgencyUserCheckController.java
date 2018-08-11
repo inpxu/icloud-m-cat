@@ -12,6 +12,8 @@ import com.zhiyun.dto.AgencyUserCheckDto;
 import com.zhiyun.dto.AgencyUserCheckSearchDto;
 import com.zhiyun.entity.IcloudApplicationagency;
 import com.zhiyun.internal.server.icloud.service.ApplicationEntryInterface;
+import com.zhiyun.internal.server.oc.approlval.service.ApprolvalUpdateInterface;
+import com.zhiyun.internal.server.oc.entity.ApprolvalEntry;
 import com.zhiyun.service.IcloudApplicationagencyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -40,6 +43,9 @@ public class AgencyUserCheckController {
 
     @Autowired
     private ApplicationEntryInterface applicationEntryInterface;
+
+    @Resource
+    private ApprolvalUpdateInterface approlvalUpdateInterface;
 
     @ResponseBody
     @RequestMapping(value = "/get/{pageNum}/{pageSize}", method = { RequestMethod.GET, RequestMethod.POST })
@@ -237,6 +243,13 @@ public class AgencyUserCheckController {
             }
             baseResult.setResult(true);
             BaseResult<String> stringBaseResult = applicationEntryInterface.updateStatus(id, checkResult, opinion);
+            ApprolvalEntry app = new ApprolvalEntry();
+
+            app.setId(id);
+            app.setAuthType(checkResult+"");
+            app.setRemark(opinion);
+            approlvalUpdateInterface.updateApprolvalEntry(app);
+
             baseResult.setModel(stringBaseResult);
         } catch (BusinessException be) {
             LOGGER.debug("业务异常" + be);
