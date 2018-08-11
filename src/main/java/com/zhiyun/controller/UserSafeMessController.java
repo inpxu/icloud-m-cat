@@ -33,7 +33,7 @@ import com.zhiyun.util.HttpUtil;
 import com.zhiyun.util.MessageCodeUtil;
 
 /**
- * 客户安全信息
+ * 安全设置
  * @author 徐飞
  * @version v1.0
  * @date 2018-6-11下午2:13:20

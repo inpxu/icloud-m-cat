@@ -29,7 +29,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 审核新增
+ * 入驻审核新增
  * 
  * @author 徐飞
  * @version v1.0

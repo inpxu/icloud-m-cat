@@ -32,7 +32,7 @@ import javax.validation.Valid;
 
 /**
  * ApplicationEntryController
- *
+ *  入驻
  * @author 孙云涛
  * @version v1.0
  * @date 2018年6月9日 下午1:04:32 

@@ -5,6 +5,7 @@ import com.zhiyun.base.entity.BaseEntity;
 
 /**
  * 实体对象：
+ * 入市图片
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class IcloudMarketentrydatashareurl extends BaseEntity<Long> {
