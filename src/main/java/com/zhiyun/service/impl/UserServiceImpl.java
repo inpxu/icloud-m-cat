@@ -4,16 +4,21 @@
  */
 
 package com.zhiyun.service.impl;
+import java.util.*;
+
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
-import com.zhiyun.dao.IcloudApplicationentryDao;
+import com.zhiyun.constants.RoleEnum;
+import com.zhiyun.dao.*;
+import com.zhiyun.dto.*;
+import com.zhiyun.entity.*;
 import com.zhiyun.internal.server.auth.service.InterfaceForUser;
 import com.zhiyun.liferay.util.ScreenNameConventer;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,19 +28,14 @@ import com.zhiyun.base.service.BaseServiceImpl;
 import com.zhiyun.client.UserHolder;
 import com.zhiyun.constants.AuditState;
 import com.zhiyun.constants.AuthType;
-import com.zhiyun.dao.IcloudEnterpriseauthDao;
-import com.zhiyun.dao.IcloudPersonalauthDao;
-import com.zhiyun.dao.UserDao;
-import com.zhiyun.dto.UserDto;
-import com.zhiyun.dto.UserStateDto;
-import com.zhiyun.entity.IcloudApplicationentry;
-import com.zhiyun.entity.User;
 import com.zhiyun.liferay.impl.UserInvoker;
 import com.zhiyun.liferay.model.FriendlyUrl;
 import com.zhiyun.liferay.model.LiferayInvokerResult;
 import com.zhiyun.liferay.model.UpdatePassword;
 import com.zhiyun.service.IcloudApplicationentryService;
 import com.zhiyun.service.UserService;
+
+
 
 /**
  * Service接口实现类。
@@ -75,6 +75,9 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 
 	@Resource
 	private UserInvoker userInvoker;
+
+	@Resource
+    private RoleDao roleDao;
 
 	@Override
 	protected BaseDao<User, Long> getBaseDao() {
@@ -219,6 +222,125 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 		}
 
 	}
+
+    @Override
+    public BaseUserInfoDto getBaseUserInfoDto(Long userId) {
+
+	    BaseUserInfoDto baseUserInfoDto = new BaseUserInfoDto();
+
+        IcloudPersonalauth icloudPersonalauth = personalauthDao.findByUserId(userId);
+        IcloudEnterpriseauth icloudEnterpriseauth = enterpriseauthDao.findByUserId(userId);
+
+        AccountDto accountDto = getAccountDto(userId,icloudPersonalauth,icloudEnterpriseauth);
+        PersonalAuthDto personalAuthDto = getPersonalAuthDto(icloudPersonalauth);
+        EnterpriseAuthDto enterpriseAuthDto = getEnterpriseAuthDto(icloudEnterpriseauth);
+        LegalPersonDto legalPersonDto = getLegalPersonDto(icloudEnterpriseauth);
+
+        baseUserInfoDto.setAccount(accountDto);
+        baseUserInfoDto.setPersonalAuth(personalAuthDto);
+        baseUserInfoDto.setEnterpriseAuth(enterpriseAuthDto);
+        baseUserInfoDto.setLegalPerson(legalPersonDto);
+
+        return baseUserInfoDto;
+    }
+
+    public AccountDto getAccountDto(Long userId , IcloudPersonalauth icloudPersonalauth,IcloudEnterpriseauth icloudEnterpriseauth){
+
+	    AccountDto accountDto = new AccountDto();
+
+        if(icloudPersonalauth != null ) {
+            accountDto.setAuthType(AuthType.PERSONAL_AUTHORIZED_TYPE);
+            accountDto.setAuthState(icloudPersonalauth.getStatus());
+        }else if(icloudEnterpriseauth != null ){
+            accountDto.setAuthType(AuthType.ENTERPRISE_AUTHORIZED_TYPE);
+            accountDto.setAuthState(icloudEnterpriseauth.getStatus());
+        }else {
+            accountDto.setAuthType(AuthType.UN_AUTHORIZED_TYPE);
+            accountDto.setAuthState(AuditState.UNDOAUDIT);
+        }
+
+        User user = userDao.findByUserId(userId);
+
+        accountDto.setAvatar(user.getAvatar());
+        accountDto.setEmailAddress(user.getEmailaddress());
+        accountDto.setPwdRank(user.getPwdrank());
+        accountDto.setUserId(userId);
+        accountDto.setUsername(user.getLastname()+user.getFirstname());
+        accountDto.setPhone(ScreenNameConventer.screenNameMinusP(user.getScreenname()));
+
+        List<Role> roles = roleDao.findByUserId(userId);
+        if(CollectionUtils.isNotEmpty(roles)){
+            accountDto.setRoleNames(roles.stream().filter(role -> {
+                return RoleEnum.traslateRoleName(role.getName()) != null;
+            }).map(role -> {
+                return RoleEnum.traslateRoleName(role.getName());
+            }).collect(Collectors.toList()));
+        }
+
+	    return accountDto;
+    }
+
+    public PersonalAuthDto getPersonalAuthDto(IcloudPersonalauth icloudPersonalauth){
+
+        PersonalAuthDto personalAuthDto = null;
+
+        if(icloudPersonalauth != null ) {
+            personalAuthDto = new PersonalAuthDto();
+
+            personalAuthDto.setUpdated(icloudPersonalauth.getUpdated());
+            personalAuthDto.setApprovalOpinion(icloudPersonalauth.getApprovalOpinion());
+            personalAuthDto.setId(icloudPersonalauth.getId());
+            personalAuthDto.setUserId(icloudPersonalauth.getUserId());
+            personalAuthDto.setName(icloudPersonalauth.getName());
+            personalAuthDto.setCertificateType(icloudPersonalauth.getCertificateType());
+            personalAuthDto.setCertificateTypeDesc(
+                    icloudPersonalauth.getCertificateType() == 0 ? "身份证" :
+                            (icloudPersonalauth.getCertificateType() == 1 ? "护照" : "港澳台通行证"));
+            personalAuthDto.setCertificate(icloudPersonalauth.getCertificate());
+            personalAuthDto.setSex(icloudPersonalauth.getSex());
+            personalAuthDto.setSexDesc(icloudPersonalauth.getSex() == 0 ? "女" : "男");
+            personalAuthDto.setProvince(icloudPersonalauth.getProvince());
+            personalAuthDto.setCity(icloudPersonalauth.getCity());
+            personalAuthDto.setDistrict(icloudPersonalauth.getDistrict());
+            personalAuthDto.setDetailedAddress(icloudPersonalauth.getDetailedAddress());
+            personalAuthDto.setCertificatePositiveShareUrl(icloudPersonalauth.getCertificatePositiveShareUrl());
+            personalAuthDto.setCertificateNegativeShareUrl(icloudPersonalauth.getCertificateNegativeShareUrl());
+            personalAuthDto.setStatus(icloudPersonalauth.getStatus());
+
+        }
+
+	    return personalAuthDto;
+    }
+
+    public EnterpriseAuthDto getEnterpriseAuthDto(IcloudEnterpriseauth icloudEnterpriseauth){
+
+        EnterpriseAuthDto enterpriseAuthDto = null;
+
+        if(icloudEnterpriseauth != null ){
+            enterpriseAuthDto = new EnterpriseAuthDto();
+            BeanUtils.copyProperties(icloudEnterpriseauth,enterpriseAuthDto);
+        }
+
+	    return enterpriseAuthDto;
+    }
+
+    public LegalPersonDto getLegalPersonDto(IcloudEnterpriseauth icloudEnterpriseauth){
+
+        LegalPersonDto legalPersonDto = null;
+
+        if(icloudEnterpriseauth != null ) {
+            legalPersonDto = new LegalPersonDto();
+
+            legalPersonDto.setUserId(icloudEnterpriseauth.getUserId());
+            legalPersonDto.setName(icloudEnterpriseauth.getName());
+            legalPersonDto.setIdentityCard(icloudEnterpriseauth.getLegalPersonIdentityCard());
+            legalPersonDto.setCertificatePositiveShareUrl(icloudEnterpriseauth.getCertificatePositiveShareUrl());
+            legalPersonDto.setCertificateNegativeShareUrl(icloudEnterpriseauth.getCertificateNegativeShareUrl());
+
+        }
+
+        return legalPersonDto;
+    }
 
 
 }

@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.RoleDaoImpl">
+
+	<!-- 插入实体 -->
+	<insert id="insert" parameterType="com.zhiyun.entity.Role">
+		INSERT INTO ROLE_ (
+		   	MVCCVERSION,
+		   	UUID_,
+		   	ROLEID,
+		   	COMPANYID,
+		   	USERID,
+		   	USERNAME,
+		   	CREATEDATE,
+		   	MODIFIEDDATE,
+		   	CLASSNAMEID,
+		   	CLASSPK,
+		   	NAME,
+		   	TITLE,
+		   	DESCRIPTION,
+		   	TYPE_,
+		   	SUBTYPE
+		) VALUES (
+		   	#{mvccversion,jdbcType=BIGINT},
+		   	#{uuid,jdbcType=VARCHAR},
+		   	#{roleid,jdbcType=BIGINT},
+		   	#{companyid,jdbcType=BIGINT},
+		   	#{userid,jdbcType=BIGINT},
+		   	#{username,jdbcType=VARCHAR},
+		   	#{createdate,jdbcType=TIMESTAMP},
+		   	#{modifieddate,jdbcType=TIMESTAMP},
+		   	#{classnameid,jdbcType=BIGINT},
+		   	#{classpk,jdbcType=BIGINT},
+		   	#{name,jdbcType=VARCHAR},
+		   	#{title,jdbcType=LONGTEXT},
+		   	#{description,jdbcType=LONGTEXT},
+		   	#{type,jdbcType=INTEGER},
+		   	#{subtype,jdbcType=VARCHAR}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_ROLE_.nextval as id FROM dual
+		</selectKey>
+	</insert>
+
+	<!-- 更新实体 -->
+	<update id="update" parameterType="com.zhiyun.entity.Role">
+		UPDATE ROLE_
+		<set>
+			<if test="mvccversion != null">
+				MVCCVERSION = #{mvccversion,jdbcType=BIGINT},
+			</if>
+			<if test="uuid != null">
+				UUID_ = #{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="roleid != null">
+				ROLEID = #{roleid,jdbcType=BIGINT},
+			</if>
+			<if test="companyid != null">
+				COMPANYID = #{companyid,jdbcType=BIGINT},
+			</if>
+			<if test="userid != null">
+				USERID = #{userid,jdbcType=BIGINT},
+			</if>
+			<if test="username != null">
+				USERNAME = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="createdate != null">
+				CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifieddate != null">
+				MODIFIEDDATE = #{modifieddate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="classnameid != null">
+				CLASSNAMEID = #{classnameid,jdbcType=BIGINT},
+			</if>
+			<if test="classpk != null">
+				CLASSPK = #{classpk,jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				TITLE = #{title,jdbcType=LONGTEXT},
+			</if>
+			<if test="description != null">
+				DESCRIPTION = #{description,jdbcType=LONGTEXT},
+			</if>
+			<if test="type != null">
+				TYPE_ = #{type,jdbcType=INTEGER},
+			</if>
+			<if test="subtype != null">
+				SUBTYPE = #{subtype,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 更新实体 -->
+	<update id="updateFields" parameterType="com.zhiyun.entity.Role">
+		UPDATE ROLE_
+		<set>
+			MVCCVERSION = #{mvccversion,jdbcType=BIGINT},
+			UUID_ = #{uuid,jdbcType=VARCHAR},
+			ROLEID = #{roleid,jdbcType=BIGINT},
+			COMPANYID = #{companyid,jdbcType=BIGINT},
+			USERID = #{userid,jdbcType=BIGINT},
+			USERNAME = #{username,jdbcType=VARCHAR},
+			CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+			MODIFIEDDATE = #{modifieddate,jdbcType=TIMESTAMP},
+			CLASSNAMEID = #{classnameid,jdbcType=BIGINT},
+			CLASSPK = #{classpk,jdbcType=BIGINT},
+			NAME = #{name,jdbcType=VARCHAR},
+			TITLE = #{title,jdbcType=LONGTEXT},
+			DESCRIPTION = #{description,jdbcType=LONGTEXT},
+			TYPE_ = #{type,jdbcType=INTEGER},
+			SUBTYPE = #{subtype,jdbcType=VARCHAR},
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 删除实体 -->
+	<update id="delete" parameterType="com.zhiyun.entity.Role">
+		DELETE FROM ROLE_ WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 查询字段 -->
+	<sql id="selectFieldSQL">
+		SELECT 
+		       MVCCVERSION mvccversion,
+		       UUID_ uuid,
+		       ROLEID roleid,
+		       COMPANYID companyid,
+		       USERID userid,
+		       USERNAME username,
+		       CREATEDATE createdate,
+		       MODIFIEDDATE modifieddate,
+		       CLASSNAMEID classnameid,
+		       CLASSPK classpk,
+		       NAME name,
+		       TITLE title,
+		       DESCRIPTION description,
+		       TYPE_ type,
+		       SUBTYPE subtype
+	</sql>
+
+	<!-- 查询 -->
+	<select id="get" parameterType="map" resultType="com.zhiyun.entity.Role">
+		<include refid="selectFieldSQL" />
+		  FROM ROLE_
+		 WHERE ID = #{id,jdbcType=INTEGER}
+	</select>
+
+	<!-- 查询 -->
+	<select id="find" parameterType="com.zhiyun.entity.Role" resultType="com.zhiyun.entity.Role">
+		<include refid="selectFieldSQL" />
+		  FROM ROLE_
+		<where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="mvccversion != null">
+				AND MVCCVERSION = #{mvccversion,jdbcType=BIGINT}
+			</if>
+			<if test="uuid != null and uuid != ''">
+				AND UUID_ = #{uuid,jdbcType=VARCHAR}
+			</if>
+			<if test="roleid != null">
+				AND ROLEID = #{roleid,jdbcType=BIGINT}
+			</if>
+			<if test="companyid != null">
+				AND COMPANYID = #{companyid,jdbcType=BIGINT}
+			</if>
+			<if test="userid != null">
+				AND USERID = #{userid,jdbcType=BIGINT}
+			</if>
+			<if test="username != null and username != ''">
+				AND USERNAME = #{username,jdbcType=VARCHAR}
+			</if>
+			<if test="createdate != null">
+				AND CREATEDATE = #{createdate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="modifieddate != null">
+				AND MODIFIEDDATE = #{modifieddate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="classnameid != null">
+				AND CLASSNAMEID = #{classnameid,jdbcType=BIGINT}
+			</if>
+			<if test="classpk != null">
+				AND CLASSPK = #{classpk,jdbcType=BIGINT}
+			</if>
+			<if test="name != null and name != ''">
+				AND NAME = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="title != null and title != ''">
+				AND TITLE = #{title,jdbcType=LONGTEXT}
+			</if>
+			<if test="description != null and description != ''">
+				AND DESCRIPTION = #{description,jdbcType=LONGTEXT}
+			</if>
+			<if test="type != null">
+				AND TYPE_ = #{type,jdbcType=INTEGER}
+			</if>
+			<if test="subtype != null and subtype != ''">
+				AND SUBTYPE = #{subtype,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询所有 -->
+	<select id="findAll" parameterType="map" resultType="com.zhiyun.entity.Role">
+		<include refid="selectFieldSQL" />
+		  FROM ROLE_
+	</select>
+
+	<!-- 分页查询（条件） -->
+	<sql id="page_condition">
+		<where>
+				<if test="entity.mvccversion != null">
+					AND MVCCVERSION = #{entity.mvccversion,jdbcType=BIGINT}
+				</if>
+				<if test="entity.uuid != null and entity.uuid != ''">
+					AND UUID_ = #{entity.uuid,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.roleid != null">
+					AND ROLEID = #{entity.roleid,jdbcType=BIGINT}
+				</if>
+				<if test="entity.companyid != null">
+					AND COMPANYID = #{entity.companyid,jdbcType=BIGINT}
+				</if>
+				<if test="entity.userid != null">
+					AND USERID = #{entity.userid,jdbcType=BIGINT}
+				</if>
+				<if test="entity.username != null and entity.username != ''">
+					AND USERNAME = #{entity.username,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.createdate != null">
+					AND CREATEDATE = #{entity.createdate,jdbcType=TIMESTAMP}
+				</if>
+				<if test="entity.modifieddate != null">
+					AND MODIFIEDDATE = #{entity.modifieddate,jdbcType=TIMESTAMP}
+				</if>
+				<if test="entity.classnameid != null">
+					AND CLASSNAMEID = #{entity.classnameid,jdbcType=BIGINT}
+				</if>
+				<if test="entity.classpk != null">
+					AND CLASSPK = #{entity.classpk,jdbcType=BIGINT}
+				</if>
+				<if test="entity.name != null and entity.name != ''">
+					AND NAME = #{entity.name,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.title != null and entity.title != ''">
+					AND TITLE = #{entity.title,jdbcType=LONGTEXT}
+				</if>
+				<if test="entity.description != null and entity.description != ''">
+					AND DESCRIPTION = #{entity.description,jdbcType=LONGTEXT}
+				</if>
+				<if test="entity.type != null">
+					AND TYPE_ = #{entity.type,jdbcType=INTEGER}
+				</if>
+				<if test="entity.subtype != null and entity.subtype != ''">
+					AND SUBTYPE = #{entity.subtype,jdbcType=VARCHAR}
+				</if>
+		</where>
+	</sql>
+
+	<!-- 分页查询（计数） -->
+	<select id="page_count" parameterType="map" resultType="int">
+		SELECT count(*)
+		  FROM ROLE_
+		<include refid="page_condition" />
+	</select>
+
+	<!-- 分页查询（数据） -->
+	<select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.Role">
+		<include refid="mybatis.pageStartSQL" />
+		<include refid="selectFieldSQL" />
+		  FROM ROLE_
+		<include refid="page_condition" />
+		<include refid="mybatis.pageEndSQL" />
+	</select>
+	
+	<!-- Map查询所有 -->
+	<select id="findMapListAll" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM ROLE_
+	</select>
+	
+	<!-- Map条件查询 -->
+	<select id="findMapList" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM ROLE_
+		 <where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="mvccversion != null">
+				AND MVCCVERSION = #{mvccversion,jdbcType=BIGINT}
+			</if>
+			<if test="uuid != null and uuid != ''">
+				AND UUID_ = #{uuid,jdbcType=VARCHAR}
+			</if>
+			<if test="roleid != null">
+				AND ROLEID = #{roleid,jdbcType=BIGINT}
+			</if>
+			<if test="companyid != null">
+				AND COMPANYID = #{companyid,jdbcType=BIGINT}
+			</if>
+			<if test="userid != null">
+				AND USERID = #{userid,jdbcType=BIGINT}
+			</if>
+			<if test="username != null and username != ''">
+				AND USERNAME = #{username,jdbcType=VARCHAR}
+			</if>
+			<if test="createdate != null">
+				AND CREATEDATE = #{createdate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="modifieddate != null">
+				AND MODIFIEDDATE = #{modifieddate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="classnameid != null">
+				AND CLASSNAMEID = #{classnameid,jdbcType=BIGINT}
+			</if>
+			<if test="classpk != null">
+				AND CLASSPK = #{classpk,jdbcType=BIGINT}
+			</if>
+			<if test="name != null and name != ''">
+				AND NAME = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="title != null and title != ''">
+				AND TITLE = #{title,jdbcType=LONGTEXT}
+			</if>
+			<if test="description != null and description != ''">
+				AND DESCRIPTION = #{description,jdbcType=LONGTEXT}
+			</if>
+			<if test="type != null">
+				AND TYPE_ = #{type,jdbcType=INTEGER}
+			</if>
+			<if test="subtype != null and subtype != ''">
+				AND SUBTYPE = #{subtype,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 插入实体map -->
+	<insert id="mapInsert" parameterType="map">
+		INSERT INTO ROLE_ (
+		   	MVCCVERSION,
+		   	UUID_,
+		   	ROLEID,
+		   	COMPANYID,
+		   	USERID,
+		   	USERNAME,
+		   	CREATEDATE,
+		   	MODIFIEDDATE,
+		   	CLASSNAMEID,
+		   	CLASSPK,
+		   	NAME,
+		   	TITLE,
+		   	DESCRIPTION,
+		   	TYPE_,
+		   	SUBTYPE
+		) VALUES (
+		   	#{ mvccversion,jdbcType=BIGINT},
+		   	#{ uuid,jdbcType=VARCHAR},
+		   	#{ roleid,jdbcType=BIGINT},
+		   	#{ companyid,jdbcType=BIGINT},
+		   	#{ userid,jdbcType=BIGINT},
+		   	#{ username,jdbcType=VARCHAR},
+		   	#{ createdate,jdbcType=TIMESTAMP},
+		   	#{ modifieddate,jdbcType=TIMESTAMP},
+		   	#{ classnameid,jdbcType=BIGINT},
+		   	#{ classpk,jdbcType=BIGINT},
+		   	#{ name,jdbcType=VARCHAR},
+		   	#{ title,jdbcType=LONGTEXT},
+		   	#{ description,jdbcType=LONGTEXT},
+		   	#{ type,jdbcType=INTEGER},
+		   	#{ subtype,jdbcType=VARCHAR}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_ROLE_.nextval as id FROM dual
+		</selectKey>
+	</insert>
+	
+	<!-- 更新实体Map -->
+	<update id="mapUpdate" parameterType="map">
+		UPDATE ROLE_
+		<set>
+			<if test="mvccversion != null">
+				MVCCVERSION = #{mvccversion,jdbcType=BIGINT},
+			</if>
+			<if test="uuid != null">
+				UUID_ = #{uuid,jdbcType=VARCHAR},
+			</if>
+			<if test="roleid != null">
+				ROLEID = #{roleid,jdbcType=BIGINT},
+			</if>
+			<if test="companyid != null">
+				COMPANYID = #{companyid,jdbcType=BIGINT},
+			</if>
+			<if test="userid != null">
+				USERID = #{userid,jdbcType=BIGINT},
+			</if>
+			<if test="username != null">
+				USERNAME = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="createdate != null">
+				CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifieddate != null">
+				MODIFIEDDATE = #{modifieddate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="classnameid != null">
+				CLASSNAMEID = #{classnameid,jdbcType=BIGINT},
+			</if>
+			<if test="classpk != null">
+				CLASSPK = #{classpk,jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				TITLE = #{title,jdbcType=LONGTEXT},
+			</if>
+			<if test="description != null">
+				DESCRIPTION = #{description,jdbcType=LONGTEXT},
+			</if>
+			<if test="type != null">
+				TYPE_ = #{type,jdbcType=INTEGER},
+			</if>
+			<if test="subtype != null">
+				SUBTYPE = #{subtype,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper>   

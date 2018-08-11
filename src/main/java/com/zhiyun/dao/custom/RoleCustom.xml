@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.RoleDaoImpl">
+
+    <sql id="mySelectFieldSQL">
+		SELECT
+		       r.MVCCVERSION mvccversion,
+		       r.UUID_ uuid,
+		       r.ROLEID roleid,
+		       r.COMPANYID companyid,
+		       r.USERID userid,
+		       r.USERNAME username,
+		       r.CREATEDATE createdate,
+		       r.MODIFIEDDATE modifieddate,
+		       r.CLASSNAMEID classnameid,
+		       r.CLASSPK classpk,
+		       r.NAME name,
+		       r.TITLE title,
+		       r.DESCRIPTION description,
+		       r.TYPE_ type,
+		       r.SUBTYPE subtype
+	</sql>
+
+
+    <!-- 查询 -->
+    <select id="findByUserId" parameterType="map" resultType="com.zhiyun.entity.Role">
+        <include refid="mySelectFieldSQL" />
+        FROM ROLE_ r , USERS_ROLES ur
+        WHERE ur.roleId = r.roleId
+        <if test="userId != null">
+            AND ur.userId = #{userId,jdbcType=BIGINT}
+        </if>
+
+    </select>
+
+</mapper>   

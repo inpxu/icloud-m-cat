@@ -190,12 +190,13 @@
 		SELECT
 			userId userid,
 			password_ password,
-
 			screenName screenname,
 			emailAddress emailaddress,
 			firstName firstname,
 			lastName lastname,
-			emailAddressVerified emailaddressverified
+			emailAddressVerified emailaddressverified,
+			pwdRank pwdRank,
+			avatar avatar
 		  FROM USER_
 		 WHERE userid = #{userId,jdbcType=BIGINT}
 		 

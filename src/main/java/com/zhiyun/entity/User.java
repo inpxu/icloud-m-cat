@@ -136,6 +136,13 @@ public class User extends BaseEntity<Long> {
     @Max(value = 99999999999L, message = "字段过长")
     private Integer status;
 
+    // 密码等级
+    @Max(value=99999999999L,message="密码等级字段过长")
+    private Integer pwdrank;
+    // 头像
+    @Pattern(regexp="[\\s\\S]{0,255}", message="头像字段过长")
+    private String avatar;
+
     private IcloudApplicationagency icloudApplicationagency;
 
     private IcloudApplicationentry icloudApplicationentry;
@@ -781,6 +788,34 @@ public class User extends BaseEntity<Long> {
 
     public void setIcloudPersonalauth(IcloudPersonalauth icloudPersonalauth) {
         this.icloudPersonalauth = icloudPersonalauth;
+    }
+
+    /**
+     * 密码等级
+     */
+    public Integer getPwdrank() {
+        return this.pwdrank;
+    }
+
+    /**
+     * 密码等级
+     */
+    public void setPwdrank(Integer pwdrank) {
+        this.pwdrank = pwdrank;
+    }
+
+    /**
+     * 头像
+     */
+    public String getAvatar() {
+        return this.avatar;
+    }
+
+    /**
+     * 头像
+     */
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
 }

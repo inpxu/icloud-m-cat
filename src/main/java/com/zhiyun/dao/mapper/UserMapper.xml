@@ -46,20 +46,22 @@
 		   	LOCKOUTDATE,
 		   	AGREEDTOTERMSOFUSE,
 		   	EMAILADDRESSVERIFIED,
-		   	STATUS
+		   	STATUS,
+		   	PWDRANK,
+		   	AVATAR
 		) VALUES (
 		   	#{mvccversion,jdbcType=BIGINT},
 		   	#{uuid,jdbcType=VARCHAR},
 		   	#{userid,jdbcType=BIGINT},
 		   	#{companyid,jdbcType=BIGINT},
-		   	#{createdate,jdbcType=DATETIME},
-		   	#{modifieddate,jdbcType=DATETIME},
+		   	#{createdate,jdbcType=TIMESTAMP},
+		   	#{modifieddate,jdbcType=TIMESTAMP},
 		   	#{defaultuser,jdbcType=TINYINT},
 		   	#{contactid,jdbcType=BIGINT},
 		   	#{password,jdbcType=VARCHAR},
 		   	#{passwordencrypted,jdbcType=TINYINT},
 		   	#{passwordreset,jdbcType=TINYINT},
-		   	#{passwordmodifieddate,jdbcType=DATETIME},
+		   	#{passwordmodifieddate,jdbcType=TIMESTAMP},
 		   	#{digest,jdbcType=VARCHAR},
 		   	#{reminderqueryquestion,jdbcType=VARCHAR},
 		   	#{reminderqueryanswer,jdbcType=VARCHAR},
@@ -79,17 +81,19 @@
 		   	#{middlename,jdbcType=VARCHAR},
 		   	#{lastname,jdbcType=VARCHAR},
 		   	#{jobtitle,jdbcType=VARCHAR},
-		   	#{logindate,jdbcType=DATETIME},
+		   	#{logindate,jdbcType=TIMESTAMP},
 		   	#{loginip,jdbcType=VARCHAR},
-		   	#{lastlogindate,jdbcType=DATETIME},
+		   	#{lastlogindate,jdbcType=TIMESTAMP},
 		   	#{lastloginip,jdbcType=VARCHAR},
-		   	#{lastfailedlogindate,jdbcType=DATETIME},
+		   	#{lastfailedlogindate,jdbcType=TIMESTAMP},
 		   	#{failedloginattempts,jdbcType=INTEGER},
 		   	#{lockout,jdbcType=TINYINT},
-		   	#{lockoutdate,jdbcType=DATETIME},
+		   	#{lockoutdate,jdbcType=TIMESTAMP},
 		   	#{agreedtotermsofuse,jdbcType=TINYINT},
 		   	#{emailaddressverified,jdbcType=TINYINT},
-		   	#{status,jdbcType=INTEGER}
+		   	#{status,jdbcType=INTEGER},
+		   	#{pwdrank,jdbcType=INTEGER},
+		   	#{avatar,jdbcType=VARCHAR}
 		)
 		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
 			SELECT LAST_INSERT_ID() AS ID
@@ -116,10 +120,10 @@
 				COMPANYID = #{companyid,jdbcType=BIGINT},
 			</if>
 			<if test="createdate != null">
-				CREATEDATE = #{createdate,jdbcType=DATETIME},
+				CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
 			</if>
 			<if test="modifieddate != null">
-				MODIFIEDDATE = #{modifieddate,jdbcType=DATETIME},
+				MODIFIEDDATE = #{modifieddate,jdbcType=TIMESTAMP},
 			</if>
 			<if test="defaultuser != null">
 				DEFAULTUSER = #{defaultuser,jdbcType=TINYINT},
@@ -137,7 +141,7 @@
 				PASSWORDRESET = #{passwordreset,jdbcType=TINYINT},
 			</if>
 			<if test="passwordmodifieddate != null">
-				PASSWORDMODIFIEDDATE = #{passwordmodifieddate,jdbcType=DATETIME},
+				PASSWORDMODIFIEDDATE = #{passwordmodifieddate,jdbcType=TIMESTAMP},
 			</if>
 			<if test="digest != null">
 				DIGEST = #{digest,jdbcType=VARCHAR},
@@ -197,19 +201,19 @@
 				JOBTITLE = #{jobtitle,jdbcType=VARCHAR},
 			</if>
 			<if test="logindate != null">
-				LOGINDATE = #{logindate,jdbcType=DATETIME},
+				LOGINDATE = #{logindate,jdbcType=TIMESTAMP},
 			</if>
 			<if test="loginip != null">
 				LOGINIP = #{loginip,jdbcType=VARCHAR},
 			</if>
 			<if test="lastlogindate != null">
-				LASTLOGINDATE = #{lastlogindate,jdbcType=DATETIME},
+				LASTLOGINDATE = #{lastlogindate,jdbcType=TIMESTAMP},
 			</if>
 			<if test="lastloginip != null">
 				LASTLOGINIP = #{lastloginip,jdbcType=VARCHAR},
 			</if>
 			<if test="lastfailedlogindate != null">
-				LASTFAILEDLOGINDATE = #{lastfailedlogindate,jdbcType=DATETIME},
+				LASTFAILEDLOGINDATE = #{lastfailedlogindate,jdbcType=TIMESTAMP},
 			</if>
 			<if test="failedloginattempts != null">
 				FAILEDLOGINATTEMPTS = #{failedloginattempts,jdbcType=INTEGER},
@@ -218,7 +222,7 @@
 				LOCKOUT = #{lockout,jdbcType=TINYINT},
 			</if>
 			<if test="lockoutdate != null">
-				LOCKOUTDATE = #{lockoutdate,jdbcType=DATETIME},
+				LOCKOUTDATE = #{lockoutdate,jdbcType=TIMESTAMP},
 			</if>
 			<if test="agreedtotermsofuse != null">
 				AGREEDTOTERMSOFUSE = #{agreedtotermsofuse,jdbcType=TINYINT},
@@ -228,6 +232,12 @@
 			</if>
 			<if test="status != null">
 				STATUS = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="pwdrank != null">
+				PWDRANK = #{pwdrank,jdbcType=INTEGER},
+			</if>
+			<if test="avatar != null">
+				AVATAR = #{avatar,jdbcType=VARCHAR},
 			</if>
 		</set>
 		WHERE ID = #{id,jdbcType=INTEGER}
@@ -241,14 +251,14 @@
 			UUID_ = #{uuid,jdbcType=VARCHAR},
 			USERID = #{userid,jdbcType=BIGINT},
 			COMPANYID = #{companyid,jdbcType=BIGINT},
-			CREATEDATE = #{createdate,jdbcType=DATETIME},
-			MODIFIEDDATE = #{modifieddate,jdbcType=DATETIME},
+			CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+			MODIFIEDDATE = #{modifieddate,jdbcType=TIMESTAMP},
 			DEFAULTUSER = #{defaultuser,jdbcType=TINYINT},
 			CONTACTID = #{contactid,jdbcType=BIGINT},
 			PASSWORD_ = #{password,jdbcType=VARCHAR},
 			PASSWORDENCRYPTED = #{passwordencrypted,jdbcType=TINYINT},
 			PASSWORDRESET = #{passwordreset,jdbcType=TINYINT},
-			PASSWORDMODIFIEDDATE = #{passwordmodifieddate,jdbcType=DATETIME},
+			PASSWORDMODIFIEDDATE = #{passwordmodifieddate,jdbcType=TIMESTAMP},
 			DIGEST = #{digest,jdbcType=VARCHAR},
 			REMINDERQUERYQUESTION = #{reminderqueryquestion,jdbcType=VARCHAR},
 			REMINDERQUERYANSWER = #{reminderqueryanswer,jdbcType=VARCHAR},
@@ -268,17 +278,19 @@
 			MIDDLENAME = #{middlename,jdbcType=VARCHAR},
 			LASTNAME = #{lastname,jdbcType=VARCHAR},
 			JOBTITLE = #{jobtitle,jdbcType=VARCHAR},
-			LOGINDATE = #{logindate,jdbcType=DATETIME},
+			LOGINDATE = #{logindate,jdbcType=TIMESTAMP},
 			LOGINIP = #{loginip,jdbcType=VARCHAR},
-			LASTLOGINDATE = #{lastlogindate,jdbcType=DATETIME},
+			LASTLOGINDATE = #{lastlogindate,jdbcType=TIMESTAMP},
 			LASTLOGINIP = #{lastloginip,jdbcType=VARCHAR},
-			LASTFAILEDLOGINDATE = #{lastfailedlogindate,jdbcType=DATETIME},
+			LASTFAILEDLOGINDATE = #{lastfailedlogindate,jdbcType=TIMESTAMP},
 			FAILEDLOGINATTEMPTS = #{failedloginattempts,jdbcType=INTEGER},
 			LOCKOUT = #{lockout,jdbcType=TINYINT},
-			LOCKOUTDATE = #{lockoutdate,jdbcType=DATETIME},
+			LOCKOUTDATE = #{lockoutdate,jdbcType=TIMESTAMP},
 			AGREEDTOTERMSOFUSE = #{agreedtotermsofuse,jdbcType=TINYINT},
 			EMAILADDRESSVERIFIED = #{emailaddressverified,jdbcType=TINYINT},
 			STATUS = #{status,jdbcType=INTEGER},
+			PWDRANK = #{pwdrank,jdbcType=INTEGER},
+			AVATAR = #{avatar,jdbcType=VARCHAR},
 		</set>
 		WHERE ID = #{id,jdbcType=INTEGER}
 	</update>
@@ -332,7 +344,9 @@
 		       LOCKOUTDATE lockoutdate,
 		       AGREEDTOTERMSOFUSE agreedtotermsofuse,
 		       EMAILADDRESSVERIFIED emailaddressverified,
-		       STATUS status
+		       STATUS status,
+		       PWDRANK pwdrank,
+		       AVATAR avatar
 	</sql>
 
 	<!-- 查询 -->
@@ -363,10 +377,10 @@
 				AND COMPANYID = #{companyid,jdbcType=BIGINT}
 			</if>
 			<if test="createdate != null">
-				AND CREATEDATE = #{createdate,jdbcType=DATETIME}
+				AND CREATEDATE = #{createdate,jdbcType=TIMESTAMP}
 			</if>
 			<if test="modifieddate != null">
-				AND MODIFIEDDATE = #{modifieddate,jdbcType=DATETIME}
+				AND MODIFIEDDATE = #{modifieddate,jdbcType=TIMESTAMP}
 			</if>
 			<if test="defaultuser != null">
 				AND DEFAULTUSER = #{defaultuser,jdbcType=TINYINT}
@@ -384,7 +398,7 @@
 				AND PASSWORDRESET = #{passwordreset,jdbcType=TINYINT}
 			</if>
 			<if test="passwordmodifieddate != null">
-				AND PASSWORDMODIFIEDDATE = #{passwordmodifieddate,jdbcType=DATETIME}
+				AND PASSWORDMODIFIEDDATE = #{passwordmodifieddate,jdbcType=TIMESTAMP}
 			</if>
 			<if test="digest != null and digest != ''">
 				AND DIGEST = #{digest,jdbcType=VARCHAR}
@@ -444,19 +458,19 @@
 				AND JOBTITLE = #{jobtitle,jdbcType=VARCHAR}
 			</if>
 			<if test="logindate != null">
-				AND LOGINDATE = #{logindate,jdbcType=DATETIME}
+				AND LOGINDATE = #{logindate,jdbcType=TIMESTAMP}
 			</if>
 			<if test="loginip != null and loginip != ''">
 				AND LOGINIP = #{loginip,jdbcType=VARCHAR}
 			</if>
 			<if test="lastlogindate != null">
-				AND LASTLOGINDATE = #{lastlogindate,jdbcType=DATETIME}
+				AND LASTLOGINDATE = #{lastlogindate,jdbcType=TIMESTAMP}
 			</if>
 			<if test="lastloginip != null and lastloginip != ''">
 				AND LASTLOGINIP = #{lastloginip,jdbcType=VARCHAR}
 			</if>
 			<if test="lastfailedlogindate != null">
-				AND LASTFAILEDLOGINDATE = #{lastfailedlogindate,jdbcType=DATETIME}
+				AND LASTFAILEDLOGINDATE = #{lastfailedlogindate,jdbcType=TIMESTAMP}
 			</if>
 			<if test="failedloginattempts != null">
 				AND FAILEDLOGINATTEMPTS = #{failedloginattempts,jdbcType=INTEGER}
@@ -465,7 +479,7 @@
 				AND LOCKOUT = #{lockout,jdbcType=TINYINT}
 			</if>
 			<if test="lockoutdate != null">
-				AND LOCKOUTDATE = #{lockoutdate,jdbcType=DATETIME}
+				AND LOCKOUTDATE = #{lockoutdate,jdbcType=TIMESTAMP}
 			</if>
 			<if test="agreedtotermsofuse != null">
 				AND AGREEDTOTERMSOFUSE = #{agreedtotermsofuse,jdbcType=TINYINT}
@@ -475,6 +489,12 @@
 			</if>
 			<if test="status != null">
 				AND STATUS = #{status,jdbcType=INTEGER}
+			</if>
+			<if test="pwdrank != null">
+				AND PWDRANK = #{pwdrank,jdbcType=INTEGER}
+			</if>
+			<if test="avatar != null and avatar != ''">
+				AND AVATAR = #{avatar,jdbcType=VARCHAR}
 			</if>
 		</where>
 	</select>
@@ -501,10 +521,10 @@
 					AND COMPANYID = #{entity.companyid,jdbcType=BIGINT}
 				</if>
 				<if test="entity.createdate != null">
-					AND CREATEDATE = #{entity.createdate,jdbcType=DATETIME}
+					AND CREATEDATE = #{entity.createdate,jdbcType=TIMESTAMP}
 				</if>
 				<if test="entity.modifieddate != null">
-					AND MODIFIEDDATE = #{entity.modifieddate,jdbcType=DATETIME}
+					AND MODIFIEDDATE = #{entity.modifieddate,jdbcType=TIMESTAMP}
 				</if>
 				<if test="entity.defaultuser != null">
 					AND DEFAULTUSER = #{entity.defaultuser,jdbcType=TINYINT}
@@ -522,7 +542,7 @@
 					AND PASSWORDRESET = #{entity.passwordreset,jdbcType=TINYINT}
 				</if>
 				<if test="entity.passwordmodifieddate != null">
-					AND PASSWORDMODIFIEDDATE = #{entity.passwordmodifieddate,jdbcType=DATETIME}
+					AND PASSWORDMODIFIEDDATE = #{entity.passwordmodifieddate,jdbcType=TIMESTAMP}
 				</if>
 				<if test="entity.digest != null and entity.digest != ''">
 					AND DIGEST = #{entity.digest,jdbcType=VARCHAR}
@@ -582,19 +602,19 @@
 					AND JOBTITLE = #{entity.jobtitle,jdbcType=VARCHAR}
 				</if>
 				<if test="entity.logindate != null">
-					AND LOGINDATE = #{entity.logindate,jdbcType=DATETIME}
+					AND LOGINDATE = #{entity.logindate,jdbcType=TIMESTAMP}
 				</if>
 				<if test="entity.loginip != null and entity.loginip != ''">
 					AND LOGINIP = #{entity.loginip,jdbcType=VARCHAR}
 				</if>
 				<if test="entity.lastlogindate != null">
-					AND LASTLOGINDATE = #{entity.lastlogindate,jdbcType=DATETIME}
+					AND LASTLOGINDATE = #{entity.lastlogindate,jdbcType=TIMESTAMP}
 				</if>
 				<if test="entity.lastloginip != null and entity.lastloginip != ''">
 					AND LASTLOGINIP = #{entity.lastloginip,jdbcType=VARCHAR}
 				</if>
 				<if test="entity.lastfailedlogindate != null">
-					AND LASTFAILEDLOGINDATE = #{entity.lastfailedlogindate,jdbcType=DATETIME}
+					AND LASTFAILEDLOGINDATE = #{entity.lastfailedlogindate,jdbcType=TIMESTAMP}
 				</if>
 				<if test="entity.failedloginattempts != null">
 					AND FAILEDLOGINATTEMPTS = #{entity.failedloginattempts,jdbcType=INTEGER}
@@ -603,7 +623,7 @@
 					AND LOCKOUT = #{entity.lockout,jdbcType=TINYINT}
 				</if>
 				<if test="entity.lockoutdate != null">
-					AND LOCKOUTDATE = #{entity.lockoutdate,jdbcType=DATETIME}
+					AND LOCKOUTDATE = #{entity.lockoutdate,jdbcType=TIMESTAMP}
 				</if>
 				<if test="entity.agreedtotermsofuse != null">
 					AND AGREEDTOTERMSOFUSE = #{entity.agreedtotermsofuse,jdbcType=TINYINT}
@@ -613,6 +633,12 @@
 				</if>
 				<if test="entity.status != null">
 					AND STATUS = #{entity.status,jdbcType=INTEGER}
+				</if>
+				<if test="entity.pwdrank != null">
+					AND PWDRANK = #{entity.pwdrank,jdbcType=INTEGER}
+				</if>
+				<if test="entity.avatar != null and entity.avatar != ''">
+					AND AVATAR = #{entity.avatar,jdbcType=VARCHAR}
 				</if>
 		</where>
 	</sql>
@@ -660,10 +686,10 @@
 				AND COMPANYID = #{companyid,jdbcType=BIGINT}
 			</if>
 			<if test="createdate != null">
-				AND CREATEDATE = #{createdate,jdbcType=DATETIME}
+				AND CREATEDATE = #{createdate,jdbcType=TIMESTAMP}
 			</if>
 			<if test="modifieddate != null">
-				AND MODIFIEDDATE = #{modifieddate,jdbcType=DATETIME}
+				AND MODIFIEDDATE = #{modifieddate,jdbcType=TIMESTAMP}
 			</if>
 			<if test="defaultuser != null">
 				AND DEFAULTUSER = #{defaultuser,jdbcType=TINYINT}
@@ -681,7 +707,7 @@
 				AND PASSWORDRESET = #{passwordreset,jdbcType=TINYINT}
 			</if>
 			<if test="passwordmodifieddate != null">
-				AND PASSWORDMODIFIEDDATE = #{passwordmodifieddate,jdbcType=DATETIME}
+				AND PASSWORDMODIFIEDDATE = #{passwordmodifieddate,jdbcType=TIMESTAMP}
 			</if>
 			<if test="digest != null and digest != ''">
 				AND DIGEST = #{digest,jdbcType=VARCHAR}
@@ -741,19 +767,19 @@
 				AND JOBTITLE = #{jobtitle,jdbcType=VARCHAR}
 			</if>
 			<if test="logindate != null">
-				AND LOGINDATE = #{logindate,jdbcType=DATETIME}
+				AND LOGINDATE = #{logindate,jdbcType=TIMESTAMP}
 			</if>
 			<if test="loginip != null and loginip != ''">
 				AND LOGINIP = #{loginip,jdbcType=VARCHAR}
 			</if>
 			<if test="lastlogindate != null">
-				AND LASTLOGINDATE = #{lastlogindate,jdbcType=DATETIME}
+				AND LASTLOGINDATE = #{lastlogindate,jdbcType=TIMESTAMP}
 			</if>
 			<if test="lastloginip != null and lastloginip != ''">
 				AND LASTLOGINIP = #{lastloginip,jdbcType=VARCHAR}
 			</if>
 			<if test="lastfailedlogindate != null">
-				AND LASTFAILEDLOGINDATE = #{lastfailedlogindate,jdbcType=DATETIME}
+				AND LASTFAILEDLOGINDATE = #{lastfailedlogindate,jdbcType=TIMESTAMP}
 			</if>
 			<if test="failedloginattempts != null">
 				AND FAILEDLOGINATTEMPTS = #{failedloginattempts,jdbcType=INTEGER}
@@ -762,7 +788,7 @@
 				AND LOCKOUT = #{lockout,jdbcType=TINYINT}
 			</if>
 			<if test="lockoutdate != null">
-				AND LOCKOUTDATE = #{lockoutdate,jdbcType=DATETIME}
+				AND LOCKOUTDATE = #{lockoutdate,jdbcType=TIMESTAMP}
 			</if>
 			<if test="agreedtotermsofuse != null">
 				AND AGREEDTOTERMSOFUSE = #{agreedtotermsofuse,jdbcType=TINYINT}
@@ -772,6 +798,12 @@
 			</if>
 			<if test="status != null">
 				AND STATUS = #{status,jdbcType=INTEGER}
+			</if>
+			<if test="pwdrank != null">
+				AND PWDRANK = #{pwdrank,jdbcType=INTEGER}
+			</if>
+			<if test="avatar != null and avatar != ''">
+				AND AVATAR = #{avatar,jdbcType=VARCHAR}
 			</if>
 		</where>
 	</select>
@@ -820,20 +852,22 @@
 		   	LOCKOUTDATE,
 		   	AGREEDTOTERMSOFUSE,
 		   	EMAILADDRESSVERIFIED,
-		   	STATUS
+		   	STATUS,
+		   	PWDRANK,
+		   	AVATAR
 		) VALUES (
 		   	#{ mvccversion,jdbcType=BIGINT},
 		   	#{ uuid,jdbcType=VARCHAR},
 		   	#{ userid,jdbcType=BIGINT},
 		   	#{ companyid,jdbcType=BIGINT},
-		   	#{ createdate,jdbcType=DATETIME},
-		   	#{ modifieddate,jdbcType=DATETIME},
+		   	#{ createdate,jdbcType=TIMESTAMP},
+		   	#{ modifieddate,jdbcType=TIMESTAMP},
 		   	#{ defaultuser,jdbcType=TINYINT},
 		   	#{ contactid,jdbcType=BIGINT},
 		   	#{ password,jdbcType=VARCHAR},
 		   	#{ passwordencrypted,jdbcType=TINYINT},
 		   	#{ passwordreset,jdbcType=TINYINT},
-		   	#{ passwordmodifieddate,jdbcType=DATETIME},
+		   	#{ passwordmodifieddate,jdbcType=TIMESTAMP},
 		   	#{ digest,jdbcType=VARCHAR},
 		   	#{ reminderqueryquestion,jdbcType=VARCHAR},
 		   	#{ reminderqueryanswer,jdbcType=VARCHAR},
@@ -853,17 +887,19 @@
 		   	#{ middlename,jdbcType=VARCHAR},
 		   	#{ lastname,jdbcType=VARCHAR},
 		   	#{ jobtitle,jdbcType=VARCHAR},
-		   	#{ logindate,jdbcType=DATETIME},
+		   	#{ logindate,jdbcType=TIMESTAMP},
 		   	#{ loginip,jdbcType=VARCHAR},
-		   	#{ lastlogindate,jdbcType=DATETIME},
+		   	#{ lastlogindate,jdbcType=TIMESTAMP},
 		   	#{ lastloginip,jdbcType=VARCHAR},
-		   	#{ lastfailedlogindate,jdbcType=DATETIME},
+		   	#{ lastfailedlogindate,jdbcType=TIMESTAMP},
 		   	#{ failedloginattempts,jdbcType=INTEGER},
 		   	#{ lockout,jdbcType=TINYINT},
-		   	#{ lockoutdate,jdbcType=DATETIME},
+		   	#{ lockoutdate,jdbcType=TIMESTAMP},
 		   	#{ agreedtotermsofuse,jdbcType=TINYINT},
 		   	#{ emailaddressverified,jdbcType=TINYINT},
-		   	#{ status,jdbcType=INTEGER}
+		   	#{ status,jdbcType=INTEGER},
+		   	#{ pwdrank,jdbcType=INTEGER},
+		   	#{ avatar,jdbcType=VARCHAR}
 		)
 		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
 			SELECT LAST_INSERT_ID() AS ID
@@ -890,10 +926,10 @@
 				COMPANYID = #{companyid,jdbcType=BIGINT},
 			</if>
 			<if test="createdate != null">
-				CREATEDATE = #{createdate,jdbcType=DATETIME},
+				CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
 			</if>
 			<if test="modifieddate != null">
-				MODIFIEDDATE = #{modifieddate,jdbcType=DATETIME},
+				MODIFIEDDATE = #{modifieddate,jdbcType=TIMESTAMP},
 			</if>
 			<if test="defaultuser != null">
 				DEFAULTUSER = #{defaultuser,jdbcType=TINYINT},
@@ -911,7 +947,7 @@
 				PASSWORDRESET = #{passwordreset,jdbcType=TINYINT},
 			</if>
 			<if test="passwordmodifieddate != null">
-				PASSWORDMODIFIEDDATE = #{passwordmodifieddate,jdbcType=DATETIME},
+				PASSWORDMODIFIEDDATE = #{passwordmodifieddate,jdbcType=TIMESTAMP},
 			</if>
 			<if test="digest != null">
 				DIGEST = #{digest,jdbcType=VARCHAR},
@@ -971,19 +1007,19 @@
 				JOBTITLE = #{jobtitle,jdbcType=VARCHAR},
 			</if>
 			<if test="logindate != null">
-				LOGINDATE = #{logindate,jdbcType=DATETIME},
+				LOGINDATE = #{logindate,jdbcType=TIMESTAMP},
 			</if>
 			<if test="loginip != null">
 				LOGINIP = #{loginip,jdbcType=VARCHAR},
 			</if>
 			<if test="lastlogindate != null">
-				LASTLOGINDATE = #{lastlogindate,jdbcType=DATETIME},
+				LASTLOGINDATE = #{lastlogindate,jdbcType=TIMESTAMP},
 			</if>
 			<if test="lastloginip != null">
 				LASTLOGINIP = #{lastloginip,jdbcType=VARCHAR},
 			</if>
 			<if test="lastfailedlogindate != null">
-				LASTFAILEDLOGINDATE = #{lastfailedlogindate,jdbcType=DATETIME},
+				LASTFAILEDLOGINDATE = #{lastfailedlogindate,jdbcType=TIMESTAMP},
 			</if>
 			<if test="failedloginattempts != null">
 				FAILEDLOGINATTEMPTS = #{failedloginattempts,jdbcType=INTEGER},
@@ -992,7 +1028,7 @@
 				LOCKOUT = #{lockout,jdbcType=TINYINT},
 			</if>
 			<if test="lockoutdate != null">
-				LOCKOUTDATE = #{lockoutdate,jdbcType=DATETIME},
+				LOCKOUTDATE = #{lockoutdate,jdbcType=TIMESTAMP},
 			</if>
 			<if test="agreedtotermsofuse != null">
 				AGREEDTOTERMSOFUSE = #{agreedtotermsofuse,jdbcType=TINYINT},
@@ -1002,6 +1038,12 @@
 			</if>
 			<if test="status != null">
 				STATUS = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="pwdrank != null">
+				PWDRANK = #{pwdrank,jdbcType=INTEGER},
+			</if>
+			<if test="avatar != null">
+				AVATAR = #{avatar,jdbcType=VARCHAR},
 			</if>
 		</set>
 		WHERE ID = #{id,jdbcType=INTEGER}

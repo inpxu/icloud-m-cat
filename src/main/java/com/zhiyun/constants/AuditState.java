@@ -12,7 +12,7 @@ package com.zhiyun.constants;
  * @version v1.0
  * @date 2018年6月7日 下午4:39:55
  */
-
+// 0 未认证 1 认证中 2 已认证 3 认证失败
 public class AuditState {
 
 	// 没有审核过
