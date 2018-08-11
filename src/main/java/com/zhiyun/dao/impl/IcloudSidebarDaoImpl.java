@@ -31,4 +31,10 @@ public class IcloudSidebarDaoImpl extends BaseDaoImpl<IcloudSidebar, Long> imple
 
 	}
 
+	@Override
+	public List<IcloudSidebar> listByRoleIds(List<Long> roleIdList) {
+		Params params = Params.create().add("roleIdList", roleIdList);
+		return this.selectList(getMethodName(), params);
+	}
+
 }

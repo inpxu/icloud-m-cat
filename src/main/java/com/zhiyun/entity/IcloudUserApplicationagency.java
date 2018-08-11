@@ -11,6 +11,7 @@ import javax.validation.constraints.Max;
 
 /**
  * 实体类
+ * 代理关联
  *
  * @author auto
  * @version v1.0

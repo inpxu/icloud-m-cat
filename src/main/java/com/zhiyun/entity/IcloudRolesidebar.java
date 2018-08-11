@@ -4,6 +4,7 @@ import com.zhiyun.base.entity.BaseEntity;
 
 /**
  * 实体对象：
+ * 侧边栏
  */
 public class IcloudRolesidebar extends BaseEntity<Long> {
 

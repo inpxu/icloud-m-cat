@@ -16,7 +16,7 @@ import com.zhiyun.base.entity.BaseEntity;
 
 /**
  * 实体类
- *
+ * 入市
  * @author auto
  * @version v1.0
  * @date
