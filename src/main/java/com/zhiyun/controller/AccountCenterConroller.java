@@ -5,6 +5,7 @@ import com.zhiyun.base.dto.BaseResult;
 import com.zhiyun.base.exception.BusinessException;
 import com.zhiyun.client.UserHolder;
 import com.zhiyun.dto.BaseUserInfoDto;
+import com.zhiyun.dto.EnterpriseAuthDto;
 import com.zhiyun.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +54,50 @@ public class AccountCenterConroller extends BaseController {
         return baseResult;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/updateAvatar", method = { RequestMethod.POST })
+    public Object setAvatar(String avatar) {
+        BaseResult<String> baseResult = new BaseResult<String>();
+        baseResult.setResult(true);
+            baseResult.setMessage("更新头像成功");
+            try {
+                userService.updateAvatar(UserHolder.getId(),avatar);
 
+            } catch (BusinessException be) {
+                LOGGER.debug("业务异常" + be);
+                baseResult.setResult(false);
+            baseResult.setMessage(be.getMessage());
+        } catch (Exception e) {
+            LOGGER.debug("系统异常" + e);
+            baseResult.setResult(false);
+            baseResult.setMessage("系统异常");
+        }
 
+        return baseResult;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getEnterpriseAuth", method = { RequestMethod.GET, RequestMethod.POST })
+    public Object getEnterprise() {
+        BaseResult<EnterpriseAuthDto> baseResult = new BaseResult<EnterpriseAuthDto>();
+        baseResult.setResult(true);
+        baseResult.setMessage("查询账号信息成功");
+        try {
+
+            EnterpriseAuthDto enterpriseAuthDto = userService.getEnterpriseAuth(UserHolder.getId());
+            baseResult.setModel(enterpriseAuthDto);
+
+        } catch (BusinessException be) {
+            LOGGER.debug("业务异常" + be);
+            baseResult.setResult(false);
+            baseResult.setMessage(be.getMessage());
+        } catch (Exception e) {
+            LOGGER.debug("系统异常" + e);
+            baseResult.setResult(false);
+            baseResult.setMessage("系统异常");
+        }
+
+        return baseResult;
+    }
 
 }

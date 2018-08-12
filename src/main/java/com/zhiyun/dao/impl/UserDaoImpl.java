@@ -63,4 +63,9 @@ public class UserDaoImpl extends BaseDaoImpl<User, Long> implements UserDao {
 		return this.update(getMethodName(),friendlyUrl);
 	}
 
+	@Override
+    public void updateUserByUserId(User user){
+	    this.update(getMethodName(),user);
+    }
+
 }

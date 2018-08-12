@@ -16,17 +16,23 @@ import javax.validation.constraints.Max;
  * @version v1.0
  * @date
  */
-public class IcloudEnterpriseauth extends BaseEntity<Long> {
+public class IcloudOnicloud extends BaseEntity<Long> {
 
-	private static final long serialVersionUID = 3359111847201383741L;
+	private static final long serialVersionUID = 1887841155244298640L;
 
 	// ~~~~实体属性
 	// 
 	@Max(value=9223372036854775807L,message="字段过长")
-	private Long userId;
-	// 
-	@Pattern(regexp="[\\s\\S]{0,75}", message="字段过长")
+	private Long createUserId;
+	// 企业名称
+	@Pattern(regexp="[\\s\\S]{0,75}", message="企业名称字段过长")
 	private String name;
+	// 企业性质
+	@Max(value=99999999999L,message="企业性质字段过长")
+	private Integer property;
+	// 行业
+	@Max(value=99999999999L,message="行业字段过长")
+	private Integer trade;
 	// 
 	@Pattern(regexp="[\\s\\S]{0,75}", message="字段过长")
 	private String province;
@@ -46,29 +52,23 @@ public class IcloudEnterpriseauth extends BaseEntity<Long> {
 	@Pattern(regexp="[\\s\\S]{0,75}", message="字段过长")
 	private String contactPhone;
 	// 
-	@Pattern(regexp="[\\s\\S]{0,75}", message="字段过长")
-	private String legalPerson;
+	@Max(value=99999999999L,message="字段过长")
+	private Integer employeeScale;
 	// 
-	@Pattern(regexp="[\\s\\S]{0,75}", message="字段过长")
-	private String legalPersonPhone;
+	@Max(value=99999999999L,message="字段过长")
+	private Integer equipmentScale;
 	// 
-	@Pattern(regexp="[\\s\\S]{0,75}", message="字段过长")
-	private String legalPersonIdentityCard;
-	// 
-	@Pattern(regexp="[\\s\\S]{0,500}", message="字段过长")
-	private String certificatePositiveShareUrl;
+	@Max(value=99999999999L,message="字段过长")
+	private Integer onIcloudScale;
 	// 
 	@Pattern(regexp="[\\s\\S]{0,500}", message="字段过长")
-	private String certificateNegativeShareUrl;
+	private String siteImageShareUrl;
 	// 
-	@Pattern(regexp="[\\s\\S]{0,75}", message="字段过长")
-	private String socialCreditCode;
-	// 
-	@Pattern(regexp="[\\s\\S]{0,500}", message="字段过长")
-	private String businessLicenceShareUrl;
-	// 0 认证中 1 认证通过 2 认证未通过
-	@Max(value=99999999999L,message="0 认证中 1 认证通过 2 认证未通过字段过长")
+	@Max(value=99999999999L,message="字段过长")
 	private Integer status;
+	// 
+	@Max(value=9223372036854775807L,message="字段过长")
+	private Long organizationId;
 	// 
 	@Pattern(regexp="[\\s\\S]{0,255}", message="字段过长")
 	private String sended;
@@ -78,9 +78,6 @@ public class IcloudEnterpriseauth extends BaseEntity<Long> {
 	// 审批意见
 	@Pattern(regexp="[\\s\\S]{0,255}", message="审批意见字段过长")
 	private String approvalOpinion;
-
-    @Max(value=99999999999L,message="行业字段过长")
-    private Integer trade;
 
 	@Override
 	public Long getId() {
@@ -95,29 +92,57 @@ public class IcloudEnterpriseauth extends BaseEntity<Long> {
 	/**
 	 * 
 	 */
-	public Long getUserId() {
-		return this.userId;
+	public Long getCreateUserId() {
+		return this.createUserId;
 	}
 
 	/**
 	 * 
 	 */
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setCreateUserId(Long createUserId) {
+		this.createUserId = createUserId;
 	}
 	
 	/**
-	 * 
+	 * 企业名称
 	 */
 	public String getName() {
 		return this.name;
 	}
 
 	/**
-	 * 
+	 * 企业名称
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	/**
+	 * 企业性质
+	 */
+	public Integer getProperty() {
+		return this.property;
+	}
+
+	/**
+	 * 企业性质
+	 */
+	public void setProperty(Integer property) {
+		this.property = property;
+	}
+	
+	/**
+	 * 行业
+	 */
+	public Integer getTrade() {
+		return this.trade;
+	}
+
+	/**
+	 * 行业
+	 */
+	public void setTrade(Integer trade) {
+		this.trade = trade;
 	}
 	
 	/**
@@ -207,113 +232,85 @@ public class IcloudEnterpriseauth extends BaseEntity<Long> {
 	/**
 	 * 
 	 */
-	public String getLegalPerson() {
-		return this.legalPerson;
+	public Integer getEmployeeScale() {
+		return this.employeeScale;
 	}
 
 	/**
 	 * 
 	 */
-	public void setLegalPerson(String legalPerson) {
-		this.legalPerson = legalPerson;
+	public void setEmployeeScale(Integer employeeScale) {
+		this.employeeScale = employeeScale;
 	}
 	
 	/**
 	 * 
 	 */
-	public String getLegalPersonPhone() {
-		return this.legalPersonPhone;
+	public Integer getEquipmentScale() {
+		return this.equipmentScale;
 	}
 
 	/**
 	 * 
 	 */
-	public void setLegalPersonPhone(String legalPersonPhone) {
-		this.legalPersonPhone = legalPersonPhone;
+	public void setEquipmentScale(Integer equipmentScale) {
+		this.equipmentScale = equipmentScale;
 	}
 	
 	/**
 	 * 
 	 */
-	public String getLegalPersonIdentityCard() {
-		return this.legalPersonIdentityCard;
+	public Integer getOnIcloudScale() {
+		return this.onIcloudScale;
 	}
 
 	/**
 	 * 
 	 */
-	public void setLegalPersonIdentityCard(String legalPersonIdentityCard) {
-		this.legalPersonIdentityCard = legalPersonIdentityCard;
+	public void setOnIcloudScale(Integer onIcloudScale) {
+		this.onIcloudScale = onIcloudScale;
 	}
 	
 	/**
 	 * 
 	 */
-	public String getCertificatePositiveShareUrl() {
-		return this.certificatePositiveShareUrl;
+	public String getSiteImageShareUrl() {
+		return this.siteImageShareUrl;
 	}
 
 	/**
 	 * 
 	 */
-	public void setCertificatePositiveShareUrl(String certificatePositiveShareUrl) {
-		this.certificatePositiveShareUrl = certificatePositiveShareUrl;
+	public void setSiteImageShareUrl(String siteImageShareUrl) {
+		this.siteImageShareUrl = siteImageShareUrl;
 	}
 	
 	/**
 	 * 
-	 */
-	public String getCertificateNegativeShareUrl() {
-		return this.certificateNegativeShareUrl;
-	}
-
-	/**
-	 * 
-	 */
-	public void setCertificateNegativeShareUrl(String certificateNegativeShareUrl) {
-		this.certificateNegativeShareUrl = certificateNegativeShareUrl;
-	}
-	
-	/**
-	 * 
-	 */
-	public String getSocialCreditCode() {
-		return this.socialCreditCode;
-	}
-
-	/**
-	 * 
-	 */
-	public void setSocialCreditCode(String socialCreditCode) {
-		this.socialCreditCode = socialCreditCode;
-	}
-	
-	/**
-	 * 
-	 */
-	public String getBusinessLicenceShareUrl() {
-		return this.businessLicenceShareUrl;
-	}
-
-	/**
-	 * 
-	 */
-	public void setBusinessLicenceShareUrl(String businessLicenceShareUrl) {
-		this.businessLicenceShareUrl = businessLicenceShareUrl;
-	}
-	
-	/**
-	 * 0 认证中 1 认证通过 2 认证未通过
 	 */
 	public Integer getStatus() {
 		return this.status;
 	}
 
 	/**
-	 * 0 认证中 1 认证通过 2 认证未通过
+	 * 
 	 */
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	
+	/**
+	 * 
+	 */
+	public Long getOrganizationId() {
+		return this.organizationId;
+	}
+
+	/**
+	 * 
+	 */
+	public void setOrganizationId(Long organizationId) {
+		this.organizationId = organizationId;
 	}
 	
 	/**
@@ -357,16 +354,4 @@ public class IcloudEnterpriseauth extends BaseEntity<Long> {
 	public void setApprovalOpinion(String approvalOpinion) {
 		this.approvalOpinion = approvalOpinion;
 	}
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public Integer getTrade() {
-        return trade;
-    }
-
-    public void setTrade(Integer trade) {
-        this.trade = trade;
-    }
 }

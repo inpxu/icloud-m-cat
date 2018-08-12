@@ -7,6 +7,7 @@ package com.zhiyun.service;
 
 import com.zhiyun.base.service.BaseService;
 import com.zhiyun.dto.BaseUserInfoDto;
+import com.zhiyun.dto.EnterpriseAuthDto;
 import com.zhiyun.dto.UserDto;
 import com.zhiyun.dto.UserStateDto;
 import com.zhiyun.entity.User;
@@ -46,6 +47,10 @@ public interface UserService extends BaseService<User, Long> {
 	void dispatchUser(Long userId);
 
 	BaseUserInfoDto getBaseUserInfoDto(Long userId);
+
+	void updateAvatar(Long userId, String avatar);
+
+    EnterpriseAuthDto getEnterpriseAuth(Long userId);
 
 }
 	

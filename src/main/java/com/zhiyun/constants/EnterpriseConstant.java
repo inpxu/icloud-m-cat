@@ -166,6 +166,44 @@ public class EnterpriseConstant {
 		}
 	}
 
+    public enum EmployeeScale {
+
+        LESS_THEN_TWENTY(0, 0, 20, "0~20人"), LESS_THEN_HUNDRED(1, 20, 100, "20~100人"), GREATER_THEN_HUNDRED(2, 100, -1,
+                "大于100人");
+
+        private int id;
+
+        private int lowBound;
+
+        private int upBound;
+
+        private String desc;
+
+        private EmployeeScale(int id, int lowBound, int upBound, String desc) {
+            this.id = id;
+            this.lowBound = lowBound;
+            this.upBound = upBound;
+            this.desc = desc;
+        }
+
+        public static String getEmployeeScaleDesc(int id) {
+            for (EmployeeScale employeeScale : EmployeeScale.values()) {
+                if (employeeScale.id == id) {
+                    return employeeScale.desc;
+                }
+            }
+            return null;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+    }
+
 	public enum EquipmentScale {
 
 		LESS_THEN_TWENTY(0, 0, 20, "0~20台"), LESS_THEN_FIFTY(1, 20, 50, "20~50台"), LESS_THEN_HUNDRED(2, 20, 100,

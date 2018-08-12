@@ -95,6 +95,13 @@ public class IcloudPersonalauthServiceImpl extends BaseServiceImpl<IcloudPersona
 
 	@Override
 	public void savePersonalauth(IcloudPersonalauth icloudPersonalauth) {
+
+	    IcloudPersonalauth dbIcloudPersonalauth = icloudPersonalauthDao.findByUserId(UserHolder.getId());
+
+	    if(dbIcloudPersonalauth != null){
+	        throw new BusinessException("请勿重复认证");
+        }
+
 		this.insert(icloudPersonalauth);
 		icloudEnterpriseauthService.deleteByUserId(UserHolder.getId());
 	}

@@ -135,7 +135,9 @@
 		       LOCKOUTDATE lockoutdate,
 		       AGREEDTOTERMSOFUSE agreedtotermsofuse,
 		       EMAILADDRESSVERIFIED emailaddressverified,
-		       STATUS status
+		       STATUS status,
+		       PWDRANK,
+		   	   AVATAR
 	</sql>
 	
 	    	
@@ -213,5 +215,144 @@
 			friendlyURL = #{newUrl,jdbcType=VARCHAR}
 		where friendlyURL = #{formerUrl,jdbcType=VARCHAR}
 	</update>
+
+    <update id="updateUserByUserId" parameterType="com.zhiyun.entity.User">
+        UPDATE USER_
+        <set>
+            <if test="mvccversion != null">
+                MVCCVERSION = #{mvccversion,jdbcType=BIGINT},
+            </if>
+            <if test="uuid != null">
+                UUID_ = #{uuid,jdbcType=VARCHAR},
+            </if>
+            <if test="userid != null">
+                USERID = #{userid,jdbcType=BIGINT},
+            </if>
+            <if test="companyid != null">
+                COMPANYID = #{companyid,jdbcType=BIGINT},
+            </if>
+            <if test="createdate != null">
+                CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifieddate != null">
+                MODIFIEDDATE = #{modifieddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="defaultuser != null">
+                DEFAULTUSER = #{defaultuser,jdbcType=TINYINT},
+            </if>
+            <if test="contactid != null">
+                CONTACTID = #{contactid,jdbcType=BIGINT},
+            </if>
+            <if test="password != null">
+                PASSWORD_ = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="passwordencrypted != null">
+                PASSWORDENCRYPTED = #{passwordencrypted,jdbcType=TINYINT},
+            </if>
+            <if test="passwordreset != null">
+                PASSWORDRESET = #{passwordreset,jdbcType=TINYINT},
+            </if>
+            <if test="passwordmodifieddate != null">
+                PASSWORDMODIFIEDDATE = #{passwordmodifieddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="digest != null">
+                DIGEST = #{digest,jdbcType=VARCHAR},
+            </if>
+            <if test="reminderqueryquestion != null">
+                REMINDERQUERYQUESTION = #{reminderqueryquestion,jdbcType=VARCHAR},
+            </if>
+            <if test="reminderqueryanswer != null">
+                REMINDERQUERYANSWER = #{reminderqueryanswer,jdbcType=VARCHAR},
+            </if>
+            <if test="gracelogincount != null">
+                GRACELOGINCOUNT = #{gracelogincount,jdbcType=INTEGER},
+            </if>
+            <if test="screenname != null">
+                SCREENNAME = #{screenname,jdbcType=VARCHAR},
+            </if>
+            <if test="emailaddress != null">
+                EMAILADDRESS = #{emailaddress,jdbcType=VARCHAR},
+            </if>
+            <if test="facebookid != null">
+                FACEBOOKID = #{facebookid,jdbcType=BIGINT},
+            </if>
+            <if test="googleuserid != null">
+                GOOGLEUSERID = #{googleuserid,jdbcType=VARCHAR},
+            </if>
+            <if test="ldapserverid != null">
+                LDAPSERVERID = #{ldapserverid,jdbcType=BIGINT},
+            </if>
+            <if test="openid != null">
+                OPENID = #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="portraitid != null">
+                PORTRAITID = #{portraitid,jdbcType=BIGINT},
+            </if>
+            <if test="languageid != null">
+                LANGUAGEID = #{languageid,jdbcType=VARCHAR},
+            </if>
+            <if test="timezoneid != null">
+                TIMEZONEID = #{timezoneid,jdbcType=VARCHAR},
+            </if>
+            <if test="greeting != null">
+                GREETING = #{greeting,jdbcType=VARCHAR},
+            </if>
+            <if test="comments != null">
+                COMMENTS = #{comments,jdbcType=LONGTEXT},
+            </if>
+            <if test="firstname != null">
+                FIRSTNAME = #{firstname,jdbcType=VARCHAR},
+            </if>
+            <if test="middlename != null">
+                MIDDLENAME = #{middlename,jdbcType=VARCHAR},
+            </if>
+            <if test="lastname != null">
+                LASTNAME = #{lastname,jdbcType=VARCHAR},
+            </if>
+            <if test="jobtitle != null">
+                JOBTITLE = #{jobtitle,jdbcType=VARCHAR},
+            </if>
+            <if test="logindate != null">
+                LOGINDATE = #{logindate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="loginip != null">
+                LOGINIP = #{loginip,jdbcType=VARCHAR},
+            </if>
+            <if test="lastlogindate != null">
+                LASTLOGINDATE = #{lastlogindate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastloginip != null">
+                LASTLOGINIP = #{lastloginip,jdbcType=VARCHAR},
+            </if>
+            <if test="lastfailedlogindate != null">
+                LASTFAILEDLOGINDATE = #{lastfailedlogindate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="failedloginattempts != null">
+                FAILEDLOGINATTEMPTS = #{failedloginattempts,jdbcType=INTEGER},
+            </if>
+            <if test="lockout != null">
+                LOCKOUT = #{lockout,jdbcType=TINYINT},
+            </if>
+            <if test="lockoutdate != null">
+                LOCKOUTDATE = #{lockoutdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="agreedtotermsofuse != null">
+                AGREEDTOTERMSOFUSE = #{agreedtotermsofuse,jdbcType=TINYINT},
+            </if>
+            <if test="emailaddressverified != null">
+                EMAILADDRESSVERIFIED = #{emailaddressverified,jdbcType=TINYINT},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="pwdrank != null">
+                PWDRANK = #{pwdrank,jdbcType=INTEGER},
+            </if>
+            <if test="avatar != null">
+                AVATAR = #{avatar,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE userId = #{userid,jdbcType=BIGINT}
+    </update>
 
 </mapper>   

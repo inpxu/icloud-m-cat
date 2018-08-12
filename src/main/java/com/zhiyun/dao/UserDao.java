@@ -31,4 +31,6 @@ public interface UserDao extends BaseDao<User, Long> {
     int updatePhone(User user);
     
     int updateUrl(FriendlyUrl friendlyUrl);
+
+    void updateUserByUserId(User user);
 }

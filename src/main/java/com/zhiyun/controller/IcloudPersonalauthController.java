@@ -77,6 +77,7 @@ public class IcloudPersonalauthController extends BaseController {
 			icloudPersonalauth.setStatus(AuditState.AUDITING);
 			icloudPersonalauth.setSended("F");
 			icloudPersonalauth.setUpdated("F");
+			icloudPersonalauth.setUserId(UserHolder.getId());
 			icloudPersonalauthService.savePersonalauth(icloudPersonalauth);
 		} catch (BusinessException be) {
 			LOGGER.debug("业务异常" + be);
@@ -103,7 +104,7 @@ public class IcloudPersonalauthController extends BaseController {
 				baseResult.setResult(false);
 				return baseResult;
 			}
-
+            icloudPersonalauth.setUserId(UserHolder.getId());
 			icloudPersonalauthService.updateIcloudPersonalauth(icloudPersonalauth);
 			baseResult.setModel(icloudPersonalauth);
 		} catch (BusinessException be) {

@@ -48,7 +48,7 @@ public class SidebarController extends BaseController {
 	 * @throws
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/get", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/getOld", method = { RequestMethod.GET, RequestMethod.POST })
 	public Object getSidebar() {
 
 		BaseResult<IcloudSidebarDto> baseResult = new BaseResult<>();
@@ -84,13 +84,12 @@ public class SidebarController extends BaseController {
 	 * @throws
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/get1", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/get", method = { RequestMethod.GET, RequestMethod.POST })
 	public Object getSidebarList() {
 
 		BaseResult<IcloudSidebarDto> baseResult = new BaseResult<>();
 		try {
 			OnlineUser user = UserHolder.getUser();
-			
 			
 			IcloudSidebarDto icloudSidebarDto = icloudSidebarService.listByUser(user);
 

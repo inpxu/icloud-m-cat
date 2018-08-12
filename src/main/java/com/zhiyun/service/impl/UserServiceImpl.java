@@ -343,4 +343,20 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
     }
 
 
+    @Override
+    public void updateAvatar(Long userId, String avatar) {
+        User user = userDao.findUserByUserId(userId);
+        user.setAvatar(avatar);
+        userDao.updateUserByUserId(user);
+    }
+
+    @Override
+    public EnterpriseAuthDto getEnterpriseAuth(Long userId) {
+
+        IcloudEnterpriseauth icloudEnterpriseauth = enterpriseauthDao.findByUserId(userId);
+        EnterpriseAuthDto enterpriseAuthDto = getEnterpriseAuthDto(icloudEnterpriseauth);
+
+        return enterpriseAuthDto;
+
+    }
 }

@@ -1,81 +1,85 @@
 <?xml version="1.0" encoding="UTF-8" ?>   
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zhiyun.dao.impl.IcloudEnterpriseauthDaoImpl">
+<mapper namespace="com.zhiyun.dao.impl.IcloudOnicloudDaoImpl">
 
 	<!-- 插入实体 -->
-	<insert id="insert" parameterType="com.zhiyun.entity.IcloudEnterpriseauth">
-		INSERT INTO ICLOUD_ENTERPRISEAUTH (
+	<insert id="insert" parameterType="com.zhiyun.entity.IcloudOnicloud">
+		INSERT INTO ICLOUD_ONICLOUD (
 		   	ID,
-		   	USER_ID,
+		   	CREATE_USER_ID,
 		   	NAME,
+		   	PROPERTY,
+		   	TRADE,
 		   	PROVINCE,
 		   	CITY,
 		   	DISTRICT,
 		   	DETAILED_ADDRESS,
 		   	CONTACT_PERSON,
 		   	CONTACT_PHONE,
-		   	LEGAL_PERSON,
-		   	LEGAL_PERSON_PHONE,
-		   	LEGAL_PERSON_IDENTITY_CARD,
-		   	CERTIFICATE_POSITIVE_SHARE_URL,
-		   	CERTIFICATE_NEGATIVE_SHARE_URL,
-		   	SOCIAL_CREDIT_CODE,
-		   	BUSINESS_LICENCE_SHARE_URL,
+		   	EMPLOYEE_SCALE,
+		   	EQUIPMENT_SCALE,
+		   	ON_ICLOUD_SCALE,
+		   	SITE_IMAGE_SHARE_URL,
 		   	STATUS,
 		   	CREATE_TIME,
 		   	MODIFY_TIME,
 		   	DELETED,
 		   	CREATE_BY,
 		   	MODIFY_BY,
+		   	ORGANIZATION_ID,
 		   	SENDED,
 		   	UPDATED,
-		   	APPROVAL_OPINION,
-		   	TRADE
+		   	APPROVAL_OPINION
 		) VALUES (
 		   	#{id,jdbcType=BIGINT},
-		   	#{userId,jdbcType=BIGINT},
+		   	#{createUserId,jdbcType=BIGINT},
 		   	#{name,jdbcType=VARCHAR},
+		   	#{property,jdbcType=INTEGER},
+		   	#{trade,jdbcType=INTEGER},
 		   	#{province,jdbcType=VARCHAR},
 		   	#{city,jdbcType=VARCHAR},
 		   	#{district,jdbcType=VARCHAR},
 		   	#{detailedAddress,jdbcType=VARCHAR},
 		   	#{contactPerson,jdbcType=VARCHAR},
 		   	#{contactPhone,jdbcType=VARCHAR},
-		   	#{legalPerson,jdbcType=VARCHAR},
-		   	#{legalPersonPhone,jdbcType=VARCHAR},
-		   	#{legalPersonIdentityCard,jdbcType=VARCHAR},
-		   	#{certificatePositiveShareUrl,jdbcType=VARCHAR},
-		   	#{certificateNegativeShareUrl,jdbcType=VARCHAR},
-		   	#{socialCreditCode,jdbcType=VARCHAR},
-		   	#{businessLicenceShareUrl,jdbcType=VARCHAR},
+		   	#{employeeScale,jdbcType=INTEGER},
+		   	#{equipmentScale,jdbcType=INTEGER},
+		   	#{onIcloudScale,jdbcType=INTEGER},
+		   	#{siteImageShareUrl,jdbcType=VARCHAR},
 		   	#{status,jdbcType=INTEGER},
 		   	#{createTime,jdbcType=TIMESTAMP},
 		   	#{modifyTime,jdbcType=TIMESTAMP},
 		   	#{deleted,jdbcType=VARCHAR},
 		   	#{createBy,jdbcType=VARCHAR},
 		   	#{modifyBy,jdbcType=VARCHAR},
+		   	#{organizationId,jdbcType=BIGINT},
 		   	#{sended,jdbcType=VARCHAR},
 		   	#{updated,jdbcType=VARCHAR},
-		   	#{approvalOpinion,jdbcType=VARCHAR},
-		   	#{trade,jdbcType=INTEGER}
+		   	#{approvalOpinion,jdbcType=VARCHAR}
 		)
 		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
 			SELECT LAST_INSERT_ID() AS ID
 		</selectKey>
 		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
-			SELECT SEQ_ICLOUD_ENTERPRISEAUTH.nextval as id FROM dual
+			SELECT SEQ_ICLOUD_ONICLOUD.nextval as id FROM dual
 		</selectKey>
 	</insert>
 
 	<!-- 更新实体 -->
-	<update id="update" parameterType="com.zhiyun.entity.IcloudEnterpriseauth">
-		UPDATE ICLOUD_ENTERPRISEAUTH
+	<update id="update" parameterType="com.zhiyun.entity.IcloudOnicloud">
+		UPDATE ICLOUD_ONICLOUD
 		<set>
-			<if test="userId != null">
-				USER_ID = #{userId,jdbcType=BIGINT},
+			<if test="createUserId != null">
+				CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
 			</if>
 			<if test="name != null">
 				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="property != null">
+				PROPERTY = #{property,jdbcType=INTEGER},
+			</if>
+			<if test="trade != null">
+				TRADE = #{trade,jdbcType=INTEGER},
 			</if>
 			<if test="province != null">
 				PROVINCE = #{province,jdbcType=VARCHAR},
@@ -95,26 +99,17 @@
 			<if test="contactPhone != null">
 				CONTACT_PHONE = #{contactPhone,jdbcType=VARCHAR},
 			</if>
-			<if test="legalPerson != null">
-				LEGAL_PERSON = #{legalPerson,jdbcType=VARCHAR},
+			<if test="employeeScale != null">
+				EMPLOYEE_SCALE = #{employeeScale,jdbcType=INTEGER},
 			</if>
-			<if test="legalPersonPhone != null">
-				LEGAL_PERSON_PHONE = #{legalPersonPhone,jdbcType=VARCHAR},
+			<if test="equipmentScale != null">
+				EQUIPMENT_SCALE = #{equipmentScale,jdbcType=INTEGER},
 			</if>
-			<if test="legalPersonIdentityCard != null">
-				LEGAL_PERSON_IDENTITY_CARD = #{legalPersonIdentityCard,jdbcType=VARCHAR},
+			<if test="onIcloudScale != null">
+				ON_ICLOUD_SCALE = #{onIcloudScale,jdbcType=INTEGER},
 			</if>
-			<if test="certificatePositiveShareUrl != null">
-				CERTIFICATE_POSITIVE_SHARE_URL = #{certificatePositiveShareUrl,jdbcType=VARCHAR},
-			</if>
-			<if test="certificateNegativeShareUrl != null">
-				CERTIFICATE_NEGATIVE_SHARE_URL = #{certificateNegativeShareUrl,jdbcType=VARCHAR},
-			</if>
-			<if test="socialCreditCode != null">
-				SOCIAL_CREDIT_CODE = #{socialCreditCode,jdbcType=VARCHAR},
-			</if>
-			<if test="businessLicenceShareUrl != null">
-				BUSINESS_LICENCE_SHARE_URL = #{businessLicenceShareUrl,jdbcType=VARCHAR},
+			<if test="siteImageShareUrl != null">
+				SITE_IMAGE_SHARE_URL = #{siteImageShareUrl,jdbcType=VARCHAR},
 			</if>
 			<if test="status != null">
 				STATUS = #{status,jdbcType=INTEGER},
@@ -134,6 +129,9 @@
 			<if test="modifyBy != null">
 				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
 			</if>
+			<if test="organizationId != null">
+				ORGANIZATION_ID = #{organizationId,jdbcType=BIGINT},
+			</if>
 			<if test="sended != null">
 				SENDED = #{sended,jdbcType=VARCHAR},
 			</if>
@@ -143,49 +141,45 @@
 			<if test="approvalOpinion != null">
 				APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR},
 			</if>
-			<if test="trade != null">
-				TRADE = #{trade,jdbcType=INTEGER},
-			</if>
 		</set>
 		WHERE ID = #{id,jdbcType=INTEGER}
 	</update>
 	
 	<!-- 更新实体 -->
-	<update id="updateFields" parameterType="com.zhiyun.entity.IcloudEnterpriseauth">
-		UPDATE ICLOUD_ENTERPRISEAUTH
+	<update id="updateFields" parameterType="com.zhiyun.entity.IcloudOnicloud">
+		UPDATE ICLOUD_ONICLOUD
 		<set>
-			USER_ID = #{userId,jdbcType=BIGINT},
+			CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
 			NAME = #{name,jdbcType=VARCHAR},
+			PROPERTY = #{property,jdbcType=INTEGER},
+			TRADE = #{trade,jdbcType=INTEGER},
 			PROVINCE = #{province,jdbcType=VARCHAR},
 			CITY = #{city,jdbcType=VARCHAR},
 			DISTRICT = #{district,jdbcType=VARCHAR},
 			DETAILED_ADDRESS = #{detailedAddress,jdbcType=VARCHAR},
 			CONTACT_PERSON = #{contactPerson,jdbcType=VARCHAR},
 			CONTACT_PHONE = #{contactPhone,jdbcType=VARCHAR},
-			LEGAL_PERSON = #{legalPerson,jdbcType=VARCHAR},
-			LEGAL_PERSON_PHONE = #{legalPersonPhone,jdbcType=VARCHAR},
-			LEGAL_PERSON_IDENTITY_CARD = #{legalPersonIdentityCard,jdbcType=VARCHAR},
-			CERTIFICATE_POSITIVE_SHARE_URL = #{certificatePositiveShareUrl,jdbcType=VARCHAR},
-			CERTIFICATE_NEGATIVE_SHARE_URL = #{certificateNegativeShareUrl,jdbcType=VARCHAR},
-			SOCIAL_CREDIT_CODE = #{socialCreditCode,jdbcType=VARCHAR},
-			BUSINESS_LICENCE_SHARE_URL = #{businessLicenceShareUrl,jdbcType=VARCHAR},
+			EMPLOYEE_SCALE = #{employeeScale,jdbcType=INTEGER},
+			EQUIPMENT_SCALE = #{equipmentScale,jdbcType=INTEGER},
+			ON_ICLOUD_SCALE = #{onIcloudScale,jdbcType=INTEGER},
+			SITE_IMAGE_SHARE_URL = #{siteImageShareUrl,jdbcType=VARCHAR},
 			STATUS = #{status,jdbcType=INTEGER},
 			CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
 			MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
 			DELETED = #{deleted,jdbcType=VARCHAR},
 			CREATE_BY = #{createBy,jdbcType=VARCHAR},
 			MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+			ORGANIZATION_ID = #{organizationId,jdbcType=BIGINT},
 			SENDED = #{sended,jdbcType=VARCHAR},
 			UPDATED = #{updated,jdbcType=VARCHAR},
 			APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR},
-			TRADE = #{trade,jdbcType=INTEGER},
 		</set>
 		WHERE ID = #{id,jdbcType=INTEGER}
 	</update>
 
 	<!-- 删除实体 -->
-	<update id="delete" parameterType="com.zhiyun.entity.IcloudEnterpriseauth">
-		UPDATE ICLOUD_ENTERPRISEAUTH
+	<update id="delete" parameterType="com.zhiyun.entity.IcloudOnicloud">
+		UPDATE ICLOUD_ONICLOUD
 		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
 		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
 		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
@@ -196,54 +190,59 @@
 	<sql id="selectFieldSQL">
 		SELECT 
 		       ID id,
-		       USER_ID userId,
+		       CREATE_USER_ID createUserId,
 		       NAME name,
+		       PROPERTY property,
+		       TRADE trade,
 		       PROVINCE province,
 		       CITY city,
 		       DISTRICT district,
 		       DETAILED_ADDRESS detailedAddress,
 		       CONTACT_PERSON contactPerson,
 		       CONTACT_PHONE contactPhone,
-		       LEGAL_PERSON legalPerson,
-		       LEGAL_PERSON_PHONE legalPersonPhone,
-		       LEGAL_PERSON_IDENTITY_CARD legalPersonIdentityCard,
-		       CERTIFICATE_POSITIVE_SHARE_URL certificatePositiveShareUrl,
-		       CERTIFICATE_NEGATIVE_SHARE_URL certificateNegativeShareUrl,
-		       SOCIAL_CREDIT_CODE socialCreditCode,
-		       BUSINESS_LICENCE_SHARE_URL businessLicenceShareUrl,
+		       EMPLOYEE_SCALE employeeScale,
+		       EQUIPMENT_SCALE equipmentScale,
+		       ON_ICLOUD_SCALE onIcloudScale,
+		       SITE_IMAGE_SHARE_URL siteImageShareUrl,
 		       STATUS status,
 		       CREATE_TIME createTime,
 		       MODIFY_TIME modifyTime,
 		       DELETED deleted,
 		       CREATE_BY createBy,
 		       MODIFY_BY modifyBy,
+		       ORGANIZATION_ID organizationId,
 		       SENDED sended,
 		       UPDATED updated,
-		       APPROVAL_OPINION approvalOpinion,
-		       TRADE trade
+		       APPROVAL_OPINION approvalOpinion
 	</sql>
 
 	<!-- 查询 -->
-	<select id="get" parameterType="map" resultType="com.zhiyun.entity.IcloudEnterpriseauth">
+	<select id="get" parameterType="map" resultType="com.zhiyun.entity.IcloudOnicloud">
 		<include refid="selectFieldSQL" />
-		  FROM ICLOUD_ENTERPRISEAUTH
+		  FROM ICLOUD_ONICLOUD
 		 WHERE ID = #{id,jdbcType=INTEGER}
 		   AND DELETED = #{deleted,jdbcType=VARCHAR}
 	</select>
 
 	<!-- 查询 -->
-	<select id="find" parameterType="com.zhiyun.entity.IcloudEnterpriseauth" resultType="com.zhiyun.entity.IcloudEnterpriseauth">
+	<select id="find" parameterType="com.zhiyun.entity.IcloudOnicloud" resultType="com.zhiyun.entity.IcloudOnicloud">
 		<include refid="selectFieldSQL" />
-		  FROM ICLOUD_ENTERPRISEAUTH
+		  FROM ICLOUD_ONICLOUD
 		<where>
 			<if test="id != null">
 				AND ID = #{id,jdbcType=INTEGER}
 			</if>
-			<if test="userId != null">
-				AND USER_ID = #{userId,jdbcType=BIGINT}
+			<if test="createUserId != null">
+				AND CREATE_USER_ID = #{createUserId,jdbcType=BIGINT}
 			</if>
 			<if test="name != null and name != ''">
 				AND NAME = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="property != null">
+				AND PROPERTY = #{property,jdbcType=INTEGER}
+			</if>
+			<if test="trade != null">
+				AND TRADE = #{trade,jdbcType=INTEGER}
 			</if>
 			<if test="province != null and province != ''">
 				AND PROVINCE = #{province,jdbcType=VARCHAR}
@@ -263,32 +262,26 @@
 			<if test="contactPhone != null and contactPhone != ''">
 				AND CONTACT_PHONE = #{contactPhone,jdbcType=VARCHAR}
 			</if>
-			<if test="legalPerson != null and legalPerson != ''">
-				AND LEGAL_PERSON = #{legalPerson,jdbcType=VARCHAR}
+			<if test="employeeScale != null">
+				AND EMPLOYEE_SCALE = #{employeeScale,jdbcType=INTEGER}
 			</if>
-			<if test="legalPersonPhone != null and legalPersonPhone != ''">
-				AND LEGAL_PERSON_PHONE = #{legalPersonPhone,jdbcType=VARCHAR}
+			<if test="equipmentScale != null">
+				AND EQUIPMENT_SCALE = #{equipmentScale,jdbcType=INTEGER}
 			</if>
-			<if test="legalPersonIdentityCard != null and legalPersonIdentityCard != ''">
-				AND LEGAL_PERSON_IDENTITY_CARD = #{legalPersonIdentityCard,jdbcType=VARCHAR}
+			<if test="onIcloudScale != null">
+				AND ON_ICLOUD_SCALE = #{onIcloudScale,jdbcType=INTEGER}
 			</if>
-			<if test="certificatePositiveShareUrl != null and certificatePositiveShareUrl != ''">
-				AND CERTIFICATE_POSITIVE_SHARE_URL = #{certificatePositiveShareUrl,jdbcType=VARCHAR}
-			</if>
-			<if test="certificateNegativeShareUrl != null and certificateNegativeShareUrl != ''">
-				AND CERTIFICATE_NEGATIVE_SHARE_URL = #{certificateNegativeShareUrl,jdbcType=VARCHAR}
-			</if>
-			<if test="socialCreditCode != null and socialCreditCode != ''">
-				AND SOCIAL_CREDIT_CODE = #{socialCreditCode,jdbcType=VARCHAR}
-			</if>
-			<if test="businessLicenceShareUrl != null and businessLicenceShareUrl != ''">
-				AND BUSINESS_LICENCE_SHARE_URL = #{businessLicenceShareUrl,jdbcType=VARCHAR}
+			<if test="siteImageShareUrl != null and siteImageShareUrl != ''">
+				AND SITE_IMAGE_SHARE_URL = #{siteImageShareUrl,jdbcType=VARCHAR}
 			</if>
 			<if test="status != null">
 				AND STATUS = #{status,jdbcType=INTEGER}
 			</if>
 			<if test="deleted != null and deleted != ''">
 				AND DELETED = #{deleted,jdbcType=VARCHAR}
+			</if>
+			<if test="organizationId != null">
+				AND ORGANIZATION_ID = #{organizationId,jdbcType=BIGINT}
 			</if>
 			<if test="sended != null and sended != ''">
 				AND SENDED = #{sended,jdbcType=VARCHAR}
@@ -299,27 +292,30 @@
 			<if test="approvalOpinion != null and approvalOpinion != ''">
 				AND APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR}
 			</if>
-			<if test="trade != null">
-				AND TRADE = #{trade,jdbcType=INTEGER}
-			</if>
 		</where>
 	</select>
 
 	<!-- 查询所有 -->
-	<select id="findAll" parameterType="map" resultType="com.zhiyun.entity.IcloudEnterpriseauth">
+	<select id="findAll" parameterType="map" resultType="com.zhiyun.entity.IcloudOnicloud">
 		<include refid="selectFieldSQL" />
-		  FROM ICLOUD_ENTERPRISEAUTH
+		  FROM ICLOUD_ONICLOUD
 		 WHERE DELETED = #{deleted,jdbcType=VARCHAR}
 	</select>
 
 	<!-- 分页查询（条件） -->
 	<sql id="page_condition">
 		<where>
-				<if test="entity.userId != null">
-					AND USER_ID = #{entity.userId,jdbcType=BIGINT}
+				<if test="entity.createUserId != null">
+					AND CREATE_USER_ID = #{entity.createUserId,jdbcType=BIGINT}
 				</if>
 				<if test="entity.name != null and entity.name != ''">
 					AND NAME = #{entity.name,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.property != null">
+					AND PROPERTY = #{entity.property,jdbcType=INTEGER}
+				</if>
+				<if test="entity.trade != null">
+					AND TRADE = #{entity.trade,jdbcType=INTEGER}
 				</if>
 				<if test="entity.province != null and entity.province != ''">
 					AND PROVINCE = #{entity.province,jdbcType=VARCHAR}
@@ -339,32 +335,26 @@
 				<if test="entity.contactPhone != null and entity.contactPhone != ''">
 					AND CONTACT_PHONE = #{entity.contactPhone,jdbcType=VARCHAR}
 				</if>
-				<if test="entity.legalPerson != null and entity.legalPerson != ''">
-					AND LEGAL_PERSON = #{entity.legalPerson,jdbcType=VARCHAR}
+				<if test="entity.employeeScale != null">
+					AND EMPLOYEE_SCALE = #{entity.employeeScale,jdbcType=INTEGER}
 				</if>
-				<if test="entity.legalPersonPhone != null and entity.legalPersonPhone != ''">
-					AND LEGAL_PERSON_PHONE = #{entity.legalPersonPhone,jdbcType=VARCHAR}
+				<if test="entity.equipmentScale != null">
+					AND EQUIPMENT_SCALE = #{entity.equipmentScale,jdbcType=INTEGER}
 				</if>
-				<if test="entity.legalPersonIdentityCard != null and entity.legalPersonIdentityCard != ''">
-					AND LEGAL_PERSON_IDENTITY_CARD = #{entity.legalPersonIdentityCard,jdbcType=VARCHAR}
+				<if test="entity.onIcloudScale != null">
+					AND ON_ICLOUD_SCALE = #{entity.onIcloudScale,jdbcType=INTEGER}
 				</if>
-				<if test="entity.certificatePositiveShareUrl != null and entity.certificatePositiveShareUrl != ''">
-					AND CERTIFICATE_POSITIVE_SHARE_URL = #{entity.certificatePositiveShareUrl,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.certificateNegativeShareUrl != null and entity.certificateNegativeShareUrl != ''">
-					AND CERTIFICATE_NEGATIVE_SHARE_URL = #{entity.certificateNegativeShareUrl,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.socialCreditCode != null and entity.socialCreditCode != ''">
-					AND SOCIAL_CREDIT_CODE = #{entity.socialCreditCode,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.businessLicenceShareUrl != null and entity.businessLicenceShareUrl != ''">
-					AND BUSINESS_LICENCE_SHARE_URL = #{entity.businessLicenceShareUrl,jdbcType=VARCHAR}
+				<if test="entity.siteImageShareUrl != null and entity.siteImageShareUrl != ''">
+					AND SITE_IMAGE_SHARE_URL = #{entity.siteImageShareUrl,jdbcType=VARCHAR}
 				</if>
 				<if test="entity.status != null">
 					AND STATUS = #{entity.status,jdbcType=INTEGER}
 				</if>
 				<if test="entity.deleted != null and entity.deleted != ''">
 					AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.organizationId != null">
+					AND ORGANIZATION_ID = #{entity.organizationId,jdbcType=BIGINT}
 				</if>
 				<if test="entity.sended != null and entity.sended != ''">
 					AND SENDED = #{entity.sended,jdbcType=VARCHAR}
@@ -375,24 +365,21 @@
 				<if test="entity.approvalOpinion != null and entity.approvalOpinion != ''">
 					AND APPROVAL_OPINION = #{entity.approvalOpinion,jdbcType=VARCHAR}
 				</if>
-				<if test="entity.trade != null">
-					AND TRADE = #{entity.trade,jdbcType=INTEGER}
-				</if>
 		</where>
 	</sql>
 
 	<!-- 分页查询（计数） -->
 	<select id="page_count" parameterType="map" resultType="int">
 		SELECT count(*)
-		  FROM ICLOUD_ENTERPRISEAUTH
+		  FROM ICLOUD_ONICLOUD
 		<include refid="page_condition" />
 	</select>
 
 	<!-- 分页查询（数据） -->
-	<select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.IcloudEnterpriseauth">
+	<select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.IcloudOnicloud">
 		<include refid="mybatis.pageStartSQL" />
 		<include refid="selectFieldSQL" />
-		  FROM ICLOUD_ENTERPRISEAUTH
+		  FROM ICLOUD_ONICLOUD
 		<include refid="page_condition" />
 		<include refid="mybatis.pageEndSQL" />
 	</select>
@@ -400,23 +387,29 @@
 	<!-- Map查询所有 -->
 	<select id="findMapListAll" parameterType="map" resultType="map">
 		<include refid="selectFieldSQL" />
-		  FROM ICLOUD_ENTERPRISEAUTH
+		  FROM ICLOUD_ONICLOUD
 		 WHERE DELETED = "F"
 	</select>
 	
 	<!-- Map条件查询 -->
 	<select id="findMapList" parameterType="map" resultType="map">
 		<include refid="selectFieldSQL" />
-		  FROM ICLOUD_ENTERPRISEAUTH
+		  FROM ICLOUD_ONICLOUD
 		 <where>
 			<if test="id != null">
 				AND ID = #{id,jdbcType=INTEGER}
 			</if>
-			<if test="userId != null">
-				AND USER_ID = #{userId,jdbcType=BIGINT}
+			<if test="createUserId != null">
+				AND CREATE_USER_ID = #{createUserId,jdbcType=BIGINT}
 			</if>
 			<if test="name != null and name != ''">
 				AND NAME = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="property != null">
+				AND PROPERTY = #{property,jdbcType=INTEGER}
+			</if>
+			<if test="trade != null">
+				AND TRADE = #{trade,jdbcType=INTEGER}
 			</if>
 			<if test="province != null and province != ''">
 				AND PROVINCE = #{province,jdbcType=VARCHAR}
@@ -436,32 +429,26 @@
 			<if test="contactPhone != null and contactPhone != ''">
 				AND CONTACT_PHONE = #{contactPhone,jdbcType=VARCHAR}
 			</if>
-			<if test="legalPerson != null and legalPerson != ''">
-				AND LEGAL_PERSON = #{legalPerson,jdbcType=VARCHAR}
+			<if test="employeeScale != null">
+				AND EMPLOYEE_SCALE = #{employeeScale,jdbcType=INTEGER}
 			</if>
-			<if test="legalPersonPhone != null and legalPersonPhone != ''">
-				AND LEGAL_PERSON_PHONE = #{legalPersonPhone,jdbcType=VARCHAR}
+			<if test="equipmentScale != null">
+				AND EQUIPMENT_SCALE = #{equipmentScale,jdbcType=INTEGER}
 			</if>
-			<if test="legalPersonIdentityCard != null and legalPersonIdentityCard != ''">
-				AND LEGAL_PERSON_IDENTITY_CARD = #{legalPersonIdentityCard,jdbcType=VARCHAR}
+			<if test="onIcloudScale != null">
+				AND ON_ICLOUD_SCALE = #{onIcloudScale,jdbcType=INTEGER}
 			</if>
-			<if test="certificatePositiveShareUrl != null and certificatePositiveShareUrl != ''">
-				AND CERTIFICATE_POSITIVE_SHARE_URL = #{certificatePositiveShareUrl,jdbcType=VARCHAR}
-			</if>
-			<if test="certificateNegativeShareUrl != null and certificateNegativeShareUrl != ''">
-				AND CERTIFICATE_NEGATIVE_SHARE_URL = #{certificateNegativeShareUrl,jdbcType=VARCHAR}
-			</if>
-			<if test="socialCreditCode != null and socialCreditCode != ''">
-				AND SOCIAL_CREDIT_CODE = #{socialCreditCode,jdbcType=VARCHAR}
-			</if>
-			<if test="businessLicenceShareUrl != null and businessLicenceShareUrl != ''">
-				AND BUSINESS_LICENCE_SHARE_URL = #{businessLicenceShareUrl,jdbcType=VARCHAR}
+			<if test="siteImageShareUrl != null and siteImageShareUrl != ''">
+				AND SITE_IMAGE_SHARE_URL = #{siteImageShareUrl,jdbcType=VARCHAR}
 			</if>
 			<if test="status != null">
 				AND STATUS = #{status,jdbcType=INTEGER}
 			</if>
 			<if test="deleted != null and deleted != ''">
 				AND DELETED = #{deleted,jdbcType=VARCHAR}
+			</if>
+			<if test="organizationId != null">
+				AND ORGANIZATION_ID = #{organizationId,jdbcType=BIGINT}
 			</if>
 			<if test="sended != null and sended != ''">
 				AND SENDED = #{sended,jdbcType=VARCHAR}
@@ -472,87 +459,88 @@
 			<if test="approvalOpinion != null and approvalOpinion != ''">
 				AND APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR}
 			</if>
-			<if test="trade != null">
-				AND TRADE = #{trade,jdbcType=INTEGER}
-			</if>
 		 WHERE DELETED = "F"
 		</where>
 	</select>
 	
 	<!-- 插入实体map -->
 	<insert id="mapInsert" parameterType="map">
-		INSERT INTO ICLOUD_ENTERPRISEAUTH (
+		INSERT INTO ICLOUD_ONICLOUD (
 		   	ID,
-		   	USER_ID,
+		   	CREATE_USER_ID,
 		   	NAME,
+		   	PROPERTY,
+		   	TRADE,
 		   	PROVINCE,
 		   	CITY,
 		   	DISTRICT,
 		   	DETAILED_ADDRESS,
 		   	CONTACT_PERSON,
 		   	CONTACT_PHONE,
-		   	LEGAL_PERSON,
-		   	LEGAL_PERSON_PHONE,
-		   	LEGAL_PERSON_IDENTITY_CARD,
-		   	CERTIFICATE_POSITIVE_SHARE_URL,
-		   	CERTIFICATE_NEGATIVE_SHARE_URL,
-		   	SOCIAL_CREDIT_CODE,
-		   	BUSINESS_LICENCE_SHARE_URL,
+		   	EMPLOYEE_SCALE,
+		   	EQUIPMENT_SCALE,
+		   	ON_ICLOUD_SCALE,
+		   	SITE_IMAGE_SHARE_URL,
 		   	STATUS,
 		   	CREATE_TIME,
 		   	MODIFY_TIME,
 		   	DELETED,
 		   	CREATE_BY,
 		   	MODIFY_BY,
+		   	ORGANIZATION_ID,
 		   	SENDED,
 		   	UPDATED,
-		   	APPROVAL_OPINION,
-		   	TRADE
+		   	APPROVAL_OPINION
 		) VALUES (
 		   	#{ id,jdbcType=BIGINT},
-		   	#{ userId,jdbcType=BIGINT},
+		   	#{ createUserId,jdbcType=BIGINT},
 		   	#{ name,jdbcType=VARCHAR},
+		   	#{ property,jdbcType=INTEGER},
+		   	#{ trade,jdbcType=INTEGER},
 		   	#{ province,jdbcType=VARCHAR},
 		   	#{ city,jdbcType=VARCHAR},
 		   	#{ district,jdbcType=VARCHAR},
 		   	#{ detailedAddress,jdbcType=VARCHAR},
 		   	#{ contactPerson,jdbcType=VARCHAR},
 		   	#{ contactPhone,jdbcType=VARCHAR},
-		   	#{ legalPerson,jdbcType=VARCHAR},
-		   	#{ legalPersonPhone,jdbcType=VARCHAR},
-		   	#{ legalPersonIdentityCard,jdbcType=VARCHAR},
-		   	#{ certificatePositiveShareUrl,jdbcType=VARCHAR},
-		   	#{ certificateNegativeShareUrl,jdbcType=VARCHAR},
-		   	#{ socialCreditCode,jdbcType=VARCHAR},
-		   	#{ businessLicenceShareUrl,jdbcType=VARCHAR},
+		   	#{ employeeScale,jdbcType=INTEGER},
+		   	#{ equipmentScale,jdbcType=INTEGER},
+		   	#{ onIcloudScale,jdbcType=INTEGER},
+		   	#{ siteImageShareUrl,jdbcType=VARCHAR},
 		   	#{ status,jdbcType=INTEGER},
 		   	#{ createTime,jdbcType=TIMESTAMP},
 		   	#{ modifyTime,jdbcType=TIMESTAMP},
 		   	#{ deleted,jdbcType=VARCHAR},
 		   	#{ createBy,jdbcType=VARCHAR},
 		   	#{ modifyBy,jdbcType=VARCHAR},
+		   	#{ organizationId,jdbcType=BIGINT},
 		   	#{ sended,jdbcType=VARCHAR},
 		   	#{ updated,jdbcType=VARCHAR},
-		   	#{ approvalOpinion,jdbcType=VARCHAR},
-		   	#{ trade,jdbcType=INTEGER}
+		   	#{ approvalOpinion,jdbcType=VARCHAR}
 		)
 		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
 			SELECT LAST_INSERT_ID() AS ID
 		</selectKey>
 		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
-			SELECT SEQ_ICLOUD_ENTERPRISEAUTH.nextval as id FROM dual
+			SELECT SEQ_ICLOUD_ONICLOUD.nextval as id FROM dual
 		</selectKey>
 	</insert>
 	
 	<!-- 更新实体Map -->
 	<update id="mapUpdate" parameterType="map">
-		UPDATE ICLOUD_ENTERPRISEAUTH
+		UPDATE ICLOUD_ONICLOUD
 		<set>
-			<if test="userId != null">
-				USER_ID = #{userId,jdbcType=BIGINT},
+			<if test="createUserId != null">
+				CREATE_USER_ID = #{createUserId,jdbcType=BIGINT},
 			</if>
 			<if test="name != null">
 				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="property != null">
+				PROPERTY = #{property,jdbcType=INTEGER},
+			</if>
+			<if test="trade != null">
+				TRADE = #{trade,jdbcType=INTEGER},
 			</if>
 			<if test="province != null">
 				PROVINCE = #{province,jdbcType=VARCHAR},
@@ -572,26 +560,17 @@
 			<if test="contactPhone != null">
 				CONTACT_PHONE = #{contactPhone,jdbcType=VARCHAR},
 			</if>
-			<if test="legalPerson != null">
-				LEGAL_PERSON = #{legalPerson,jdbcType=VARCHAR},
+			<if test="employeeScale != null">
+				EMPLOYEE_SCALE = #{employeeScale,jdbcType=INTEGER},
 			</if>
-			<if test="legalPersonPhone != null">
-				LEGAL_PERSON_PHONE = #{legalPersonPhone,jdbcType=VARCHAR},
+			<if test="equipmentScale != null">
+				EQUIPMENT_SCALE = #{equipmentScale,jdbcType=INTEGER},
 			</if>
-			<if test="legalPersonIdentityCard != null">
-				LEGAL_PERSON_IDENTITY_CARD = #{legalPersonIdentityCard,jdbcType=VARCHAR},
+			<if test="onIcloudScale != null">
+				ON_ICLOUD_SCALE = #{onIcloudScale,jdbcType=INTEGER},
 			</if>
-			<if test="certificatePositiveShareUrl != null">
-				CERTIFICATE_POSITIVE_SHARE_URL = #{certificatePositiveShareUrl,jdbcType=VARCHAR},
-			</if>
-			<if test="certificateNegativeShareUrl != null">
-				CERTIFICATE_NEGATIVE_SHARE_URL = #{certificateNegativeShareUrl,jdbcType=VARCHAR},
-			</if>
-			<if test="socialCreditCode != null">
-				SOCIAL_CREDIT_CODE = #{socialCreditCode,jdbcType=VARCHAR},
-			</if>
-			<if test="businessLicenceShareUrl != null">
-				BUSINESS_LICENCE_SHARE_URL = #{businessLicenceShareUrl,jdbcType=VARCHAR},
+			<if test="siteImageShareUrl != null">
+				SITE_IMAGE_SHARE_URL = #{siteImageShareUrl,jdbcType=VARCHAR},
 			</if>
 			<if test="status != null">
 				STATUS = #{status,jdbcType=INTEGER},
@@ -611,6 +590,9 @@
 			<if test="modifyBy != null">
 				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
 			</if>
+			<if test="organizationId != null">
+				ORGANIZATION_ID = #{organizationId,jdbcType=BIGINT},
+			</if>
 			<if test="sended != null">
 				SENDED = #{sended,jdbcType=VARCHAR},
 			</if>
@@ -619,9 +601,6 @@
 			</if>
 			<if test="approvalOpinion != null">
 				APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR},
-			</if>
-			<if test="trade != null">
-				TRADE = #{trade,jdbcType=INTEGER},
 			</if>
 		</set>
 		WHERE ID = #{id,jdbcType=INTEGER}
