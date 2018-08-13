@@ -7,11 +7,8 @@
 		INSERT INTO ICLOUD_APPLICATIONAGENCY (
 		   	ID,
 		   	USER_ID,
-		   	NAME,
 		   	AGENCY_TYPE,
-		   	AGENCY_LEVEL,
 		   	AGENCY_AREA,
-		   	QUALITY_IMAGE_SHARE_URL,
 		   	STATUS,
 		   	CREATE_TIME,
 		   	MODIFY_TIME,
@@ -25,11 +22,8 @@
 		) VALUES (
 		   	#{id,jdbcType=BIGINT},
 		   	#{userId,jdbcType=BIGINT},
-		   	#{name,jdbcType=VARCHAR},
 		   	#{agencyType,jdbcType=VARCHAR},
-		   	#{agencyLevel,jdbcType=VARCHAR},
 		   	#{agencyArea,jdbcType=VARCHAR},
-		   	#{qualityImageShareUrl,jdbcType=VARCHAR},
 		   	#{status,jdbcType=INTEGER},
 		   	#{createTime,jdbcType=TIMESTAMP},
 		   	#{modifyTime,jdbcType=TIMESTAMP},
@@ -56,20 +50,11 @@
 			<if test="userId != null">
 				USER_ID = #{userId,jdbcType=BIGINT},
 			</if>
-			<if test="name != null">
-				NAME = #{name,jdbcType=VARCHAR},
-			</if>
 			<if test="agencyType != null">
 				AGENCY_TYPE = #{agencyType,jdbcType=VARCHAR},
 			</if>
-			<if test="agencyLevel != null">
-				AGENCY_LEVEL = #{agencyLevel,jdbcType=VARCHAR},
-			</if>
 			<if test="agencyArea != null">
 				AGENCY_AREA = #{agencyArea,jdbcType=VARCHAR},
-			</if>
-			<if test="qualityImageShareUrl != null">
-				QUALITY_IMAGE_SHARE_URL = #{qualityImageShareUrl,jdbcType=VARCHAR},
 			</if>
 			<if test="status != null">
 				STATUS = #{status,jdbcType=INTEGER},
@@ -110,11 +95,8 @@
 		UPDATE ICLOUD_APPLICATIONAGENCY
 		<set>
 			USER_ID = #{userId,jdbcType=BIGINT},
-			NAME = #{name,jdbcType=VARCHAR},
 			AGENCY_TYPE = #{agencyType,jdbcType=VARCHAR},
-			AGENCY_LEVEL = #{agencyLevel,jdbcType=VARCHAR},
 			AGENCY_AREA = #{agencyArea,jdbcType=VARCHAR},
-			QUALITY_IMAGE_SHARE_URL = #{qualityImageShareUrl,jdbcType=VARCHAR},
 			STATUS = #{status,jdbcType=INTEGER},
 			CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
 			MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
@@ -143,11 +125,8 @@
 		SELECT 
 		       ID id,
 		       USER_ID userId,
-		       NAME name,
 		       AGENCY_TYPE agencyType,
-		       AGENCY_LEVEL agencyLevel,
 		       AGENCY_AREA agencyArea,
-		       QUALITY_IMAGE_SHARE_URL qualityImageShareUrl,
 		       STATUS status,
 		       CREATE_TIME createTime,
 		       MODIFY_TIME modifyTime,
@@ -179,20 +158,11 @@
 			<if test="userId != null">
 				AND USER_ID = #{userId,jdbcType=BIGINT}
 			</if>
-			<if test="name != null and name != ''">
-				AND NAME = #{name,jdbcType=VARCHAR}
-			</if>
 			<if test="agencyType != null and agencyType != ''">
 				AND AGENCY_TYPE = #{agencyType,jdbcType=VARCHAR}
 			</if>
-			<if test="agencyLevel != null and agencyLevel != ''">
-				AND AGENCY_LEVEL = #{agencyLevel,jdbcType=VARCHAR}
-			</if>
 			<if test="agencyArea != null and agencyArea != ''">
 				AND AGENCY_AREA = #{agencyArea,jdbcType=VARCHAR}
-			</if>
-			<if test="qualityImageShareUrl != null and qualityImageShareUrl != ''">
-				AND QUALITY_IMAGE_SHARE_URL = #{qualityImageShareUrl,jdbcType=VARCHAR}
 			</if>
 			<if test="status != null">
 				AND STATUS = #{status,jdbcType=INTEGER}
@@ -228,20 +198,11 @@
 				<if test="entity.userId != null">
 					AND USER_ID = #{entity.userId,jdbcType=BIGINT}
 				</if>
-				<if test="entity.name != null and entity.name != ''">
-					AND NAME = #{entity.name,jdbcType=VARCHAR}
-				</if>
 				<if test="entity.agencyType != null and entity.agencyType != ''">
 					AND AGENCY_TYPE = #{entity.agencyType,jdbcType=VARCHAR}
 				</if>
-				<if test="entity.agencyLevel != null and entity.agencyLevel != ''">
-					AND AGENCY_LEVEL = #{entity.agencyLevel,jdbcType=VARCHAR}
-				</if>
 				<if test="entity.agencyArea != null and entity.agencyArea != ''">
 					AND AGENCY_AREA = #{entity.agencyArea,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.qualityImageShareUrl != null and entity.qualityImageShareUrl != ''">
-					AND QUALITY_IMAGE_SHARE_URL = #{entity.qualityImageShareUrl,jdbcType=VARCHAR}
 				</if>
 				<if test="entity.status != null">
 					AND STATUS = #{entity.status,jdbcType=INTEGER}
@@ -298,20 +259,11 @@
 			<if test="userId != null">
 				AND USER_ID = #{userId,jdbcType=BIGINT}
 			</if>
-			<if test="name != null and name != ''">
-				AND NAME = #{name,jdbcType=VARCHAR}
-			</if>
 			<if test="agencyType != null and agencyType != ''">
 				AND AGENCY_TYPE = #{agencyType,jdbcType=VARCHAR}
 			</if>
-			<if test="agencyLevel != null and agencyLevel != ''">
-				AND AGENCY_LEVEL = #{agencyLevel,jdbcType=VARCHAR}
-			</if>
 			<if test="agencyArea != null and agencyArea != ''">
 				AND AGENCY_AREA = #{agencyArea,jdbcType=VARCHAR}
-			</if>
-			<if test="qualityImageShareUrl != null and qualityImageShareUrl != ''">
-				AND QUALITY_IMAGE_SHARE_URL = #{qualityImageShareUrl,jdbcType=VARCHAR}
 			</if>
 			<if test="status != null">
 				AND STATUS = #{status,jdbcType=INTEGER}
@@ -340,11 +292,8 @@
 		INSERT INTO ICLOUD_APPLICATIONAGENCY (
 		   	ID,
 		   	USER_ID,
-		   	NAME,
 		   	AGENCY_TYPE,
-		   	AGENCY_LEVEL,
 		   	AGENCY_AREA,
-		   	QUALITY_IMAGE_SHARE_URL,
 		   	STATUS,
 		   	CREATE_TIME,
 		   	MODIFY_TIME,
@@ -358,11 +307,8 @@
 		) VALUES (
 		   	#{ id,jdbcType=BIGINT},
 		   	#{ userId,jdbcType=BIGINT},
-		   	#{ name,jdbcType=VARCHAR},
 		   	#{ agencyType,jdbcType=VARCHAR},
-		   	#{ agencyLevel,jdbcType=VARCHAR},
 		   	#{ agencyArea,jdbcType=VARCHAR},
-		   	#{ qualityImageShareUrl,jdbcType=VARCHAR},
 		   	#{ status,jdbcType=INTEGER},
 		   	#{ createTime,jdbcType=TIMESTAMP},
 		   	#{ modifyTime,jdbcType=TIMESTAMP},
@@ -389,20 +335,11 @@
 			<if test="userId != null">
 				USER_ID = #{userId,jdbcType=BIGINT},
 			</if>
-			<if test="name != null">
-				NAME = #{name,jdbcType=VARCHAR},
-			</if>
 			<if test="agencyType != null">
 				AGENCY_TYPE = #{agencyType,jdbcType=VARCHAR},
 			</if>
-			<if test="agencyLevel != null">
-				AGENCY_LEVEL = #{agencyLevel,jdbcType=VARCHAR},
-			</if>
 			<if test="agencyArea != null">
 				AGENCY_AREA = #{agencyArea,jdbcType=VARCHAR},
-			</if>
-			<if test="qualityImageShareUrl != null">
-				QUALITY_IMAGE_SHARE_URL = #{qualityImageShareUrl,jdbcType=VARCHAR},
 			</if>
 			<if test="status != null">
 				STATUS = #{status,jdbcType=INTEGER},

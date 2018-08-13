@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.IcloudApplicationagencyqualityimageshareurlDaoImpl">
+
+    <!-- 查询 -->
+    <select id="findByApplicationAgencyIds" parameterType="map" resultType="com.zhiyun.entity.IcloudApplicationagencyqualityimageshareurl">
+        <include refid="selectFieldSQL" />
+        FROM ICLOUD_APPLICATIONAGENCYQUALITYIMAGESHAREURL
+        <where>
+            <if test="applicationAgencyIds != null">
+                application_agency_id in
+                <foreach collection="applicationAgencyIds" index="index" item="applicationAgencyId" open="(" separator="," close=")">
+                    #{applicationAgencyId}
+                </foreach>
+            </if>
+
+        </where>
+    </select>
+
+
+</mapper>   

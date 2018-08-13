@@ -145,13 +145,13 @@ public class ApprolvalEntryController {
 	public void insertApprolvalAgency() {
 		BaseResult<IcloudApplicationagency> baseResult = new BaseResult<IcloudApplicationagency>();
 		try {
-			List<com.zhiyun.entity.IcloudApplicationagency> agencys = applicationagencyService.findBySended();
+			/*List<com.zhiyun.entity.IcloudApplicationagency> agencys = applicationagencyService.findBySended();
 			if (!CommonUtils.isEmpty(agencys)) {
 				for (com.zhiyun.entity.IcloudApplicationagency ic : agencys) {
 					IcloudApplicationagency app = new IcloudApplicationagency();
 					Long id = ic.getId();
 					Long userId = ic.getUserId();
-					/*IcloudPersonalauth icPerson = personalauthService
+					IcloudPersonalauth icPerson = personalauthService
 							.findByUserId(userId);
 					IcloudEnterpriseauth icEnter = enterpriseauthService
 							.findByUserId(userId);
@@ -165,7 +165,7 @@ public class ApprolvalEntryController {
 						app.setInCity(icEnter.getCity());
 						app.setInDistrict(icEnter.getDistrict());
 						app.setInProvince(icEnter.getProvince());
-					}*/
+					}
 					app.setId(id);
 					app.setUserId(userId);
 					app.setAgencyArea(ic.getAgencyArea());
@@ -196,7 +196,7 @@ public class ApprolvalEntryController {
 						throw new BusinessException(baseResult.getMessage());
 					}
 				}
-			}
+			}*/
 		} catch (BusinessException be) {
 			baseResult.setResult(false);
 			baseResult.setMessage(be.getMessage());

@@ -52,7 +52,7 @@ public class AgencyUserCheckController {
     public Object get(@PathVariable int pageSize, @PathVariable int pageNum, AgencyUserCheckSearchDto searchDto) {
 
         BaseResult<JSONObject> baseResult = new BaseResult<>();
-        try {
+        /*try {
             baseResult.setResult(true);
             Long userId = UserHolder.getId();
             Map params = new HashMap();
@@ -215,7 +215,7 @@ public class AgencyUserCheckController {
             baseResult.setResult(false);
             baseResult.setMessage("系统异常");
         }
-        System.out.println(JSON.toJSONString(baseResult));
+        System.out.println(JSON.toJSONString(baseResult));*/
         return baseResult;
     }
 

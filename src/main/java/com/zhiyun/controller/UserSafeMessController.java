@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -137,7 +138,7 @@ public class UserSafeMessController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/sendNewMess", method = { RequestMethod.GET, RequestMethod.POST })
-	public Object sendNewMess(@Valid SubmitCode submitCode) {
+	public Object sendNewMess(@Valid @RequestBody SubmitCode submitCode,BindingResult bindingResult) {
 		BaseResult<String> baseResult = new BaseResult<String>();
 		baseResult.setResult(true);
 		baseResult.setMessage("操作成功");
@@ -187,7 +188,7 @@ public class UserSafeMessController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/submitMess", method = { RequestMethod.GET, RequestMethod.POST })
-	public Object submitMess(@Valid SubmitCode submitCode) {
+	public Object submitMess(@Valid @RequestBody SubmitCode submitCode) {
 		BaseResult<String> baseResult = new BaseResult<String>();
 		baseResult.setResult(true);
 		baseResult.setMessage("操作成功");
@@ -245,7 +246,7 @@ public class UserSafeMessController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/sendMess", method = { RequestMethod.GET, RequestMethod.POST })
-	public Object sendMess(@Valid SubmitCode submitCode,BindingResult bindingResult) {
+	public Object sendMess(@Valid @RequestBody SubmitCode submitCode,BindingResult bindingResult) {
 		BaseResult<String> baseResult = new BaseResult<String>();
 		baseResult.setResult(true);
 		baseResult.setMessage("操作成功");

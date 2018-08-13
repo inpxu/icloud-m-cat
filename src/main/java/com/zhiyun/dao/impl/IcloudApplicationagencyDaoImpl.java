@@ -5,16 +5,14 @@
 
 package com.zhiyun.dao.impl;
 
-import com.zhiyun.base.dao.BaseDaoImpl;
 import com.zhiyun.base.model.Params;
-import com.zhiyun.dao.IcloudApplicationagencyDao;
-import com.zhiyun.dto.AgencyUserCheckDto;
-import com.zhiyun.entity.IcloudApplicationagency;
-import com.zhiyun.entity.IcloudApplicationentry;
 import org.springframework.stereotype.Repository;
 
+import com.zhiyun.base.dao.BaseDaoImpl;
+import com.zhiyun.dao.IcloudApplicationagencyDao;
+import com.zhiyun.entity.IcloudApplicationagency;
+
 import java.util.List;
-import java.util.Map;
 
 /**
  * IcloudApplicationagencyDao接口实现类
@@ -27,35 +25,10 @@ import java.util.Map;
 public class IcloudApplicationagencyDaoImpl extends BaseDaoImpl<IcloudApplicationagency, Long> implements IcloudApplicationagencyDao {
 
     @Override
-    public List<Object> getAgencyAreaByParams(Map params) {
-        return this.selectList(getMethodName(), params);
-    }
-
-    @Override
-    public List<AgencyUserCheckDto> getUserCheckByparams(Map params) {
-        return this.selectList(getMethodName(), params);
-    }
-
-    @Override
-    public int getUserCheckByparamsCount(Map params) {
-        return this.selectList(getMethodName(), params).size();
-    }
-
-    @Override
-    public int agencyApprove(IcloudApplicationentry icloudApplicationentry) {
-        return this.update(getMethodName(), icloudApplicationentry);
-    }
-
-    @Override
-    public List<IcloudApplicationagency> findBySended() {
+    public List<IcloudApplicationagency> listByExceptIdAndAgencyType(Long exceptId, String agencyType) {
         Params params = Params.create();
-        return this.selectList(getMethodName(), params);
-    }
-
-    @Override
-    public void updateSended(Long id) {
-        Params params = Params.create();
-        params.add("id", id);
-        this.update(getMethodName(), params);
+        params.add("exceptId",exceptId);
+        params.add("agencyType",agencyType);
+        return this.selectList(getMethodName(),params);
     }
 }

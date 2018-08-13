@@ -5,13 +5,13 @@
 
 package com.zhiyun.service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.zhiyun.base.service.BaseService;
-import com.zhiyun.dto.AgencyUserCheckDto;
+import com.zhiyun.dto.IcloudApplicationagencyDto;
 import com.zhiyun.entity.IcloudApplicationagency;
-import com.zhiyun.entity.IcloudApplicationentry;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Service接口。
@@ -22,19 +22,12 @@ import java.util.Map;
  */
 public interface IcloudApplicationagencyService extends BaseService<IcloudApplicationagency, Long> {
 
-    void save(IcloudApplicationagency icloudApplicationagency);
+    void save(IcloudApplicationagencyDto icloudApplicationagencyDto);
 
-    IcloudApplicationagency updateApplicationAgency(IcloudApplicationagency icloudApplicationagency);
+    IcloudApplicationagencyDto updateApplicationAgency(IcloudApplicationagencyDto icloudApplicationagencyDto);
 
-    List<Object> getAgencyAreaByParams(Map params);
+    List<IcloudApplicationagencyDto> listApplicationAgencyDto();
 
-    List<AgencyUserCheckDto> getAgencyUserCheckByparams(Map params);
+    JSONArray getAgencyArea(Long exceptId, String agencyType);
 
-    int getAgencyUserCheckByparamsCount(Map params);
-
-    IcloudApplicationentry agencyApprove(IcloudApplicationentry icloudApplicationentry);
-
-    List<IcloudApplicationagency> findBySended();
-
-    void updateSended(Long id);
 }

@@ -16,7 +16,9 @@ import com.zhiyun.client.UserHolder;
 import com.zhiyun.constants.AuditState;
 import com.zhiyun.constants.EnterpriseConstant;
 import com.zhiyun.dto.ApplicationAgencyDto;
+import com.zhiyun.dto.IcloudApplicationagencyDto;
 import com.zhiyun.entity.IcloudApplicationagency;
+import com.zhiyun.entity.User;
 import com.zhiyun.service.IcloudApplicationagencyService;
 import com.zhiyun.service.IcloudEnterpriseauthService;
 import com.zhiyun.service.IcloudPersonalauthService;
@@ -71,28 +73,32 @@ public class IcloudApplicationAgencyController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/add", method = { RequestMethod.GET, RequestMethod.POST })
-	public Object add(@Valid @RequestBody IcloudApplicationagency icloudApplicationagency, BindingResult bindingResult) {
+	public Object add(@Valid @RequestBody IcloudApplicationagencyDto icloudApplicationagencyDto, BindingResult bindingResult) {
 
-		BaseResult<IcloudApplicationagency> baseResult = new BaseResult<>();
+		BaseResult<IcloudApplicationagencyDto> baseResult = new BaseResult<>();
 		try {
-			String agencyType = icloudApplicationagency.getAgencyType();
+			String agencyType = icloudApplicationagencyDto.getAgencyType();
 			if(StringUtils.isEmpty(agencyType)){
 				throw new BusinessException("代理行业不能为空，请选择! ");
 			}
-			String agencyArea = icloudApplicationagency.getAgencyArea();
+			String agencyArea = icloudApplicationagencyDto.getAgencyArea();
 			if(StringUtils.isEmpty(agencyArea)){
 				throw new BusinessException("代理地区不能为空，请选择! ");
 			}
 			IcloudApplicationagency agencys = new IcloudApplicationagency();
 			agencys.setAgencyType(agencyType);
 			agencys.setAgencyArea(agencyArea);
+
 			List<IcloudApplicationagency> icloudApplicationagencies = icloudApplicationagencyService.find(agencys);
 			if (null != icloudApplicationagencies && icloudApplicationagencies.size()>0){
 				throw new BusinessException("该代理行业和地区已存在，请重新选择! ");
 			}
 			vaildParamsDefault(baseResult, bindingResult);
 			baseResult.setResult(true);
-			icloudApplicationagencyService.save(icloudApplicationagency);
+            icloudApplicationagencyDto.setOrganizationId(UserHolder.getCompanyId());
+            icloudApplicationagencyDto.setUserId(UserHolder.getId());
+			icloudApplicationagencyService.save(icloudApplicationagencyDto);
+			baseResult.setModel(icloudApplicationagencyDto);
 		} catch (BusinessException be) {
 			LOGGER.debug("业务异常" + be);
 			baseResult.setResult(false);
@@ -118,20 +124,20 @@ public class IcloudApplicationAgencyController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/update", method = { RequestMethod.GET, RequestMethod.POST })
-	public Object update(@Valid @RequestBody ApplicationAgencyDto applicationagency,
+	public Object update(@Valid @RequestBody IcloudApplicationagencyDto icloudApplicationagencyDto,
 			BindingResult bindingResult) {
 
 		BaseResult<IcloudApplicationagency> baseResult = new BaseResult<IcloudApplicationagency>();
 		try {
-			Long id = applicationagency.getId();
+			Long id = icloudApplicationagencyDto.getId();
 			if(StringUtils.isEmpty(id)){
 				throw new BusinessException("缺少参数id! ");
 			}
-			String agencyType = applicationagency.getAgencyType();
+			String agencyType = icloudApplicationagencyDto.getAgencyType();
 			if(StringUtils.isEmpty(agencyType)){
 				throw new BusinessException("代理行业不能为空，请选择! ");
 			}
-			String agencyArea = applicationagency.getAgencyArea();
+			String agencyArea = icloudApplicationagencyDto.getAgencyArea();
 			if(StringUtils.isEmpty(agencyArea)){
 				throw new BusinessException("代理地区不能为空，请选择! ");
 			}
@@ -148,10 +154,10 @@ public class IcloudApplicationAgencyController extends BaseController {
 			}
 			vaildParamsDefault(baseResult, bindingResult);
 			baseResult.setResult(true);
-			IcloudApplicationagency icloudApplicationagency = new IcloudApplicationagency();
-			BeanUtils.copyProperties(applicationagency, icloudApplicationagency);
-			icloudApplicationagency = icloudApplicationagencyService.updateApplicationAgency(icloudApplicationagency);
-			baseResult.setModel(icloudApplicationagency);
+			icloudApplicationagencyDto.setUserId(UserHolder.getId());
+			icloudApplicationagencyDto.setCompanyId(UserHolder.getCompanyId());
+            icloudApplicationagencyDto = icloudApplicationagencyService.updateApplicationAgency(icloudApplicationagencyDto);
+			baseResult.setModel(icloudApplicationagencyDto);
 		} catch (BusinessException be) {
 			LOGGER.debug("业务异常" + be);
 			baseResult.setResult(false);
@@ -165,51 +171,13 @@ public class IcloudApplicationAgencyController extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/get", method = { RequestMethod.GET, RequestMethod.POST })
-	public Object get(@RequestParam(value = "userId", required = false) Long userId) {
-		BaseResult<List<ApplicationAgencyDto>> baseResult = new BaseResult<>();
+	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
+	public Object list() {
+		BaseResult<List<IcloudApplicationagencyDto>> baseResult = new BaseResult<>();
 		try {
-			List<ApplicationAgencyDto> results = new ArrayList<>();
-			baseResult.setResult(true);
-			IcloudApplicationagency params = new IcloudApplicationagency();
-			params.setUserId(userId);
-			List<IcloudApplicationagency> icloudApplicationagencies = icloudApplicationagencyService.find(params);
-			if (icloudApplicationagencies != null && icloudApplicationagencies.size()>0) {
-				for (IcloudApplicationagency item:icloudApplicationagencies) {
-					ApplicationAgencyDto applicationAgencyDto = new ApplicationAgencyDto();
-					applicationAgencyDto.setUserId(item.getUserId());
-					applicationAgencyDto.setName(item.getName());
-					applicationAgencyDto.setAgencyType(item.getAgencyType());
-					try {
-						applicationAgencyDto.setAgencyTypeDesc(EnterpriseConstant.Industry.getIndustryDesc(item.getAgencyType()));
-					}catch (Exception e){
-						applicationAgencyDto.setAgencyTypeDesc("未知");
-					}
-					applicationAgencyDto.setAgencyLevel(item.getAgencyLevel());
-					applicationAgencyDto.setAgencyArea(item.getAgencyArea());
-					try {
-						applicationAgencyDto.setAgencyAreaDesc(EnterpriseConstant.Province.getProvince(Integer.parseInt(item.getAgencyArea())));
-					}catch (Exception e){
-						applicationAgencyDto.setAgencyAreaDesc("未知");
-					}
-					applicationAgencyDto.setQualityImageShareUrl(item.getQualityImageShareUrl());
-					applicationAgencyDto.setStatus(item.getStatus());
-					applicationAgencyDto.setStatusDesc(AuditState.getStateDesc(item.getStatus()));
-					applicationAgencyDto.setId(item.getId());
-					applicationAgencyDto.setApprovalOpinion(item.getApprovalOpinion());
-					Long LogId = UserHolder.getId();
-					Long id = item.getId();
-					Long usersId = icloudApplicationagencyService.get(id).getUserId();
-					if (LogId != null && LogId.equals(usersId)) {
-						applicationAgencyDto.setJurisdiction(true);
-					} else if (LogId != null && !LogId.equals(usersId)) {
-						applicationAgencyDto.setJurisdiction(false);
-					}
-					results.add(applicationAgencyDto);
-				}
-
-				baseResult.setModel(results);
-			}
+		    baseResult.setResult(Boolean.TRUE);
+            List<IcloudApplicationagencyDto> icloudApplicationagencyDtos = icloudApplicationagencyService.listApplicationAgencyDto();
+		    baseResult.setModel(icloudApplicationagencyDtos);
 		} catch (BusinessException be) {
 			LOGGER.debug("业务异常" + be);
 			baseResult.setResult(false);
@@ -219,7 +187,7 @@ public class IcloudApplicationAgencyController extends BaseController {
 			baseResult.setResult(false);
 			baseResult.setMessage("系统异常");
 		}
-		System.out.println(JSON.toJSONString(baseResult));
+
 		return baseResult;
 	}
 
@@ -236,36 +204,18 @@ public class IcloudApplicationAgencyController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/getAgencyArea", method = { RequestMethod.GET, RequestMethod.POST })
-	public Object getAgencyArea(@RequestParam(value = "notUserId", required = false) Long notUserId,@RequestParam(value = "notId", required = false) Long notId,@RequestParam(value = "agencyType", required =  true) String agencyType) {
+	public Object getAgencyArea(@RequestParam(value = "exceptId", required = false) Long exceptId,
+                                @RequestParam(value = "agencyType", required =  true) String agencyType) {
 
 		BaseResult<JSONArray> baseResult = new BaseResult<>();
-		JSONArray provinces = new JSONArray();
 		try {
 			if (StringUtils.isEmpty(agencyType)){
 				throw new BusinessException("请先选择代理行业! ");
 			}
-			baseResult.setResult(true);
-			Map<String,Object> params = new HashMap();
-			params.put("notUserId",StringUtils.isEmpty(notUserId)?null:notUserId);
-			params.put("agencyType", agencyType);
-			params.put("notId", StringUtils.isEmpty(notId)?null:notId);
-			List<Object> agencyAreas = icloudApplicationagencyService.getAgencyAreaByParams(params);
-			EnterpriseConstant.Province[] values = EnterpriseConstant.Province.values();
-			for (EnterpriseConstant.Province province : values) {
-				JSONObject pObj = new JSONObject();
-				pObj.put("id", province.getId());
-				pObj.put("name", province.getName());
-				pObj.put("status", "1");
-				String pId = pObj.get("id")+"";
-				for (Object area:agencyAreas) {
-					JSONObject areaObj = (JSONObject)JSON.toJSON(area);
-					String agencyArea = areaObj.get("agencyArea")+"";
-					if (pId.equals(agencyArea)){
-						pObj.put("status", "0");
-					}
-				}
-				provinces.add(pObj);
-			}
+            baseResult.setResult(true);
+			JSONArray jsonArray = icloudApplicationagencyService.getAgencyArea(exceptId,agencyType);
+			baseResult.setModel(jsonArray);
+
 		} catch (BusinessException be) {
 			LOGGER.debug("业务异常" + be);
 			baseResult.setResult(false);
@@ -275,7 +225,6 @@ public class IcloudApplicationAgencyController extends BaseController {
 			baseResult.setResult(false);
 			baseResult.setMessage("系统异常");
 		}
-		baseResult.setModel(provinces);
 		return baseResult;
 	}
 

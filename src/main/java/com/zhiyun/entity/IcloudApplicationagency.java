@@ -6,40 +6,30 @@
 package com.zhiyun.entity;
 
 import com.zhiyun.base.entity.BaseEntity;
-
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Max;
 
 /**
  * 实体类
- *代理
+ *
  * @author auto
  * @version v1.0
  * @date
  */
 public class IcloudApplicationagency extends BaseEntity<Long> {
 
-	private static final long serialVersionUID = 1726285389892752506L;
+	private static final long serialVersionUID = 5076243750801199646L;
 
 	// ~~~~实体属性
 	// 用户id
 	@Max(value=9223372036854775807L,message="用户id字段过长")
 	private Long userId;
-	// 用户姓名
-	@Pattern(regexp="[\\s\\S]{0,75}", message="用户姓名字段过长")
-	private String name;
 	// 代理行业
 	@Pattern(regexp="[\\s\\S]{0,20}", message="代理行业字段过长")
 	private String agencyType;
-	// 代理级别
-	@Pattern(regexp="[\\s\\S]{0,20}", message="代理级别字段过长")
-	private String agencyLevel;
 	// 代理区域
 	@Pattern(regexp="[\\s\\S]{0,20}", message="代理区域字段过长")
 	private String agencyArea;
-	// 相关资质图片
-	@Pattern(regexp="[\\s\\S]{0,500}", message="相关资质图片字段过长")
-	private String qualityImageShareUrl;
 	// 状态
 	@Max(value=99999999999L,message="状态字段过长")
 	private Integer status;
@@ -81,20 +71,6 @@ public class IcloudApplicationagency extends BaseEntity<Long> {
 	}
 	
 	/**
-	 * 用户姓名
-	 */
-	public String getName() {
-		return this.name;
-	}
-
-	/**
-	 * 用户姓名
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	/**
 	 * 代理行业
 	 */
 	public String getAgencyType() {
@@ -109,20 +85,6 @@ public class IcloudApplicationagency extends BaseEntity<Long> {
 	}
 	
 	/**
-	 * 代理级别
-	 */
-	public String getAgencyLevel() {
-		return this.agencyLevel;
-	}
-
-	/**
-	 * 代理级别
-	 */
-	public void setAgencyLevel(String agencyLevel) {
-		this.agencyLevel = agencyLevel;
-	}
-	
-	/**
 	 * 代理区域
 	 */
 	public String getAgencyArea() {
@@ -134,20 +96,6 @@ public class IcloudApplicationagency extends BaseEntity<Long> {
 	 */
 	public void setAgencyArea(String agencyArea) {
 		this.agencyArea = agencyArea;
-	}
-	
-	/**
-	 * 相关资质图片
-	 */
-	public String getQualityImageShareUrl() {
-		return this.qualityImageShareUrl;
-	}
-
-	/**
-	 * 相关资质图片
-	 */
-	public void setQualityImageShareUrl(String qualityImageShareUrl) {
-		this.qualityImageShareUrl = qualityImageShareUrl;
 	}
 	
 	/**
