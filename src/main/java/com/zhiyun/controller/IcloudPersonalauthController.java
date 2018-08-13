@@ -73,11 +73,7 @@ public class IcloudPersonalauthController extends BaseController {
 			if(!baseResult.getResult()){
 				return baseResult;
 			}
-			// TODO 这版先直接默认认证通过
-			icloudPersonalauth.setStatus(AuditState.AUDITING);
-			icloudPersonalauth.setSended("F");
-			icloudPersonalauth.setUpdated("F");
-			icloudPersonalauth.setUserId(UserHolder.getId());
+
 			icloudPersonalauthService.savePersonalauth(icloudPersonalauth);
 		} catch (BusinessException be) {
 			LOGGER.debug("业务异常" + be);

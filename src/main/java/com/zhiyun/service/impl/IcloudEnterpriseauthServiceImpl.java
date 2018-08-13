@@ -66,10 +66,18 @@ public class IcloudEnterpriseauthServiceImpl extends BaseServiceImpl<IcloudEnter
 	public void updateEnterpriseauth(IcloudEnterpriseauth icloudEnterpriseauth) {
 
 		Long id = icloudEnterpriseauth.getId();
-		Integer status = this.get(icloudEnterpriseauth.getId()).getStatus();
-		if (status != null && status == 1) {
-			throw new BusinessException("申请正在审核中，不能进行修改");
-		}
+		Integer status = 0;
+
+		if(id != null){
+            status = this.get(icloudEnterpriseauth.getId()).getStatus();
+            if (status != null && status == 1) {
+                throw new BusinessException("申请正在审核中，不能进行修改");
+            }
+        }else {
+		    saveIcloudEnterpriseauth(icloudEnterpriseauth);
+		    return;
+        }
+
 
 		if (status != null && status == 3) {
 			icloudEnterpriseauth.setStatus(AuditState.AUDITING);
@@ -100,6 +108,17 @@ public class IcloudEnterpriseauthServiceImpl extends BaseServiceImpl<IcloudEnter
 	@Transactional
 	@Override
 	public void saveIcloudEnterpriseauth(IcloudEnterpriseauth icloudEnterpriseauth) {
+
+        icloudEnterpriseauth.setStatus(AuditState.AUDITING);
+        icloudEnterpriseauth.setSended("F");
+        icloudEnterpriseauth.setUpdated("F");
+
+        IcloudEnterpriseauth dbIcloudEnterpriseauth = icloudEnterpriseauthDao.findByUserId(UserHolder.getId());
+
+        if(dbIcloudEnterpriseauth != null){
+            throw new BusinessException("请勿重复认证");
+        }
+
 		this.insert(icloudEnterpriseauth);
 		icloudPersonalauthService.deleteByUserId(UserHolder.getId());
 	}

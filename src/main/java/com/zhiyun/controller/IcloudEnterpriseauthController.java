@@ -12,6 +12,7 @@ import com.zhiyun.base.exception.BusinessException;
 import com.zhiyun.client.UserHolder;
 import com.zhiyun.constants.AuditState;
 import com.zhiyun.entity.IcloudEnterpriseauth;
+import com.zhiyun.entity.User;
 import com.zhiyun.service.IcloudEnterpriseauthService;
 import com.zhiyun.service.IcloudPersonalauthService;
 import com.zhiyun.service.IcloudUserMarketentryService;
@@ -84,9 +85,7 @@ public class IcloudEnterpriseauthController extends BaseController {
 				}
 				return JSON.toJSONString(baseResult);
 			}
-			icloudEnterpriseauth.setStatus(AuditState.AUDITING);
-			icloudEnterpriseauth.setSended("F");
-			icloudEnterpriseauth.setUpdated("F");
+
 
 			icloudEnterpriseauthService.saveIcloudEnterpriseauth(icloudEnterpriseauth);
 
@@ -151,31 +150,21 @@ public class IcloudEnterpriseauthController extends BaseController {
 	/**
 	 * 企业认证查询
 	 *
-	 * @param icloudEnterpriseauth 条件实体
+	 * @param  条件实体
 	 * @return java.lang.String
 	 * @author 邓艺
 	 * @date 2018/6/8 9:46
 	 */
 	@RequestMapping(value = "page", method = RequestMethod.POST)
-	public Object page(@Valid @RequestBody IcloudEnterpriseauth icloudEnterpriseauth, BindingResult bindingResult) {
+	public Object page() {
 		BaseResult<IcloudEnterpriseauth> baseResult = new BaseResult<>();
 		baseResult.setResult(true);
 
 		try {
-			StringBuilder stringBuilder = new StringBuilder();
-			if (bindingResult.hasErrors()) {
-				baseResult.setResult(false);
-				baseResult.setMessage("提交更新企业认证参数不合法");
-				List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-				if (CollectionUtils.isNotEmpty(fieldErrors)) {
-					for (FieldError fieldError : fieldErrors) {
-						stringBuilder.append(fieldError.getDefaultMessage());
-						stringBuilder.append(",");
-					}
-					baseResult.setMessage(stringBuilder.toString());
-				}
-				return baseResult;
-			}
+
+		    IcloudEnterpriseauth icloudEnterpriseauth = new IcloudEnterpriseauth();
+			icloudEnterpriseauth.setUserId(UserHolder.getId());
+
 			List<IcloudEnterpriseauth> icloudEnterpriseauths = icloudEnterpriseauthService.find(icloudEnterpriseauth);
 			if (CollectionUtils.isNotEmpty(icloudEnterpriseauths)) {
 				IcloudEnterpriseauth icloudEnterpriseauth1 = icloudEnterpriseauths.get(0);

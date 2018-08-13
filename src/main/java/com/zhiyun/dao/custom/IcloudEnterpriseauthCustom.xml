@@ -22,12 +22,16 @@
 		       SOCIAL_CREDIT_CODE socialCreditCode,
 		       BUSINESS_LICENCE_SHARE_URL businessLicenceShareUrl,
 		       STATUS status,
-		       SENDED sended,
 		       CREATE_TIME createTime,
 		       MODIFY_TIME modifyTime,
 		       DELETED deleted,
-		       updated updated,
-		       approval_opinion approvalOpinion
+		       CREATE_BY createBy,
+		       MODIFY_BY modifyBy,
+		       SENDED sended,
+		       UPDATED updated,
+		       APPROVAL_OPINION approvalOpinion,
+		       TRADE trade,
+		       LEGAL_PERSON_IDENTITY_TYPE legalPersonIdentityType
 	</sql>
 	
 	<!-- 查询 -->

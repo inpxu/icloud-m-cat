@@ -62,7 +62,6 @@ public class AccountCenterConroller extends BaseController {
             baseResult.setMessage("更新头像成功");
             try {
                 userService.updateAvatar(UserHolder.getId(),avatar);
-
             } catch (BusinessException be) {
                 LOGGER.debug("业务异常" + be);
                 baseResult.setResult(false);

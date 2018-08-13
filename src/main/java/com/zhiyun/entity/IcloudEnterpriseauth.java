@@ -82,6 +82,9 @@ public class IcloudEnterpriseauth extends BaseEntity<Long> {
     @Max(value=99999999999L,message="行业字段过长")
     private Integer trade;
 
+    @Max(value=99999999999L,message="字段过长")
+    private Integer legalPersonIdentityType;
+
 	@Override
 	public Long getId() {
 		return super.getId();
@@ -368,5 +371,19 @@ public class IcloudEnterpriseauth extends BaseEntity<Long> {
 
     public void setTrade(Integer trade) {
         this.trade = trade;
+    }
+
+    /**
+     *
+     */
+    public Integer getLegalPersonIdentityType() {
+        return this.legalPersonIdentityType;
+    }
+
+    /**
+     *
+     */
+    public void setLegalPersonIdentityType(Integer legalPersonIdentityType) {
+        this.legalPersonIdentityType = legalPersonIdentityType;
     }
 }

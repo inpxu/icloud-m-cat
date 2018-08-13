@@ -30,7 +30,8 @@
 		   	SENDED,
 		   	UPDATED,
 		   	APPROVAL_OPINION,
-		   	TRADE
+		   	TRADE,
+		   	LEGAL_PERSON_IDENTITY_TYPE
 		) VALUES (
 		   	#{id,jdbcType=BIGINT},
 		   	#{userId,jdbcType=BIGINT},
@@ -57,7 +58,8 @@
 		   	#{sended,jdbcType=VARCHAR},
 		   	#{updated,jdbcType=VARCHAR},
 		   	#{approvalOpinion,jdbcType=VARCHAR},
-		   	#{trade,jdbcType=INTEGER}
+		   	#{trade,jdbcType=INTEGER},
+		   	#{legalPersonIdentityType,jdbcType=INTEGER}
 		)
 		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
 			SELECT LAST_INSERT_ID() AS ID
@@ -146,6 +148,9 @@
 			<if test="trade != null">
 				TRADE = #{trade,jdbcType=INTEGER},
 			</if>
+			<if test="legalPersonIdentityType != null">
+				LEGAL_PERSON_IDENTITY_TYPE = #{legalPersonIdentityType,jdbcType=INTEGER},
+			</if>
 		</set>
 		WHERE ID = #{id,jdbcType=INTEGER}
 	</update>
@@ -179,6 +184,7 @@
 			UPDATED = #{updated,jdbcType=VARCHAR},
 			APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR},
 			TRADE = #{trade,jdbcType=INTEGER},
+			LEGAL_PERSON_IDENTITY_TYPE = #{legalPersonIdentityType,jdbcType=INTEGER},
 		</set>
 		WHERE ID = #{id,jdbcType=INTEGER}
 	</update>
@@ -220,7 +226,8 @@
 		       SENDED sended,
 		       UPDATED updated,
 		       APPROVAL_OPINION approvalOpinion,
-		       TRADE trade
+		       TRADE trade,
+		       LEGAL_PERSON_IDENTITY_TYPE legalPersonIdentityType
 	</sql>
 
 	<!-- 查询 -->
@@ -302,6 +309,9 @@
 			<if test="trade != null">
 				AND TRADE = #{trade,jdbcType=INTEGER}
 			</if>
+			<if test="legalPersonIdentityType != null">
+				AND LEGAL_PERSON_IDENTITY_TYPE = #{legalPersonIdentityType,jdbcType=INTEGER}
+			</if>
 		</where>
 	</select>
 
@@ -377,6 +387,9 @@
 				</if>
 				<if test="entity.trade != null">
 					AND TRADE = #{entity.trade,jdbcType=INTEGER}
+				</if>
+				<if test="entity.legalPersonIdentityType != null">
+					AND LEGAL_PERSON_IDENTITY_TYPE = #{entity.legalPersonIdentityType,jdbcType=INTEGER}
 				</if>
 		</where>
 	</sql>
@@ -475,6 +488,9 @@
 			<if test="trade != null">
 				AND TRADE = #{trade,jdbcType=INTEGER}
 			</if>
+			<if test="legalPersonIdentityType != null">
+				AND LEGAL_PERSON_IDENTITY_TYPE = #{legalPersonIdentityType,jdbcType=INTEGER}
+			</if>
 		 WHERE DELETED = "F"
 		</where>
 	</select>
@@ -507,7 +523,8 @@
 		   	SENDED,
 		   	UPDATED,
 		   	APPROVAL_OPINION,
-		   	TRADE
+		   	TRADE,
+		   	LEGAL_PERSON_IDENTITY_TYPE
 		) VALUES (
 		   	#{ id,jdbcType=BIGINT},
 		   	#{ userId,jdbcType=BIGINT},
@@ -534,7 +551,8 @@
 		   	#{ sended,jdbcType=VARCHAR},
 		   	#{ updated,jdbcType=VARCHAR},
 		   	#{ approvalOpinion,jdbcType=VARCHAR},
-		   	#{ trade,jdbcType=INTEGER}
+		   	#{ trade,jdbcType=INTEGER},
+		   	#{ legalPersonIdentityType,jdbcType=INTEGER}
 		)
 		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
 			SELECT LAST_INSERT_ID() AS ID
@@ -622,6 +640,9 @@
 			</if>
 			<if test="trade != null">
 				TRADE = #{trade,jdbcType=INTEGER},
+			</if>
+			<if test="legalPersonIdentityType != null">
+				LEGAL_PERSON_IDENTITY_TYPE = #{legalPersonIdentityType,jdbcType=INTEGER},
 			</if>
 		</set>
 		WHERE ID = #{id,jdbcType=INTEGER}

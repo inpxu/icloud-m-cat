@@ -286,7 +286,6 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 
         if(icloudPersonalauth != null ) {
             personalAuthDto = new PersonalAuthDto();
-
             personalAuthDto.setUpdated(icloudPersonalauth.getUpdated());
             personalAuthDto.setApprovalOpinion(icloudPersonalauth.getApprovalOpinion());
             personalAuthDto.setId(icloudPersonalauth.getId());
@@ -330,7 +329,6 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 
         if(icloudEnterpriseauth != null ) {
             legalPersonDto = new LegalPersonDto();
-
             legalPersonDto.setUserId(icloudEnterpriseauth.getUserId());
             legalPersonDto.setName(icloudEnterpriseauth.getName());
             legalPersonDto.setIdentityCard(icloudEnterpriseauth.getLegalPersonIdentityCard());

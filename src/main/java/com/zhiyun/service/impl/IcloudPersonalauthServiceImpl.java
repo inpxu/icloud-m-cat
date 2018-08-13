@@ -63,10 +63,18 @@ public class IcloudPersonalauthServiceImpl extends BaseServiceImpl<IcloudPersona
 	public void updateIcloudPersonalauth(IcloudPersonalauth icloudPersonalauth) {
 
 		Long id = icloudPersonalauth.getId();
-		Integer status = this.get(icloudPersonalauth.getId()).getStatus();
-		if (status != null && status == 1) {
-			throw new BusinessException("申请正在审核中，不能进行修改");
-		}
+
+		Integer status = 0;
+		if(id !=null ){
+		    status = this.get(icloudPersonalauth.getId()).getStatus();
+            if (status == 1) {
+                throw new BusinessException("申请正在审核中，不能进行修改");
+            }
+        }else {
+		    savePersonalauth(icloudPersonalauth);
+		    return;
+        }
+
 
 		if (status != null && status == 3){
 			// TODO 这版先直接默认认证通过
@@ -96,8 +104,13 @@ public class IcloudPersonalauthServiceImpl extends BaseServiceImpl<IcloudPersona
 	@Override
 	public void savePersonalauth(IcloudPersonalauth icloudPersonalauth) {
 
-	    IcloudPersonalauth dbIcloudPersonalauth = icloudPersonalauthDao.findByUserId(UserHolder.getId());
 
+        icloudPersonalauth.setStatus(AuditState.AUDITING);
+        icloudPersonalauth.setSended("F");
+        icloudPersonalauth.setUpdated("F");
+        icloudPersonalauth.setUserId(UserHolder.getId());
+
+	    IcloudPersonalauth dbIcloudPersonalauth = icloudPersonalauthDao.findByUserId(UserHolder.getId());
 	    if(dbIcloudPersonalauth != null){
 	        throw new BusinessException("请勿重复认证");
         }
