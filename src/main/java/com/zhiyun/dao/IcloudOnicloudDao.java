@@ -6,6 +6,10 @@
 package com.zhiyun.dao;
 
 import com.zhiyun.base.dao.BaseDao;
+import com.zhiyun.base.model.DataGrid;
+import com.zhiyun.base.model.Page;
+import com.zhiyun.base.model.Params;
+import com.zhiyun.dto.IcloudOnicloudDto;
 import com.zhiyun.entity.IcloudOnicloud;
 
 /**
@@ -16,5 +20,7 @@ import com.zhiyun.entity.IcloudOnicloud;
  * @date
  */
 public interface IcloudOnicloudDao extends BaseDao<IcloudOnicloud, Long> {
+
+    DataGrid<IcloudOnicloudDto> myPage(Params params, Page page);
 
 }

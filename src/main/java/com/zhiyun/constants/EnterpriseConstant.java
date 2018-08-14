@@ -106,7 +106,39 @@ public class EnterpriseConstant {
 
 	public enum Industry{
 
-		JING_BIANG("0","经编行业"),JIA_GONG("1","加工类行业");
+		INDUSTRY13("13","农副食品加工业"),
+        INDUSTRY14("14","食品制造业"),
+        INDUSTRY15("15","酒、饮料和精制茶制造业"),
+        INDUSTRY16("16","烟草制品业"),
+        INDUSTRY17("17","纺织业"),
+        INDUSTRY18("18","纺织服装、服饰业"),
+        INDUSTRY19("19","皮革、毛皮、羽毛及其制品和制鞋业"),
+        INDUSTRY20("20","木材加工和木、竹、藤、棕、草制品业"),
+        INDUSTRY21("21","家具制造业"),
+        INDUSTRY22("22","造纸和纸制品业"),
+        INDUSTRY23("23","印刷和记录媒介复制业"),
+        INDUSTRY24("24","文教、工美、体育和娱乐用品制造业"),
+        INDUSTRY25("25","石油、煤炭及其他燃料加工业"),
+        INDUSTRY26("26","化学原料和化学制品制造业"),
+        INDUSTRY27("27","医药制造业"),
+        INDUSTRY28("28","化学纤维制造业"),
+        INDUSTRY29("29","橡胶和塑料制品业"),
+        INDUSTRY30("30","非金属矿物制品业"),
+        INDUSTRY31("31","黑色金属冶炼和压延加工业"),
+        INDUSTRY32("32","有色金属冶炼和压延加工业 "),
+        INDUSTRY33("33","金属制品业"),
+        INDUSTRY34("34","通用设备制造业"),
+        INDUSTRY35("35","专用设备制造业"),
+        INDUSTRY36("36","汽车制造业"),
+        INDUSTRY37("37","铁路、船舶、航空航天和其他运输设备制造业"),
+        INDUSTRY38("38","电气机械和器材制造业"),
+        INDUSTRY39("39","计算机、通信和其他电子设备制造业"),
+        INDUSTRY40("40","仪器仪表制造业"),
+        INDUSTRY41("41","其他制造业"),
+        INDUSTRY42("42","废弃资源综合利用业"),
+        INDUSTRY43("43","金属制品、机械和设备修理业");
+
+
 
 		public String id;
 
@@ -362,7 +394,7 @@ public class EnterpriseConstant {
 	}
 
 	public enum Province {
-		BEIJING(1,"北京","京"),  TIANJING(2,"天津","津"),  HEBEI(3,"河北","冀"),  SHANXI(4,"山西","晋"),  NEIMENGGU(5,"内蒙古","蒙"),  LIAONING(6,"辽宁","辽"),  JILIN(7,"吉林","吉"),  HEILONGJIANG(8,"黑龙江","黑"),  SHANGHAI(9,"上海","沪"),  JIANGSU(10,"江苏","苏"),  ZHEJIANG(11,"浙江","浙"),  ANHU(12,"安徽","皖"),  FUJIAN(13,"福建","闽"),  JIANGXI(14,"江西","赣"),  SHANDONG(15,"山东","鲁"),  HENAN(16,"河南","豫"),  HUBEI(17,"湖北","鄂"),  HUNAN(18,"湖南","湘"),  GUANGDONG(19,"广东","粤"),  GUANGXI(20,"广西","桂"),  HAINAN(21,"海南","琼"),  CHONGQING(22,"重庆","渝"),  SICHUAN(23,"四川","川"),  GUIZHOU(24,"贵州","黔"),  YUNAN(25,"云南","滇"),  XIZANG(26,"西藏","藏"),  SHANXI2(27,"陕西","陕"),  GANSU(28,"甘肃省","甘"),  QINHAI(29,"青海","青"),  NINGXIA(30,"宁夏","宁"),  XINJIANG(31,"新疆","新"),  TAIWAN(32,"台湾","台"),  XIANGGANG(33,"香港特别行政区","港"),  AOMEN(34,"澳门","澳");
+		BEIJING(1,"北京市","京"),  TIANJING(2,"天津市","津"),  HEBEI(3,"河北省","冀"),  SHANXI(4,"山西省","晋"),  NEIMENGGU(5,"内蒙古自治区","蒙"),  LIAONING(6,"辽宁省","辽"),  JILIN(7,"吉林省","吉"),  HEILONGJIANG(8,"黑龙江省","黑"),  SHANGHAI(9,"上海市","沪"),  JIANGSU(10,"江苏省","苏"),  ZHEJIANG(11,"浙江省","浙"),  ANHU(12,"安徽省","皖"),  FUJIAN(13,"福建省","闽"),  JIANGXI(14,"江西省","赣"),  SHANDONG(15,"山东省","鲁"),  HENAN(16,"河南省","豫"),  HUBEI(17,"湖北省","鄂"),  HUNAN(18,"湖南省","湘"),  GUANGDONG(19,"广东省","粤"),  GUANGXI(20,"广西壮族自治区","桂"),  HAINAN(21,"海南省","琼"),  CHONGQING(22,"重庆市","渝"),  SICHUAN(23,"四川省","川"),  GUIZHOU(24,"贵州省","黔"),  YUNAN(25,"云南省","滇"),  XIZANG(26,"西藏自治区","藏"),  SHANXI2(27,"陕西省","陕"),  GANSU(28,"甘肃省","甘"),  QINHAI(29,"青海省","青"),  NINGXIA(30,"宁夏回族自治区","宁"),  XINJIANG(31,"新疆维吾尔自治区","新"),  TAIWAN(32,"台湾省","台"),  GANGAO(33,"港澳","港澳");
 		private int id;
 
 		private String name;

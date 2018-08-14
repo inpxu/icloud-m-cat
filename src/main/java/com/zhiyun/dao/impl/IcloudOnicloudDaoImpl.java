@@ -5,6 +5,10 @@
 
 package com.zhiyun.dao.impl;
 
+import com.zhiyun.base.model.DataGrid;
+import com.zhiyun.base.model.Page;
+import com.zhiyun.base.model.Params;
+import com.zhiyun.dto.IcloudOnicloudDto;
 import org.springframework.stereotype.Repository;
 
 import com.zhiyun.base.dao.BaseDaoImpl;
@@ -20,5 +24,10 @@ import com.zhiyun.entity.IcloudOnicloud;
  */
 @Repository("icloudOnicloudDao")
 public class IcloudOnicloudDaoImpl extends BaseDaoImpl<IcloudOnicloud, Long> implements IcloudOnicloudDao {
+
+    @Override
+    public DataGrid<IcloudOnicloudDto> myPage(Params params, Page page) {
+        return this.selectPage(getMethodName(), params, page);
+    }
 
 }

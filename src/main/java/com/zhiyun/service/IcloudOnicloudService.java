@@ -5,7 +5,11 @@
 
 package com.zhiyun.service;
 
+import com.zhiyun.base.model.DataGrid;
+import com.zhiyun.base.model.Pager;
+import com.zhiyun.base.model.Params;
 import com.zhiyun.base.service.BaseService;
+import com.zhiyun.dto.IcloudOnicloudDto;
 import com.zhiyun.entity.IcloudOnicloud;
 
 /**
@@ -22,5 +26,7 @@ public interface IcloudOnicloudService extends BaseService<IcloudOnicloud, Long>
     IcloudOnicloud getOnIcloudByUserId(Long userId);
 
     void updateOnIncloud(IcloudOnicloud icloudOnicloud);
+
+    DataGrid<IcloudOnicloudDto> myPage(Params params , Pager pager);
 
 }

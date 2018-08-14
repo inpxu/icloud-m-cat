@@ -10,9 +10,13 @@ import javax.annotation.Resource;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhiyun.base.exception.BusinessException;
+import com.zhiyun.base.model.DataGrid;
+import com.zhiyun.base.model.Pager;
+import com.zhiyun.base.model.Params;
 import com.zhiyun.client.UserHolder;
 import com.zhiyun.constants.AuditState;
 import com.zhiyun.dao.IcloudUserOnicloudDao;
+import com.zhiyun.dto.IcloudOnicloudDto;
 import com.zhiyun.entity.IcloudUserOnicloud;
 import com.zhiyun.liferay.constants.LiferayErrorCodeConstant;
 import com.zhiyun.liferay.impl.OrganizationInvoker;
@@ -174,5 +178,10 @@ public class IcloudOnicloudServiceImpl extends BaseServiceImpl<IcloudOnicloud, L
         }
 
         return null;
+    }
+
+    @Override
+    public DataGrid<IcloudOnicloudDto> myPage(Params params, Pager pager) {
+        return icloudOnicloudDao.myPage(params,pager);
     }
 }

@@ -2,4 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhiyun.dao.impl.IcloudOnicloudDaoImpl">
 
+    <!-- 分页查询（条件） -->
+    <sql id="myPage_condition">
+        <where>
+            AND DELETED = 'F'
+            AND STATUS = #{status,jdbcType=INTEGER}
+            AND CONCAT(province,TRADE) in
+            (SELECT CONCAT(agency_area,agency_type) FROM icloud_applicationagency WHERE  user_id = #{userId,jdbcType=BIGINT} and status =2 )
+            <if test="search != null and search != '' ">
+                AND (LOCATE(#{search,jdbcType=VARCHAR},name) >0 or
+                LOCATE(#{search,jdbcType=VARCHAR},contact_person) >0 or
+                LOCATE(#{search,jdbcType=VARCHAR},contact_phone) >0 or
+                trade in(SELECT id FROM icloud_industry WHERE LOCATE(#{search,jdbcType=VARCHAR},name) > 0 ))
+            </if>
+
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="myPage_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM ICLOUD_ONICLOUD
+        <include refid="myPage_condition" />
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="myPage_datas" parameterType="map" resultType="com.zhiyun.dto.IcloudOnicloudDto">
+        <include refid="mybatis.pageStartSQL" />
+        <include refid="selectFieldSQL" />
+        FROM ICLOUD_ONICLOUD
+        <include refid="myPage_condition" />
+        <include refid="mybatis.pageEndSQL" />
+    </select>
+
 </mapper>   
