@@ -9,6 +9,9 @@ import com.zhiyun.base.model.DataGrid;
 import com.zhiyun.base.model.Page;
 import com.zhiyun.base.model.Params;
 import com.zhiyun.dto.IcloudOnicloudDto;
+
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.zhiyun.base.dao.BaseDaoImpl;
@@ -29,5 +32,18 @@ public class IcloudOnicloudDaoImpl extends BaseDaoImpl<IcloudOnicloud, Long> imp
     public DataGrid<IcloudOnicloudDto> myPage(Params params, Page page) {
         return this.selectPage(getMethodName(), params, page);
     }
+
+	@Override
+	public List<IcloudOnicloud> findBySended() {
+		Params params = Params.create();
+		return this.selectList(getMethodName(),params);
+	}
+
+	@Override
+	public int updateSended(Long id) {
+		Params params = Params.create();
+		params.add("id", id);
+		return this.update(getMethodName(), id);
+	}
 
 }

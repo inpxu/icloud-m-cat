@@ -29,7 +29,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 入驻审核新增
+ * 入驻审核新增定时任务发送
  * 
  * @author 徐飞
  * @version v1.0
@@ -408,4 +408,5 @@ public class ApprolvalEntryController {
     	}
     }
 
+    
 }

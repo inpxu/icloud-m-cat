@@ -184,4 +184,14 @@ public class IcloudOnicloudServiceImpl extends BaseServiceImpl<IcloudOnicloud, L
     public DataGrid<IcloudOnicloudDto> myPage(Params params, Pager pager) {
         return icloudOnicloudDao.myPage(params,pager);
     }
+
+	@Override
+	public List<IcloudOnicloud> findBySended() {
+		return icloudOnicloudDao.findBySended();
+	}
+
+	@Override
+	public int updateSended(Long id) {
+		return icloudOnicloudDao.updateSended(id);
+	}
 }

@@ -12,9 +12,11 @@ import java.util.List;
  */
 public class IcloudApplicationagencyDto extends IcloudApplicationagency {
 
-    private String agencyTypeDesc;
+	private static final long serialVersionUID = -4475635303160491113L;
 
-    List<IcloudApplicationagencyqualityimageshareurl> qualityImageShareUrls;
+	private String agencyTypeDesc;
+
+    private List<IcloudApplicationagencyqualityimageshareurl> qualityImageShareUrls;
 
     public String getAgencyTypeDesc() {
         return agencyTypeDesc;
