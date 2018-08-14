@@ -34,6 +34,23 @@
         <include refid="myPage_condition" />
         <include refid="mybatis.pageEndSQL" />
     </select>
+    
+    <select id="findBySended" resultType="com.zhiyun.entity.IcloudEnterpriseauth">
+    	<include refid="selectFieldSQL" />
+    	FROM ICLOUD_ONICLOUD
+    	WHERE
+			DELETED = 'F'
+			AND SENDED = 'F'
+    </select>
+    
+    <update id="updateSended" parameterType="int">
+		  UPDATE ICLOUD_ONICLOUD
+        <set>
+             SENDED = 'T'
+        </set>
+        WHERE ID = #{id,jdbcType=BIGINT}
+        AND DELETED = 'F'
+	</update>
 
 
     <select id="findByUserIdAndStatus" parameterType="map" resultType="com.zhiyun.dto.IcloudOnicloudDto">

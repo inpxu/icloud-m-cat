@@ -32,6 +32,19 @@ public class IcloudOnicloudDaoImpl extends BaseDaoImpl<IcloudOnicloud, Long> imp
         return this.selectPage(getMethodName(), params, page);
     }
 
+	@Override
+	public List<IcloudOnicloud> findBySended() {
+		Params params = Params.create();
+		return this.selectList(getMethodName(),params);
+	}
+
+	@Override
+	public int updateSended(Long id) {
+		Params params = Params.create();
+		params.add("id", id);
+		return this.update(getMethodName(), id);
+	}
+
     @Override
     public List<IcloudOnicloudDto> findByUserIdAndStatus(Params params) {
         return this.selectList(getMethodName(),params);

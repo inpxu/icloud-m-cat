@@ -5,6 +5,8 @@
 
 package com.zhiyun.dao;
 
+import java.util.List;
+
 import com.zhiyun.base.dao.BaseDao;
 import com.zhiyun.base.model.DataGrid;
 import com.zhiyun.base.model.Page;
@@ -24,6 +26,11 @@ import java.util.List;
 public interface IcloudOnicloudDao extends BaseDao<IcloudOnicloud, Long> {
 
     DataGrid<IcloudOnicloudDto> myPage(Params params, Page page);
+    // 查询未发送的数据
+    List<IcloudOnicloud> findBySended();
+    
+    // 修改发送状态
+    int updateSended(Long id);
 
     List<IcloudOnicloudDto> findByUserIdAndStatus(Params params);
 

@@ -5,6 +5,8 @@
 
 package com.zhiyun.service;
 
+import java.util.List;
+
 import com.zhiyun.base.model.DataGrid;
 import com.zhiyun.base.model.Pager;
 import com.zhiyun.base.model.Params;
@@ -28,5 +30,12 @@ public interface IcloudOnicloudService extends BaseService<IcloudOnicloud, Long>
     void updateOnIncloud(IcloudOnicloud icloudOnicloud);
 
     DataGrid<IcloudOnicloudDto> myPage(Params params , Pager pager);
+    
+    // 查询未发送的数据
+ 	List<IcloudOnicloud> findBySended();
+    
+ 	// 修改发送状态
+ 	int updateSended(Long id);
+
 
 }

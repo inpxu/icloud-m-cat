@@ -23,4 +23,6 @@
 	<dubbo:service interface="com.zhiyun.internal.server.icloud.service.PersonalAuthInterface" ref="personalAuthInterface" executes="${dubbo.providerExecutes}" />
 	<!-- 用户信息 -->
 	<dubbo:service interface="com.zhiyun.internal.server.icloud.service.UserInterface" ref="userInterface" executes="${dubbo.providerExecutes}" />
+	<!-- 设备入云 -->
+	<dubbo:service interface="com.zhiyun.internal.server.icloud.service.OnIcloudInterface" ref="onIcloudInterface" executes="${dubbo.providerExecutes}" />
 </beans>
