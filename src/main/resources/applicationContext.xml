@@ -25,5 +25,6 @@
 	<!-- 系统redis配置 -->
 	<import resource="classpath:/META-INF/applicationContext-redis.xml"/>
 	<import resource="classpath:/spring/applicationContext-redisconnection.xml"/>
-	
+
+    <import resource="classpath:applicationContext-activemq.xml" />
 </beans>

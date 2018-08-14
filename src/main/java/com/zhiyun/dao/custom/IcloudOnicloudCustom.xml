@@ -52,4 +52,13 @@
         AND DELETED = 'F'
 	</update>
 
+
+    <select id="findByUserIdAndStatus" parameterType="map" resultType="com.zhiyun.dto.IcloudOnicloudDto">
+        <include refid="selectFieldSQL" />
+        FROM ICLOUD_ONICLOUD
+        <include refid="myPage_condition" />
+    </select>
+
+
+
 </mapper>   

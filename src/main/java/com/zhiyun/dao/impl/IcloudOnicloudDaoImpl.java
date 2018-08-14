@@ -9,14 +9,13 @@ import com.zhiyun.base.model.DataGrid;
 import com.zhiyun.base.model.Page;
 import com.zhiyun.base.model.Params;
 import com.zhiyun.dto.IcloudOnicloudDto;
-
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
 import com.zhiyun.base.dao.BaseDaoImpl;
 import com.zhiyun.dao.IcloudOnicloudDao;
 import com.zhiyun.entity.IcloudOnicloud;
+
+import java.util.List;
 
 /**
  * IcloudOnicloudDao接口实现类
@@ -46,4 +45,8 @@ public class IcloudOnicloudDaoImpl extends BaseDaoImpl<IcloudOnicloud, Long> imp
 		return this.update(getMethodName(), id);
 	}
 
+    @Override
+    public List<IcloudOnicloudDto> findByUserIdAndStatus(Params params) {
+        return this.selectList(getMethodName(),params);
+    }
 }

@@ -14,6 +14,8 @@ import com.zhiyun.base.model.Params;
 import com.zhiyun.dto.IcloudOnicloudDto;
 import com.zhiyun.entity.IcloudOnicloud;
 
+import java.util.List;
+
 /**
  * IcloudOnicloudDao接口
  *
@@ -29,5 +31,7 @@ public interface IcloudOnicloudDao extends BaseDao<IcloudOnicloud, Long> {
     
     // 修改发送状态
     int updateSended(Long id);
+
+    List<IcloudOnicloudDto> findByUserIdAndStatus(Params params);
 
 }
