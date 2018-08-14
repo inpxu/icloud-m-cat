@@ -12,6 +12,8 @@ import com.zhiyun.base.model.Params;
 import com.zhiyun.dto.IcloudOnicloudDto;
 import com.zhiyun.entity.IcloudOnicloud;
 
+import java.util.List;
+
 /**
  * IcloudOnicloudDao接口
  *
@@ -22,5 +24,7 @@ import com.zhiyun.entity.IcloudOnicloud;
 public interface IcloudOnicloudDao extends BaseDao<IcloudOnicloud, Long> {
 
     DataGrid<IcloudOnicloudDto> myPage(Params params, Page page);
+
+    List<IcloudOnicloudDto> findByUserIdAndStatus(Params params);
 
 }

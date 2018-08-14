@@ -15,6 +15,8 @@ import com.zhiyun.base.dao.BaseDaoImpl;
 import com.zhiyun.dao.IcloudOnicloudDao;
 import com.zhiyun.entity.IcloudOnicloud;
 
+import java.util.List;
+
 /**
  * IcloudOnicloudDao接口实现类
  *
@@ -30,4 +32,8 @@ public class IcloudOnicloudDaoImpl extends BaseDaoImpl<IcloudOnicloud, Long> imp
         return this.selectPage(getMethodName(), params, page);
     }
 
+    @Override
+    public List<IcloudOnicloudDto> findByUserIdAndStatus(Params params) {
+        return this.selectList(getMethodName(),params);
+    }
 }

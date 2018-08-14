@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.McatRunDevDaoImpl">
+
+    <sql id="selectFieldSQL">
+		SELECT
+		       modelId,
+		       modelName,
+		       manufactory,
+		       spec,
+		       commcode,
+		       transferMethod,
+		       longitude,
+		       latitude,
+		       companyId,
+		       companyName,
+		       onlineStatus,
+		       faultStatus
+	</sql>
+
+    <!-- 分页查询（条件） -->
+    <sql id="myPage_condition">
+        <where>
+            <if test="entity.modelName != null and entity.modelName != '' ">
+                and LOCATE(#{entity.modelName,jdbcType=VARCHAR},modelName) > 0
+            </if>
+            <if test="entity.manufactory != null and entity.manufactory != '' ">
+                and LOCATE(#{entity.manufactory,jdbcType=VARCHAR},manufactory) > 0
+            </if>
+            <if test="entity.spec != null and entity.spec != '' ">
+                and LOCATE(#{entity.spec,jdbcType=VARCHAR},spec) > 0
+            </if>
+            <if test="entity.transferMethod != null and entity.transferMethod != '' ">
+                and transferMethod = #{entity.transferMethod,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyName != null and entity.companyName != '' ">
+                and LOCATE(#{entity.companyName,jdbcType=VARCHAR},companyName) > 0
+            </if>
+            <if test="entity.onlineStatus != null and entity.onlineStatus != '' ">
+                and onlineStatus = #{entity.onlineStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.faultStatus != null and entity.faultStatus != '' ">
+                and faultStatus = #{entity.faultStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="companyIds != null and companyIds.size() > 0">
+                AND companyId in
+                <foreach collection="companyIds" index="index" item="companyId" open="(" separator="," close=")">
+                    #{companyId,jdbcType=BIGINT}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="myPage_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM v_mcat_rundev m
+        <include refid="myPage_condition" />
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="myPage_datas" parameterType="map" resultType="com.zhiyun.entity.McatRunDev">
+        <include refid="mybatis.pageStartSQL" />
+        <include refid="selectFieldSQL" />
+        FROM v_mcat_rundev m
+        <include refid="myPage_condition" />
+        <include refid="mybatis.pageEndSQL" />
+    </select>
+
+    <select id="listByCommcodes" parameterType="map" resultType="map">
+        SELECT b.n_value nValue , b.id , concat(a.commcode,'') commcode FROM
+        v_mcat_rundev a left join (
+            SELECT b.n_value  , b.dev_id , b.id FROM
+            machine.devcentre_monitor_real_time b
+            where b.param_id = 4
+        ) b
+        on a.id =  b.dev_id
+        WHERE commcode in
+        <foreach collection="commcodes" index="index" item="commcode" open="(" separator="," close=")">
+            #{commcode,jdbcType=VARCHAR}
+        </foreach>
+    </select>
+
+    <update id="updateNvalueByCommcode"  parameterType="map">
+        update machine.devcentre_monitor_real_time
+        set n_value = #{status,jdbcType=VARCHAR}
+        WHERE id in
+        <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+            #{id,jdbcType=BIGINT}
+        </foreach>
+    </update>
+
+</mapper>
