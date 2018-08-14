@@ -55,6 +55,10 @@ public class ApprolvalEntryController {
     private ApprolvalUpdateInterface approlvalUpdateInterface;
     @Resource
 	private IcloudApplicationagencyService applicationagencyService;
+    @Resource
+    private IcloudOnicloudService icloudOnicloudService;
+    @Resource
+    private IcloudApplicationagencyqualityimageshareurlService icloudApplicationagencyqualityimageshareurlService;
     /**
      * 入驻
      *
@@ -63,7 +67,7 @@ public class ApprolvalEntryController {
      * @author: 徐飞
      * @date: 2018-6-16 下午2:04:54
      */
-    @Scheduled(cron = "0 */1 * * * ?")
+//    @Scheduled(cron = "0 */1 * * * ?")
     public void insertApprolvalEntry() {
     	BaseResult<ApprolvalEntry> baseResult = new BaseResult<ApprolvalEntry>();
     	try {
@@ -132,6 +136,77 @@ public class ApprolvalEntryController {
     		baseResult.setMessage(e.getMessage());
     	}
     }
+    
+    
+    /**
+     * 设备入云
+     *
+     * @param: @return
+     * @return: BaseResult<String>
+     * @author: 徐飞
+     * @date: 2018-8-14 16:37:51
+     */
+    @Scheduled(cron = "0 */1 * * * ?")
+    public void onCloudEntry() {
+    	BaseResult<ApprolvalEntry> baseResult = new BaseResult<ApprolvalEntry>();
+    	try {
+    		List<IcloudOnicloud> entrys = icloudOnicloudService.findBySended();
+    		if (!CommonUtils.isEmpty(entrys)) {
+    			for (IcloudOnicloud ic : entrys) {
+    				ApprolvalEntry app = new ApprolvalEntry();
+    				Long id = ic.getId();
+    				Long userId = ic.getCreateUserId();
+    				IcloudPersonalauth icPerson = personalauthService.findByUserId(userId);
+    				if (icPerson != null) {
+    					app.setUserName(icPerson.getName());
+    				}
+    				app.setInCity(ic.getCity());
+    				app.setInDistrict(ic.getDistrict());
+    				app.setInProvince(ic.getProvince());
+    				app.setId(id);
+    				app.setCompanyId(ic.getOrganizationId());
+    				app.setAuthDate(new Date());
+    				app.setCompanyName(ic.getName());
+    				app.setCompanyNature(EnterpriseConstant.Property
+    						.getPropertyDesc(ic.getProperty()));
+    				app.setCompanyType(EnterpriseConstant.Industry.getIndustryDesc(ic.getTrade()+""));
+    				app.setCertificateImg(ic.getSiteImageShareUrl());
+    				app.setAuthType(String.valueOf(AuditState.AUDITING));
+    				app.setCompanyModel(EnterpriseConstant.EnterpriseScale.getEnterpriseScaleDesc(ic.getEmployeeScale()));
+    				app.setDetailAddress(ic.getDetailedAddress());
+    				app.setLinkman(ic.getContactPerson());
+    				app.setLinkphone(ic.getContactPhone());
+    				app.setEquipmentNum(ic.getEquipmentScale()+ "");
+    				app.setUploadcloudNum(ic.getOnIcloudScale()+"");
+    				app.setCompanyAddressimg(ic.getSiteImageShareUrl());
+    				// 判断是新增还是更新的信息
+
+					System.err.println(JSON.toJSONString(app));
+
+    				String updated = ic.getUpdated();
+    				if ("F".equals(updated)) {
+        				baseResult = approlvalInterface.insertApprolvalEntry(app);
+					} else if ("T".equals(updated)) {
+						baseResult = approlvalUpdateInterface.updateApprolvalEntry(app);
+					}
+    				if (baseResult.getResult()) {
+    					icloudOnicloudService.updateSended(id);
+    				}
+    				if (!baseResult.getResult()) {
+    					throw new BusinessException(baseResult.getMessage());
+    				}
+    			}
+    		}
+    	} catch (BusinessException be) {
+    		baseResult.setResult(false);
+    		baseResult.setMessage(be.getMessage());
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		logger.debug(e.getMessage());
+    		baseResult.setResult(false);
+    		baseResult.setMessage(e.getMessage());
+    	}
+    }
 
 	/**
 	 * 代理
@@ -145,7 +220,7 @@ public class ApprolvalEntryController {
 	public void insertApprolvalAgency() {
 		BaseResult<IcloudApplicationagency> baseResult = new BaseResult<IcloudApplicationagency>();
 		try {
-			/*List<com.zhiyun.entity.IcloudApplicationagency> agencys = applicationagencyService.findBySended();
+			List<com.zhiyun.entity.IcloudApplicationagency> agencys = applicationagencyService.findBySended();
 			if (!CommonUtils.isEmpty(agencys)) {
 				for (com.zhiyun.entity.IcloudApplicationagency ic : agencys) {
 					IcloudApplicationagency app = new IcloudApplicationagency();
@@ -153,26 +228,25 @@ public class ApprolvalEntryController {
 					Long userId = ic.getUserId();
 					IcloudPersonalauth icPerson = personalauthService
 							.findByUserId(userId);
-					IcloudEnterpriseauth icEnter = enterpriseauthService
-							.findByUserId(userId);
 					if (icPerson != null) {
-						app.setUserName(icPerson.getName());
-						app.setInCity(icPerson.getCity());
-						app.setInDistrict(icPerson.getDistrict());
-						app.setInProvince(icPerson.getProvince());
-					}
-					if (icEnter != null) {
-						app.setInCity(icEnter.getCity());
-						app.setInDistrict(icEnter.getDistrict());
-						app.setInProvince(icEnter.getProvince());
+						app.setName(icPerson.getName());
 					}
 					app.setId(id);
 					app.setUserId(userId);
 					app.setAgencyArea(ic.getAgencyArea());
-					app.setAgencyLevel(ic.getAgencyLevel());
 					app.setAgencyType(ic.getAgencyType());
-					app.setName(ic.getName());
-					app.setQualityImageShareUrl(ic.getQualityImageShareUrl());
+					List<String> urls = icloudApplicationagencyqualityimageshareurlService.findUrl(id);
+					String imageShareUrl = "";
+					for (String url : urls) {
+						if (url != null) {
+							imageShareUrl = imageShareUrl + url + ",";
+						}
+					}
+					if (imageShareUrl != null) {
+						int a = imageShareUrl.length();
+						imageShareUrl =  imageShareUrl.substring(0,a-1);
+					}
+					app.setQualityImageShareUrl(imageShareUrl);
 					app.setStatus(ic.getStatus());
 					app.setCreateTime(ic.getCreateTime());
 					app.setModifyBy(ic.getModifyBy());
@@ -181,7 +255,7 @@ public class ApprolvalEntryController {
 
 					// 判断是新增还是更新的信息
 
-					System.out.println(JSON.toJSONString(app));
+					System.err.println(JSON.toJSONString(app));
 
 					String updated = ic.getUpdated();
 					if ("F".equals(updated)) {
@@ -196,7 +270,7 @@ public class ApprolvalEntryController {
 						throw new BusinessException(baseResult.getMessage());
 					}
 				}
-			}*/
+			}
 		} catch (BusinessException be) {
 			baseResult.setResult(false);
 			baseResult.setMessage(be.getMessage());
@@ -296,6 +370,8 @@ public class ApprolvalEntryController {
     				app.setCompanyLinkphone(Long.valueOf(ic.getContactPhone()));
     				app.setAuthDate(new Date());
     				app.setCompanyOwner(ic.getLegalPerson());
+    				app.setCompanyIndustrytype(EnterpriseConstant.Industry.getIndustryDesc(ic.getTrade()+""));
+    				app.setCompanyOwnerCardtype(EnterpriseConstant.CertificateType.getCertificateTypeDesc(ic.getLegalPersonIdentityType()));
     				app.setCompanyOwnerPhone(Long.valueOf(ic
     						.getLegalPersonPhone()));
     				app.setCompanyOwnerIdcard(Long.valueOf(ic
@@ -307,6 +383,7 @@ public class ApprolvalEntryController {
     				app.setCompanyId(ic.getCompanyId());
     				app.setAuthType(String.valueOf(AuditState.AUDITING));
     				app.setDetailAddress(ic.getDetailedAddress());
+    				app.setCompanyIndustrytype(EnterpriseConstant.Industry.getIndustryDesc(ic.getTrade()+""));
     				// 判断是新增还是更新的信息
     				String updated = ic.getUpdated();
     				if ("F".equals(updated)) {
@@ -341,7 +418,7 @@ public class ApprolvalEntryController {
      * @author: 徐飞
      * @date: 2018-6-19 上午10:59:03
      */
-    @Scheduled(cron = "0 */1 * * * ?")
+//    @Scheduled(cron = "0 */1 * * * ?")
     public void marketInsert() {
     	BaseResult<ApprolvalEntryMarket> baseResult = new BaseResult<ApprolvalEntryMarket>();
     	try {
@@ -362,12 +439,14 @@ public class ApprolvalEntryController {
     					app.setInCity(icPerson.getCity());
     					app.setInDistrict(icPerson.getDistrict());
     					app.setInProvince(icPerson.getProvince());
+    					app.setUserType("个人");
     				}
     				if (icEnter != null) {
     					app.setUserName(icEnter.getName());
     					app.setInCity(icEnter.getCity());
     					app.setInDistrict(icEnter.getDistrict());
     					app.setInProvince(icEnter.getProvince());
+    					app.setUserType("企业");
     				}
     				app.setCompanyDescribe(ic.getEnterpriseProfile());
     				app.setWorkGroup(EnterpriseConstant.BusinessType

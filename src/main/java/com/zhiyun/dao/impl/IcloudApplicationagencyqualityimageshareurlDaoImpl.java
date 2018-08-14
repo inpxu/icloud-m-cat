@@ -28,4 +28,9 @@ public class IcloudApplicationagencyqualityimageshareurlDaoImpl extends BaseDaoI
     public List<IcloudApplicationagencyqualityimageshareurl> findByApplicationAgencyIds(List<Long> applicationAgencyIds) {
         return this.selectList(getMethodName(),Params.create().add("applicationAgencyIds",applicationAgencyIds));
     }
+
+	@Override
+	public List<String> findUrl(Long id) {
+		return this.selectList(getMethodName(), id);
+	}
 }

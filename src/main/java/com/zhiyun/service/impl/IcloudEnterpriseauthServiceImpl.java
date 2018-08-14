@@ -12,9 +12,6 @@ import javax.annotation.Resource;
 import com.zhiyun.base.exception.BusinessException;
 import com.zhiyun.client.UserHolder;
 import com.zhiyun.constants.AuditState;
-import com.zhiyun.dao.IcloudPersonalauthDao;
-import com.zhiyun.dao.IcloudUserPersonalauthDao;
-import com.zhiyun.entity.IcloudPersonalauth;
 import com.zhiyun.service.IcloudPersonalauthService;
 import org.springframework.stereotype.Service;
 

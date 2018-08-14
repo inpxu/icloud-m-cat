@@ -16,6 +16,12 @@
 
         </where>
     </select>
+    
+    <select id="findUrl" parameterType="java.lang.Long" resultType="java.lang.String">
+    	SELECT quality_image_share_url qualityImageShareUrl FROM icloud_applicationagencyqualityimageshareurl
+			WHERE application_agency_id = #{id}
+			and deleted = 'F'
+    </select>
 
 
 </mapper>   

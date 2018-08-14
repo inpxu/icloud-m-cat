@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.zhiyun.base.service.BaseService;
 import com.zhiyun.dto.IcloudApplicationagencyDto;
 import com.zhiyun.entity.IcloudApplicationagency;
+import com.zhiyun.entity.IcloudOnicloud;
 
 import java.util.List;
 
@@ -29,5 +30,11 @@ public interface IcloudApplicationagencyService extends BaseService<IcloudApplic
     List<IcloudApplicationagencyDto> listApplicationAgencyDto();
 
     JSONArray getAgencyArea(Long exceptId, String agencyType);
+    
+    // 查询未发送的数据
+ 	List<IcloudApplicationagency> findBySended();
+    
+ 	// 修改发送状态
+ 	int updateSended(Long id);
 
 }

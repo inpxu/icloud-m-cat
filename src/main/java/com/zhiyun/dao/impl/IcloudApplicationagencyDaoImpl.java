@@ -31,4 +31,17 @@ public class IcloudApplicationagencyDaoImpl extends BaseDaoImpl<IcloudApplicatio
         params.add("agencyType",agencyType);
         return this.selectList(getMethodName(),params);
     }
+
+    @Override
+	public List<IcloudApplicationagency> findBySended() {
+		Params params = Params.create();
+		return this.selectList(getMethodName(),params);
+	}
+
+	@Override
+	public int updateSended(Long id) {
+		Params params = Params.create();
+		params.add("id", id);
+		return this.update(getMethodName(), id);
+		}
 }

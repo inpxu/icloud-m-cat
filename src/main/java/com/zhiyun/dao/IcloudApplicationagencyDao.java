@@ -20,5 +20,10 @@ import java.util.List;
 public interface IcloudApplicationagencyDao extends BaseDao<IcloudApplicationagency, Long> {
 
     List<IcloudApplicationagency> listByExceptIdAndAgencyType(Long exceptId, String agencyType);
+    // 查询未发送的数据
+    List<IcloudApplicationagency> findBySended();
+    
+    // 修改发送状态
+    int updateSended(Long id);
 
 }

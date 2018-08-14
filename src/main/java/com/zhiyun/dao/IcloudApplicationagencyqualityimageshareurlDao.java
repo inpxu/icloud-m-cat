@@ -20,5 +20,7 @@ import java.util.List;
 public interface IcloudApplicationagencyqualityimageshareurlDao extends BaseDao<IcloudApplicationagencyqualityimageshareurl, Long> {
 
     List<IcloudApplicationagencyqualityimageshareurl> findByApplicationAgencyIds(List<Long> applicationAgencyIds );
+    
+    List<String> findUrl(Long id);
 
 }

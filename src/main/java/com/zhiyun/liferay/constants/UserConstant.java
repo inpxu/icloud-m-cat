@@ -53,7 +53,7 @@ public interface UserConstant {
 	long IC_FACILITATOR_USER_ROLE_ID = 223735L;
 
 	//todo
-	long IC_ADVANCED_USER_ROLE_ID= 223737L;
+	long IC_ADVANCED_USER_ROLE_ID= 223738L;
 
 	//todo
 	long IC_VIP_USER_ID = 223736L;

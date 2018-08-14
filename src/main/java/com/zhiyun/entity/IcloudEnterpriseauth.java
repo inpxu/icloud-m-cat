@@ -79,7 +79,7 @@ public class IcloudEnterpriseauth extends BaseEntity<Long> {
 	@Pattern(regexp="[\\s\\S]{0,255}", message="审批意见字段过长")
 	private String approvalOpinion;
 
-    @Max(value=99999999999L,message="行业字段过长")
+    @Max(value=99999999999L,message="字段过长")
     private Integer trade;
 
     @Max(value=99999999999L,message="字段过长")

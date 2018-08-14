@@ -14,5 +14,23 @@
             </if>
         </where>
     </select>
+    
+    
+    <select id="findBySended" resultType="com.zhiyun.entity.IcloudApplicationagency">
+    	<include refid="selectFieldSQL" />
+    	FROM ICLOUD_APPLICATIONAGENCY
+    	WHERE
+			DELETED = 'F'
+			AND SENDED = 'F'
+    </select>
+    
+    <update id="updateSended" parameterType="int">
+		  UPDATE ICLOUD_APPLICATIONAGENCY
+        <set>
+             SENDED = 'T'
+        </set>
+        WHERE ID = #{id,jdbcType=BIGINT}
+        AND DELETED = 'F'
+	</update>
 
 </mapper>   

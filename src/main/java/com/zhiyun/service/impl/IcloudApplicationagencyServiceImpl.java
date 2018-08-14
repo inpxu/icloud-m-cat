@@ -7,7 +7,6 @@ package com.zhiyun.service.impl;
 
 import javax.annotation.Resource;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhiyun.base.exception.BusinessException;
@@ -17,7 +16,6 @@ import com.zhiyun.constants.EnterpriseConstant;
 import com.zhiyun.dao.IcloudApplicationagencyqualityimageshareurlDao;
 import com.zhiyun.dto.IcloudApplicationagencyDto;
 import com.zhiyun.entity.IcloudApplicationagencyqualityimageshareurl;
-import com.zhiyun.service.IcloudApplicationagencyqualityimageshareurlService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -28,12 +26,9 @@ import com.zhiyun.dao.IcloudApplicationagencyDao;
 import com.zhiyun.entity.IcloudApplicationagency;
 import com.zhiyun.service.IcloudApplicationagencyService;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Service接口实现类。
@@ -176,4 +171,15 @@ public class IcloudApplicationagencyServiceImpl extends BaseServiceImpl<IcloudAp
 
         return provinces;
     }
+
+	@Override
+	public List<IcloudApplicationagency> findBySended() {
+		return icloudApplicationagencyDao.findBySended();
+	}
+
+	@Override
+	public int updateSended(Long id) {
+		return icloudApplicationagencyDao.updateSended(id);
+	}
 }
+

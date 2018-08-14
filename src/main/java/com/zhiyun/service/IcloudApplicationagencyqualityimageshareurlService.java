@@ -5,6 +5,8 @@
 
 package com.zhiyun.service;
 
+import java.util.List;
+
 import com.zhiyun.base.service.BaseService;
 import com.zhiyun.entity.IcloudApplicationagencyqualityimageshareurl;
 
@@ -17,4 +19,5 @@ import com.zhiyun.entity.IcloudApplicationagencyqualityimageshareurl;
  */
 public interface IcloudApplicationagencyqualityimageshareurlService extends BaseService<IcloudApplicationagencyqualityimageshareurl, Long> {
 
+    List<String> findUrl(Long id);
 }

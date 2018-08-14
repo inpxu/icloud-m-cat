@@ -35,7 +35,7 @@
         <include refid="mybatis.pageEndSQL" />
     </select>
     
-    <select id="findBySended" resultType="com.zhiyun.entity.IcloudEnterpriseauth">
+    <select id="findBySended" resultType="com.zhiyun.entity.IcloudOnicloud">
     	<include refid="selectFieldSQL" />
     	FROM ICLOUD_ONICLOUD
     	WHERE

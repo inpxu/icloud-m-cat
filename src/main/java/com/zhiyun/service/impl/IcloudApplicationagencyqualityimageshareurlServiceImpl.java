@@ -5,6 +5,8 @@
 
 package com.zhiyun.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -31,5 +33,12 @@ public class IcloudApplicationagencyqualityimageshareurlServiceImpl extends Base
 	@Override
 	protected BaseDao<IcloudApplicationagencyqualityimageshareurl, Long> getBaseDao() {
 		return this.icloudApplicationagencyqualityimageshareurlDao;
+	}
+	
+
+
+	@Override
+	public List<String> findUrl(Long id) {
+		return icloudApplicationagencyqualityimageshareurlDao.findUrl(id);
 	}
 }
