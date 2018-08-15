@@ -31,7 +31,7 @@
                 and LOCATE(#{entity.spec,jdbcType=VARCHAR},spec) > 0
             </if>
             <if test="entity.transferMethod != null and entity.transferMethod != '' ">
-                and transferMethod = #{entity.transferMethod,jdbcType=VARCHAR}
+                and LOCATE(#{entity.transferMethod,jdbcType=VARCHAR},transferMethod)>0
             </if>
             <if test="entity.companyName != null and entity.companyName != '' ">
                 and LOCATE(#{entity.companyName,jdbcType=VARCHAR},companyName) > 0

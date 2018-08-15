@@ -79,7 +79,7 @@ public class ApplicationAgencyInterfaceImpl extends BaseServiceImpl<IcloudApplic
 				}
 
 				if(status == AuditState.AUDITED){
-					userInvoker.addRoleUsers(UserConstant.IC_AGENCY_USER_ID,userIds.toArray(new Long[0]));
+					userInvoker.addRoleUsers(UserConstant.AGENT_ROLE_ID,userIds.toArray(new Long[0]));
 				}
 
 //				if(status == AuditState.UNAUDITED){

@@ -69,7 +69,7 @@ public class OnIcloudInterfaceImpl extends BaseServiceImpl<IcloudOnicloud, Long>
 			if(status ==AuditState.AUDITED){
 				IcloudOnicloud iae = icloudOnicloudDao.get(id);
 				//角色定义
-				roleInvoker.addUserRoles(iae.getCreateUserId(),new Long[]{UserConstant.IC_ADVANCED_USER_ROLE_ID});
+				roleInvoker.addUserRoles(iae.getCreateUserId(),new Long[]{UserConstant.ENTERUSER_ROLE_ID});
 				//分发个人信息
 				com.zhiyun.internal.server.auth.entity.CasCompany casCompany = new com.zhiyun.internal.server.auth.entity.CasCompany();
 				casCompany.setCompanyName(iae.getName());
