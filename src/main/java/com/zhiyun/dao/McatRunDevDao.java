@@ -2,10 +2,8 @@ package com.zhiyun.dao;
 
 import com.zhiyun.base.dao.BaseDao;
 import com.zhiyun.base.model.DataGrid;
-import com.zhiyun.base.model.Page;
 import com.zhiyun.base.model.Pager;
 import com.zhiyun.base.model.Params;
-import com.zhiyun.entity.IcloudUserPersonalauth;
 import com.zhiyun.entity.McatRunDev;
 
 import java.util.List;
@@ -23,5 +21,7 @@ public interface McatRunDevDao  extends BaseDao<McatRunDev, Long> {
     List<Map<String,Object>> listByCommcodes(Params params);
 
     int updateNvalueByCommcode(Params params);
+
+    List<McatRunDev> listByCompanyName(Params params);
 
 }

@@ -33,4 +33,9 @@ public class McatRunDevDaoImpl  extends BaseDaoImpl<McatRunDev, Long> implements
     public int updateNvalueByCommcode(Params params) {
         return this.update(getMethodName(),params);
     }
+
+    @Override
+    public List<McatRunDev> listByCompanyName(Params params) {
+        return this.selectList(getMethodName(),params);
+    }
 }

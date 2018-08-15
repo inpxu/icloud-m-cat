@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.McatRunDevDaoDistributionDaoImpl">
+
+    <select id="listMcatRundevCompanyDto" parameterType="map" resultType="com.zhiyun.dto.McatRundevCompanyDto" >
+        SELECT * FROM
+        v_mcat_rundev_company
+        <where>
+            <if test="companyIds != null and companyIds.size() > 0">
+                AND companyId in
+                <foreach collection="companyIds" index="index" item="companyId" open="(" separator="," close=")">
+                    #{companyId,jdbcType=BIGINT}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="McatRunDevDistribution" type="com.zhiyun.entity.McatRunDevDistribution" >
+        <id column="companyId" property="companyId" />
+        <id column="longitude" property="longitude" />
+        <id column="latitude" property="latitude" />
+        <result column="sumDevs" property="count" />
+        <association property="infos" resultMap="McatRunDevInfo" columnPrefix="infos_"/>
+    </resultMap>
+
+    <resultMap id="McatRunDevInfo" type="com.zhiyun.entity.McatRunDevInfo">
+        <id column="modelName" property="modelName" />
+        <result column="modelNameSumDevs" property="sumDevs" />
+        <result column="faultDevs" property="faultDevs" />
+        <result column="onlineDevs" property="onLineDevs" />
+    </resultMap>
+
+    <select id="listMcatRunDevDistribution" parameterType="map" resultMap="McatRunDevDistribution">
+        SELECT
+            k.companyName,k.companyId,k.sumDevs count,
+            k.longitude,k.latitude,k.modelName infos_modelName,
+            k.modelNameSumDevs infos_sumDevs, k.faultDevs infos_faultDevs,
+            k.onlineDevs infos_onLineDevs
+        FROM
+            (
+                SELECT
+                    f.*, g.companyName,
+                    g.count sumDevs
+                FROM
+                    (
+                        SELECT
+                            c.*, IFNULL(d.count, 0) onlineDevs
+                        FROM
+                            (
+                                SELECT
+                                    a.companyId,
+                                    a.longitude,
+                                    a.latitude,
+                                    a.modelName,
+                                    a.count modelNameSumDevs,
+                                    IFNULL(b.count, 0) faultDevs
+                                FROM
+                                    v_mcat_rundev_modelname a
+                                LEFT JOIN v_mcat_rundev_fault b ON (
+                                    a.companyId = b.companyId
+                                    AND a.longitude = b.longitude
+                                    AND a.latitude = b.latitude
+                                )
+                            ) c
+                        LEFT JOIN v_mcat_rundev_online d ON (
+                            c.companyId = d.companyId
+                            AND c.longitude = d.longitude
+                            AND c.latitude = d.latitude
+                        )
+                    ) f,
+                    v_mcat_company_location g
+                WHERE
+                    f.companyId = g.companyId
+                AND f.longitude = g.longitude
+                AND f.latitude = g.latitude
+            ) k
+        <where>
+            <if test="companyIds != null and companyIds.size() > 0">
+                AND companyId in
+                <foreach collection="companyIds" index="index" item="companyId" open="(" separator="," close=")">
+                    #{companyId,jdbcType=BIGINT}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="listMcatRundevState" parameterType="map" resultType="com.zhiyun.dto.McatRundevStateDto">
+        SELECT
+            max(k.companyName) companyName,
+            k.companyId,
+            sum(k.sumDevs) - sum(k.onlineDevs) offLineDevs,
+            sum(k.onlineDevs) onLineDevs
+        FROM
+        (
+            SELECT
+                f.*, g.companyName,
+                g.count sumDevs
+            FROM
+            (
+                SELECT
+                c.*, IFNULL(d.count, 0) onlineDevs
+                FROM
+                (
+                    SELECT
+                    a.companyId,
+                    a.longitude,
+                    a.latitude,
+                    a.modelName,
+                    a.count modelNameSumDevs,
+                    IFNULL(b.count, 0) faultDevs
+                    FROM
+                    v_mcat_rundev_modelname a
+                    LEFT JOIN v_mcat_rundev_fault b ON (
+                    a.companyId = b.companyId
+                    AND a.longitude = b.longitude
+                    AND a.latitude = b.latitude
+                  )
+                ) c
+                LEFT JOIN v_mcat_rundev_online d ON (
+                    c.companyId = d.companyId
+                    AND c.longitude = d.longitude
+                    AND c.latitude = d.latitude
+                    )
+                ) f,
+                v_mcat_company_location g
+            WHERE
+            f.companyId = g.companyId
+            AND f.longitude = g.longitude
+            AND f.latitude = g.latitude
+        ) k
+        <where>
+            <if test="companyIds != null and companyIds.size() > 0">
+                AND companyId in
+                <foreach collection="companyIds" index="index" item="companyId" open="(" separator="," close=")">
+                    #{companyId,jdbcType=BIGINT}
+                </foreach>
+            </if>
+            <if test="companyName != null and companyName !=''">
+                AND  locate(#{companyName,jdbcType=VARCHAR}, `companyName`)>0
+            </if>
+        </where>
+        group by companyId
+    </select>
+
+</mapper>

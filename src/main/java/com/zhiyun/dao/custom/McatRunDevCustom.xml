@@ -67,6 +67,12 @@
         <include refid="mybatis.pageEndSQL" />
     </select>
 
+    <select id="listByCompanyName" parameterType="map" resultType="com.zhiyun.entity.McatRunDev">
+        <include refid="selectFieldSQL" />
+        FROM v_mcat_rundev m
+        <include refid="myPage_condition" />
+    </select>
+
     <select id="listByCommcodes" parameterType="map" resultType="map">
         SELECT b.n_value nValue , b.id , concat(a.commcode,'') commcode FROM
         v_mcat_rundev a left join (

@@ -1,6 +1,5 @@
 package com.zhiyun.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.zhiyun.base.controller.BaseController;
 import com.zhiyun.base.dto.BaseResult;
 import com.zhiyun.base.exception.BusinessException;
@@ -10,9 +9,7 @@ import com.zhiyun.base.model.Params;
 import com.zhiyun.client.UserHolder;
 import com.zhiyun.constants.EnterpriseConstant;
 import com.zhiyun.dto.IcloudOnicloudDto;
-import com.zhiyun.entity.IcloudApplicationagency;
 import com.zhiyun.entity.IcloudOnicloud;
-import com.zhiyun.service.IcloudApplicationagencyService;
 import com.zhiyun.service.IcloudOnicloudService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
