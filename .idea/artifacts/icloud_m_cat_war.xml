@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="icloud-m-cat:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="icloud.war">
+      <element id="artifact" artifact-name="icloud-m-cat:war exploded" />
+    </root>
+  </artifact>
+</component>
