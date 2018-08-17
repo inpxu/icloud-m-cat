@@ -15,7 +15,9 @@
     }</style>
     <link href=/icloud/static/css/app.css rel=stylesheet></head>
 <body>
-        <div id=app><app ports="http://218.0.50.68:8887/icloud" user-id="${userId}></app></div>
+        <div id=app>
+            <app ports="http://218.0.50.68:8887/icloud" user-id="${userId}" ></app>
+        </div>
         <script type=text/javascript src=/icloud/static/js/manifest.js></script>
         <script type=text/javascript src=/icloud/static/js/vendor.js></script>
         <script type=text/javascript src=/icloud/static/js/app.js></script>

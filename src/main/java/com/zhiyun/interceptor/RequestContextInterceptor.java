@@ -46,6 +46,7 @@ public class RequestContextInterceptor extends HandlerInterceptorAdapter impleme
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		RequestHolder.init();
+        UserHolder.clear();
 		OnlineUser user = (OnlineUser) request.getSession().getAttribute("user");
 		// 判断是否调试模式
 		if (config.getIsDev()) {

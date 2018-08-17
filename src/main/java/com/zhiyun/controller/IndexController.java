@@ -50,8 +50,8 @@ public class IndexController {
 
 		logger.debug("request in");
         model.addAttribute("userId", UserHolder.getId());
-//		model.addAttribute("userName", UserHolder.getUserName());
-//		model.addAttribute("companyName", UserHolder.getCompanyName());
+		model.addAttribute("userName", UserHolder.getUserName());
+		model.addAttribute("companyName", UserHolder.getCompanyName());
 		return "/demo/index";
 	}
 

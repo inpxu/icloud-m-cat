@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.CasCompanyAppDaoImpl">
+
+    <!-- 插入实体 -->
+    <insert id="insertInAuthAuthorization" parameterType="com.zhiyun.entity.CasCompanyApp">
+        INSERT INTO auth_authorization.CAS_COMPANY_APP (
+            ID,
+            APP_ID,
+            EFFECTIVE_DATE,
+            EXPIRY_DATE,
+            DELETED,
+            COMPANY_ID,
+            CREATE_TIME,
+            CREATE_BY,
+            MODIFY_TIME,
+            MODIFY_BY
+        ) VALUES (
+            #{id,jdbcType=BIGINT},
+            #{appId,jdbcType=BIGINT},
+            #{effectiveDate,jdbcType=TIMESTAMP},
+            #{expiryDate,jdbcType=TIMESTAMP},
+            #{deleted,jdbcType=VARCHAR},
+            #{companyId,jdbcType=BIGINT},
+            #{createTime,jdbcType=TIMESTAMP},
+            #{createBy,jdbcType=VARCHAR},
+            #{modifyTime,jdbcType=TIMESTAMP},
+            #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_CAS_COMPANY_APP.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+</mapper>   

@@ -109,6 +109,7 @@ public class IcloudEnterpriseauthServiceImpl extends BaseServiceImpl<IcloudEnter
         icloudEnterpriseauth.setStatus(AuditState.AUDITING);
         icloudEnterpriseauth.setSended("F");
         icloudEnterpriseauth.setUpdated("F");
+        icloudEnterpriseauth.setUserId(UserHolder.getId());
 
         IcloudEnterpriseauth dbIcloudEnterpriseauth = icloudEnterpriseauthDao.findByUserId(UserHolder.getId());
 
