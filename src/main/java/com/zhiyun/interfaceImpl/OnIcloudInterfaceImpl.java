@@ -6,6 +6,8 @@ package com.zhiyun.interfaceImpl;
 
 import javax.annotation.Resource;
 
+import com.zhiyun.dao.CasCompanyAppDao;
+import com.zhiyun.entity.CasCompanyApp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,9 @@ import com.zhiyun.liferay.constants.UserConstant;
 import com.zhiyun.liferay.impl.RoleInvoker;
 import com.zhiyun.liferay.util.ScreenNameConventer;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * @author 徐飞
  * @version v1.0
@@ -34,6 +39,8 @@ import com.zhiyun.liferay.util.ScreenNameConventer;
 public class OnIcloudInterfaceImpl extends BaseServiceImpl<IcloudOnicloud, Long> implements OnIcloudInterface {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(OnIcloudInterfaceImpl.class);
+
+	private static final Long OC_OLD_APP_ID = 303L;
 	
 	@Resource
 	private IcloudOnicloudDao icloudOnicloudDao;
@@ -46,6 +53,9 @@ public class OnIcloudInterfaceImpl extends BaseServiceImpl<IcloudOnicloud, Long>
 
 	@Resource
 	private RoleInvoker roleInvoker;
+
+	@Resource
+    private CasCompanyAppDao casCompanyAppDao;
 
 	@Override
 	protected BaseDao<IcloudOnicloud, Long> getBaseDao() {
@@ -67,9 +77,10 @@ public class OnIcloudInterfaceImpl extends BaseServiceImpl<IcloudOnicloud, Long>
 			
 			//分发个人信息
 			if(status ==AuditState.AUDITED){
+
 				IcloudOnicloud iae = icloudOnicloudDao.get(id);
 				//角色定义
-				roleInvoker.addUserRoles(iae.getCreateUserId(),new Long[]{UserConstant.IC_ADVANCED_USER_ROLE_ID});
+				roleInvoker.addUserRoles(iae.getCreateUserId(),new Long[]{UserConstant.ENTERUSER_ROLE_ID});
 				//分发个人信息
 				com.zhiyun.internal.server.auth.entity.CasCompany casCompany = new com.zhiyun.internal.server.auth.entity.CasCompany();
 				casCompany.setCompanyName(iae.getName());
@@ -87,7 +98,21 @@ public class OnIcloudInterfaceImpl extends BaseServiceImpl<IcloudOnicloud, Long>
 				casUser.setIsAble(true);
 				casUser.setIsAdmin(true);
 
+
+                Calendar c = Calendar.getInstance();
+                c.setTime(new Date());
+                c.add(Calendar.YEAR,80);
+                CasCompanyApp casCompanyApp = new CasCompanyApp();
+                casCompanyApp.setAppId(OC_OLD_APP_ID);
+                casCompanyApp.setCompanyId(iae.getOrganizationId());
+                casCompanyApp.setEffectiveDate(new Date());
+                casCompanyApp.setExpiryDate(c.getTime());
+
+                casCompanyAppDao.insertInAuthAuthorization(casCompanyApp);
+
 				interfaceForUser.insertOrUpdateUser(casUser,casCompany);
+
+
 			}
 
 		} catch (BusinessException be) {

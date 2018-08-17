@@ -41,8 +41,6 @@ public interface UserConstant {
 
 	long ADMINISTRATOR_ROLE_ID = 20121L;
 
-	long GUEST_ROLE_ID = 20122L;
-
 	//todo 修改 普通用户
 	long IC_ORDINARY_USER_ROLE_ID = 223738L;
 
@@ -66,6 +64,14 @@ public interface UserConstant {
 	long POWER_USER_ROLE_ID = 20124L;
 
 	long USER_ROLE_ID = 20125L;
+
+	long GUEST_ROLE_ID = 20122L;
+
+	long OPERATOR_ROLE_ID = 223736L;
+
+	long ENTERUSER_ROLE_ID = 223738L;
+
+	long AGENT_ROLE_ID = 247091L;
 
 	long[] USERGROUPIDS = new long[] {};
 

@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -250,7 +251,6 @@ public class ApprolvalEntryController {
 					app.setStatus(ic.getStatus());
 					app.setCreateTime(ic.getCreateTime());
 					app.setModifyBy(ic.getModifyBy());
-					app.setCompanyId(ic.getOrganizationId());
 					app.setAuthDate(new Date());
 
 					// 判断是新增还是更新的信息
@@ -372,8 +372,10 @@ public class ApprolvalEntryController {
     				app.setCompanyOwner(ic.getLegalPerson());
     				app.setCompanyIndustrytype(EnterpriseConstant.Industry.getIndustryDesc(ic.getTrade()+""));
     				app.setCompanyOwnerCardtype(EnterpriseConstant.CertificateType.getCertificateTypeDesc(ic.getLegalPersonIdentityType()));
-    				app.setCompanyOwnerPhone(Long.valueOf(ic
-    						.getLegalPersonPhone()));
+    				if(!StringUtils.isEmpty(ic.getLegalPersonPhone())){
+                        app.setCompanyOwnerPhone(Long.valueOf(ic
+                                .getLegalPersonPhone()));
+                    }
     				app.setCompanyOwnerIdcard(Long.valueOf(ic
     						.getLegalPersonIdentityCard()));
     				app.setIdcardFrontImg(ic.getCertificatePositiveShareUrl());

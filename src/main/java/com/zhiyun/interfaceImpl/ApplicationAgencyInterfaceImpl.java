@@ -67,50 +67,17 @@ public class ApplicationAgencyInterfaceImpl extends BaseServiceImpl<IcloudApplic
 			IcloudApplicationagency icloudApplicationagency = new IcloudApplicationagency();
 			icloudApplicationagency.setId(id);
 			icloudApplicationagency.setStatus(status);
-			icloudApplicationagency.setApprovalOpinion(approvalOpinion);
-			icloudApplicationagency.setUpdated("F");
-			icloudApplicationagencyDao.update(icloudApplicationagency);
+                icloudApplicationagency.setApprovalOpinion(approvalOpinion);
+                icloudApplicationagency.setUpdated("F");
+                icloudApplicationagencyDao.update(icloudApplicationagency);
 
-			List<IcloudUserApplicationagency> iuaes = icloudUserApplicationagencyDao.listByApplicationagencyId(id);
-			if(CollectionUtils.isNotEmpty(iuaes)){
-				List<Long> userIds = new ArrayList<>();
-				for(int i = 0 ; i < iuaes.size();i++){
-					userIds.add(iuaes.get(i).getUserId());
-				}
+                IcloudApplicationagency ia = icloudApplicationagencyDao.get(id);
+
+                Long[] userIds = new Long[]{ia.getUserId()};
 
 				if(status == AuditState.AUDITED){
-					userInvoker.addRoleUsers(UserConstant.IC_AGENCY_USER_ID,userIds.toArray(new Long[0]));
+					userInvoker.addRoleUsers(UserConstant.AGENT_ROLE_ID,userIds);
 				}
-
-//				if(status == AuditState.UNAUDITED){
-//					userInvoker.unsetRoleUsers(UserConstant.IC_VIP_USER_ID,userIds.toArray(new Long[0]));
-//				}else if(status == AuditState.AUDITED){
-//					userInvoker.addRoleUsers(UserConstant.IC_VIP_USER_ID,userIds.toArray(new Long[0]));
-//				}
-			}
-
-			//分发个人信息
-			/*if(status ==AuditState.AUDITED){
-				IcloudApplicationagency iaa = icloudApplicationagencyDao.get(id);
-				com.zhiyun.internal.server.auth.entity.CasCompany casCompany = new com.zhiyun.internal.server.auth.entity.CasCompany();
-				casCompany.setCompanyName(iaa.getName());
-				casCompany.setCompanyId(iaa.getOrganizationId());
-				casCompany.setId(iaa.getOrganizationId());
-				User user = userDao.findByUserId(iaa.getUserId());
-				com.zhiyun.internal.server.auth.entity.CasUser casUser = new com.zhiyun.internal.server.auth.entity.CasUser();
-				casUser.setAccount(user.getScreenname());
-				casUser.setEmail(user.getEmailaddress());
-				casUser.setName(user.getLastname() + user.getFirstname());
-				casUser.setId(user.getId());
-				casUser.setPhone(ScreenNameConventer.screenNameMinusP(user.getScreenname()));
-				casUser.setId(user.getUserid());
-				casUser.setCompanyId(iaa.getOrganizationId());
-				casUser.setIsAble(true);
-				casUser.setIsAdmin(true);
-
-
-				interfaceForUser.insertOrUpdateUser(casUser,casCompany);
-			}*/
 
 		} catch (BusinessException be) {
 			LOGGER.debug("业务异常" + be);

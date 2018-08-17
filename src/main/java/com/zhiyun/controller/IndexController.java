@@ -49,6 +49,7 @@ public class IndexController {
 		LiferayInvokerResult result = userInvoker.getUserByScreenName("ptest");
 
 		logger.debug("request in");
+        model.addAttribute("userId", UserHolder.getId());
 		model.addAttribute("userName", UserHolder.getUserName());
 		model.addAttribute("companyName", UserHolder.getCompanyName());
 		return "/demo/index";

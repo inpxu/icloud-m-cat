@@ -7,6 +7,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zhiyun.entity.*;
+import com.zhiyun.service.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,14 +19,6 @@ import com.zhiyun.base.util.CommonUtils;
 import com.zhiyun.client.UserHolder;
 import com.zhiyun.context.OnlineUser;
 import com.zhiyun.context.RequestHolder;
-import com.zhiyun.entity.CasCompany;
-import com.zhiyun.entity.CasUser;
-import com.zhiyun.entity.IcloudApplicationentry;
-import com.zhiyun.entity.User;
-import com.zhiyun.service.CasCompanyService;
-import com.zhiyun.service.CasUserService;
-import com.zhiyun.service.IcloudApplicationentryService;
-import com.zhiyun.service.UserService;
 
 /**
  * 请求拦截。<br>
@@ -41,7 +35,7 @@ public class RequestContextInterceptor extends HandlerInterceptorAdapter impleme
 	@Resource
 	private UserService userService;
 	@Resource
-	IcloudApplicationentryService icloudApplicationentryService;
+    IcloudOnicloudService icloudOnicloudService;
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
@@ -52,6 +46,7 @@ public class RequestContextInterceptor extends HandlerInterceptorAdapter impleme
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		RequestHolder.init();
+        UserHolder.clear();
 		OnlineUser user = (OnlineUser) request.getSession().getAttribute("user");
 		// 判断是否调试模式
 		if (config.getIsDev()) {
@@ -72,17 +67,17 @@ public class RequestContextInterceptor extends HandlerInterceptorAdapter impleme
 			casUser.setAccount(user.getAccountName());
 
 			User liferayUser = userService.findUserByScreenNameAndEmail(user.getAccountName());
-			IcloudApplicationentry icloudApplicationentry = icloudApplicationentryService
-					.findByUserId(liferayUser.getUserid());
+
+			IcloudOnicloud icloudOnicloud = icloudOnicloudService.getOnIcloudByUserId(liferayUser.getUserid());
 			if (liferayUser != null) {
 				// 设置用户信息
 				user.setId(liferayUser.getUserid());
 				user.setAccountName(liferayUser.getScreenname());
 				user.setUserName(liferayUser.getFirstname() + liferayUser.getLastname());
 				user.setId(liferayUser.getUserid());
-				if (icloudApplicationentry != null) {
-					user.setCompanyId(icloudApplicationentry.getOrganizationId());
-					user.setCompanyName(icloudApplicationentry.getName());
+				if (icloudOnicloud != null) {
+					user.setCompanyId(icloudOnicloud.getOrganizationId());
+					user.setCompanyName(icloudOnicloud.getName());
 				}
 
 				request.getSession().setAttribute("user", user);
