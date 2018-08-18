@@ -68,4 +68,8 @@ public class UserDaoImpl extends BaseDaoImpl<User, Long> implements UserDao {
 	    this.update(getMethodName(),user);
     }
 
+	@Override
+	public Long getUserIdByPhone(String screenname){
+		return this.selectOne(getMethodName(),screenname);
+	}
 }

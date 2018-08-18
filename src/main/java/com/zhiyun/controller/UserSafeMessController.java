@@ -290,7 +290,7 @@ public class UserSafeMessController extends BaseController {
 	 * @param: @param submitCode 验证码
 	 * @param: @param updatePassword 密码
 	 * @param: @return
-	 * @return: Object 
+	 * @return: Object
 	 * @author: 徐飞
 	 * @date: 2018-6-12 上午10:44:57
 	 */
@@ -330,7 +330,7 @@ public class UserSafeMessController extends BaseController {
 			} else if (!password2.equals(password1)) {
 				throw new BusinessException("两次输入的密码不同, 请重新输入！");
 			}
-			userService.updatePassword(updatePassword);
+			userService.updatePassword(updatePassword, userid);
 			baseResult.setMessage("密码修改成功！");
 	       
 		} catch (BusinessException be) {
@@ -344,6 +344,5 @@ public class UserSafeMessController extends BaseController {
 		}
 		return baseResult;
 	}
-	
 
 }

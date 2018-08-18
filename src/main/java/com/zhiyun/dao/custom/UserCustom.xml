@@ -355,4 +355,12 @@
         WHERE userId = #{userid,jdbcType=BIGINT}
     </update>
 
+	<select id="getUserIdByPhone" resultType="java.lang.Long" parameterType="java.lang.String">
+		  SELECT
+		  	USERID userid
+		  FROM USER_
+		  WHERE screenName = #{screenname,jdbcType=VARCHAR}
+
+	</select>
+
 </mapper>   

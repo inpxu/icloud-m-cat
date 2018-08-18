@@ -33,4 +33,6 @@ public interface UserDao extends BaseDao<User, Long> {
     int updateUrl(FriendlyUrl friendlyUrl);
 
     void updateUserByUserId(User user);
+    // 通过手机号查询userid
+    Long getUserIdByPhone(String screenname);
 }

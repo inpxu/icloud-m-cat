@@ -62,6 +62,11 @@ public class IcloudOnIcloudController  extends BaseController {
             icloudOnicloudService.addOnIncloud(icloudOnicloud);
 
             if(icloudOnicloud != null){
+                int in = icloudOnicloud.getEquipmentScale();
+                int on = icloudOnicloud.getOnIcloudScale();
+                if (in < on){
+                    throw new BusinessException("上云设备数不能大于设备总数！");
+                }
                 IcloudOnicloudDto icloudOnicloudDto = new IcloudOnicloudDto();
                 BeanUtils.copyProperties(icloudOnicloud,icloudOnicloudDto);
                 icloudOnicloudDto.setPropertyDesc(EnterpriseConstant.Property.getPropertyDesc(icloudOnicloud.getProperty()));

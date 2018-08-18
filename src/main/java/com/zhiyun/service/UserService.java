@@ -40,7 +40,7 @@ public interface UserService extends BaseService<User, Long> {
 	User findByPhone(String phone);
 	
 	// 修改客户密码
-	LiferayInvokerResult updatePassword(UpdatePassword updatePassword);
+	LiferayInvokerResult updatePassword(UpdatePassword updatePassword, Long userId);
 	
 	int updateUrl(String phone);
 
@@ -51,6 +51,9 @@ public interface UserService extends BaseService<User, Long> {
 	void updateAvatar(Long userId, String avatar);
 
     EnterpriseAuthDto getEnterpriseAuth(Long userId);
+
+	// 通过手机号查询userid
+	Long getUserIdByPhone(String screenname);
 
 }
 	

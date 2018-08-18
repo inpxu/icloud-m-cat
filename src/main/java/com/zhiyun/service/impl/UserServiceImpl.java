@@ -177,8 +177,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 	}
 
 	@Override
-	public LiferayInvokerResult updatePassword(UpdatePassword updatePassword) {
-		Long userId = UserHolder.getId();
+	public LiferayInvokerResult updatePassword(UpdatePassword updatePassword, Long userId) {
 		String password1 = updatePassword.getPassword1();
 		String password2 = updatePassword.getPassword2();
 		return userInvoker.updatePassword(userId, password1, password2);
@@ -357,4 +356,9 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
         return enterpriseAuthDto;
 
     }
+
+    @Override
+	public Long getUserIdByPhone(String screenname){
+		return userDao.getUserIdByPhone(screenname);
+	}
 }

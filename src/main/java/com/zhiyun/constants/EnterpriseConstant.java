@@ -162,8 +162,8 @@ public class EnterpriseConstant {
 
 	public enum EnterpriseScale {
 
-		LESS_THEN_TWENTY(0, 0, 20, "0~20人"), LESS_THEN_HUNDRED(1, 20, 100, "20~100人"), GREATER_THEN_HUNDRED(2, 100, -1,
-				"大于100人");
+		LESS_THEN_TWENTY(0, 0, 20, "0~20人"), LESS_THEN_HUNDRED(1, 20, 100, "20~100人"), GREATER_THEN_HUNDRED(2, 100, 500,
+				"100~500人"), LESS_THEN_THOUSAND(3, 500, 1000, "500~1000人"), GREATER_THEN_THOUSAND(4, 1000, -1, "大于1000人");
 
 		private int id;
 
@@ -200,8 +200,8 @@ public class EnterpriseConstant {
 
     public enum EmployeeScale {
 
-        LESS_THEN_TWENTY(0, 0, 20, "0~20人"), LESS_THEN_HUNDRED(1, 20, 100, "20~100人"), GREATER_THEN_HUNDRED(2, 100, -1,
-                "大于100人");
+		LESS_THEN_TWENTY(0, 0, 20, "0~20人"), LESS_THEN_HUNDRED(1, 20, 100, "20~100人"), GREATER_THEN_HUNDRED(2, 100, 500,
+				"100~500人"), LESS_THEN_THOUSAND(3, 500, 1000, "500~1000人"), GREATER_THEN_THOUSAND(4, 1000, -1, "大于1000人");
 
         private int id;
 
