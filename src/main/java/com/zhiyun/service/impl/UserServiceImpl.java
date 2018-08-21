@@ -177,6 +177,13 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 	}
 
 	@Override
+	public String findPhoneByUserId(Long userId) {
+		String screanName = userDao.findPhoneByUserId(userId);
+		String phone = screanName.replaceAll("[a-zA-Z]","" );
+		return phone;
+	}
+
+	@Override
 	public LiferayInvokerResult updatePassword(UpdatePassword updatePassword, Long userId) {
 		String password1 = updatePassword.getPassword1();
 		String password2 = updatePassword.getPassword2();

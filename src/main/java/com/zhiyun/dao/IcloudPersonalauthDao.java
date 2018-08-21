@@ -26,7 +26,7 @@ public interface IcloudPersonalauthDao extends BaseDao<IcloudPersonalauth, Long>
     int updateSended(Long id);
 
     // 通过userId查询
-    IcloudPersonalauth findByUserId(Long userId);
+    List<IcloudPersonalauth> findByUserId(Long userId);
 
     void deleteByUserId(IcloudPersonalauth icloudPersonalauth);
 

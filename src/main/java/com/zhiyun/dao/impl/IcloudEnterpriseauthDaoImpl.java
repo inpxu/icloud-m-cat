@@ -38,10 +38,10 @@ public class IcloudEnterpriseauthDaoImpl extends BaseDaoImpl<IcloudEnterpriseaut
 	}
 
 	@Override
-	public IcloudEnterpriseauth findByUserId(Long userId) {
+	public List<IcloudEnterpriseauth> findByUserId(Long userId) {
 		Params params = Params.create();
 		params.add("userId", userId);
-		return this.selectOne(getMethodName(), userId);
+		return this.selectList(getMethodName(), userId);
 	}
 
 	@Override

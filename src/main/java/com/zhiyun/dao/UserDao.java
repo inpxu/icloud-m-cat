@@ -23,6 +23,8 @@ public interface UserDao extends BaseDao<User, Long> {
 
     User findUserByUserId(Long userId);
 
+    String findPhoneByUserId(Long userId);
+
     User findUserByScreenNameAndEmail(String accout);
 
     User findByUserId(Long userId);

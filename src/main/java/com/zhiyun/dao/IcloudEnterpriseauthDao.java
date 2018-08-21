@@ -26,7 +26,7 @@ public interface IcloudEnterpriseauthDao extends BaseDao<IcloudEnterpriseauth, L
     int updateSended(Long id);
 
     // 通过userId查询
-    IcloudEnterpriseauth findByUserId(Long userId);
+    List<IcloudEnterpriseauth> findByUserId(Long userId);
 
     void deleteByUserId(IcloudEnterpriseauth icloudEnterpriseauth);
 

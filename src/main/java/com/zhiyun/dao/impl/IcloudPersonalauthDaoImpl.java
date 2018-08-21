@@ -37,9 +37,9 @@ public class IcloudPersonalauthDaoImpl extends BaseDaoImpl<IcloudPersonalauth, L
 	}
 
 	@Override
-	public IcloudPersonalauth findByUserId(Long userId) {
+	public List<IcloudPersonalauth> findByUserId(Long userId) {
 		Params params = Params.create().add("userId", userId);
-		return this.selectOne(getMethodName(), params);
+		return this.selectList(getMethodName(), params);
 	}
 
 	@Override

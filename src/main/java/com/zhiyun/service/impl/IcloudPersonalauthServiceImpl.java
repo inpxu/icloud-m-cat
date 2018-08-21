@@ -54,7 +54,7 @@ public class IcloudPersonalauthServiceImpl extends BaseServiceImpl<IcloudPersona
 	}
 
 	@Override
-	public IcloudPersonalauth findByUserId(Long userId) {
+	public List<IcloudPersonalauth> findByUserId(Long userId) {
 		return icloudPersonalauthDao.findByUserId(userId);
 	}
 
@@ -110,7 +110,7 @@ public class IcloudPersonalauthServiceImpl extends BaseServiceImpl<IcloudPersona
         icloudPersonalauth.setUpdated("F");
         icloudPersonalauth.setUserId(UserHolder.getId());
 
-	    IcloudPersonalauth dbIcloudPersonalauth = icloudPersonalauthDao.findByUserId(UserHolder.getId());
+	    IcloudPersonalauth dbIcloudPersonalauth = icloudPersonalauthDao.findByUserId(UserHolder.getId()).get(0);
 	    if(dbIcloudPersonalauth != null){
 	        throw new BusinessException("请勿重复认证");
         }

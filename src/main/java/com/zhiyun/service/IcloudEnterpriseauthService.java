@@ -26,7 +26,7 @@ public interface IcloudEnterpriseauthService extends BaseService<IcloudEnterpris
 	int updateSended(Long id);
 
     // 通过userId查询
-    IcloudEnterpriseauth findByUserId(Long userId);
+    List<IcloudEnterpriseauth> findByUserId(Long userId);
 
     void updateEnterpriseauth(IcloudEnterpriseauth icloudEnterpriseauth);
 

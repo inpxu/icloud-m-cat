@@ -38,6 +38,8 @@ public interface UserService extends BaseService<User, Long> {
 	
 	// 通过 phone查找客户信息
 	User findByPhone(String phone);
+
+	String findPhoneByUserId(Long userId);
 	
 	// 修改客户密码
 	LiferayInvokerResult updatePassword(UpdatePassword updatePassword, Long userId);

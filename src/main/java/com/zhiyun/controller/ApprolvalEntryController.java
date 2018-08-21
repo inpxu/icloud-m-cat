@@ -60,6 +60,8 @@ public class ApprolvalEntryController {
     private IcloudOnicloudService icloudOnicloudService;
     @Resource
     private IcloudApplicationagencyqualityimageshareurlService icloudApplicationagencyqualityimageshareurlService;
+    @Resource
+    private UserService userService;
     /**
      * 入驻
      *
@@ -79,9 +81,9 @@ public class ApprolvalEntryController {
     				Long id = ic.getId();
     				Long userId = ic.getCreateUserId();
     				IcloudPersonalauth icPerson = personalauthService
-    						.findByUserId(userId);
+    						.findByUserId(userId).get(0);
     				IcloudEnterpriseauth icEnter = enterpriseauthService
-    						.findByUserId(userId);
+    						.findByUserId(userId).get(0);
     				if (icPerson != null) {
     					app.setUserName(icPerson.getName());
     					app.setInCity(icPerson.getCity());
@@ -157,7 +159,7 @@ public class ApprolvalEntryController {
     				ApprolvalEntry app = new ApprolvalEntry();
     				Long id = ic.getId();
     				Long userId = ic.getCreateUserId();
-    				IcloudPersonalauth icPerson = personalauthService.findByUserId(userId);
+    				IcloudPersonalauth icPerson = personalauthService.findByUserId(userId).get(0);
     				if (icPerson != null) {
     					app.setUserName(icPerson.getName());
     				}
@@ -227,10 +229,25 @@ public class ApprolvalEntryController {
 					IcloudApplicationagency app = new IcloudApplicationagency();
 					Long id = ic.getId();
 					Long userId = ic.getUserId();
-					IcloudPersonalauth icPerson = personalauthService
-							.findByUserId(userId);
+					IcloudPersonalauth icPerson = personalauthService.findByUserId(userId).get(0);
+					IcloudEnterpriseauth icEnter = enterpriseauthService.findByUserId(userId).get(0);
+					// 个人
 					if (icPerson != null) {
 						app.setName(icPerson.getName());
+						app.setCardType(icPerson.getCertificateType()+"");
+						app.setIdCard(icPerson.getCertificate());
+						app.setLinkPhone(Long.valueOf(userService.findPhoneByUserId(userId)));
+						app.setCertificationType(String.valueOf(EnterpriseConstant.Type.PERSONAL));
+					}
+					// 企业
+					if (icEnter != null) {
+						app.setName(icEnter.getName());
+						app.setLinkPhone(Long.valueOf(icEnter.getContactPerson()));
+						app.setLinkName(icEnter.getContactPerson());
+						app.setIdCard(icEnter.getLegalPersonIdentityCard());
+						app.setCompanyOwner(icEnter.getLegalPerson());
+						app.setCompanyOwnerOhone(icEnter.getLegalPersonPhone());
+						app.setCertificationType(String.valueOf(EnterpriseConstant.Type.ENTERPRISE));
 					}
 					app.setId(id);
 					app.setUserId(userId);
@@ -251,6 +268,7 @@ public class ApprolvalEntryController {
 					app.setStatus(ic.getStatus());
 					app.setCreateTime(ic.getCreateTime());
 					app.setModifyBy(ic.getModifyBy());
+					app.setRegisterDate(ic.getCreateTime());
 					app.setAuthDate(new Date());
 
 					// 判断是新增还是更新的信息
@@ -431,9 +449,9 @@ public class ApprolvalEntryController {
     				Long id = ic.getId();
     				Long userId = ic.getCreateUserId();
     				IcloudPersonalauth icPerson = personalauthService
-    						.findByUserId(userId);
+    						.findByUserId(userId).get(0);
     				IcloudEnterpriseauth icEnter = enterpriseauthService
-    						.findByUserId(userId);
+    						.findByUserId(userId).get(0);
     				List<IcloudMarketentrydatashareurl> urls = marketentryService
     						.findUrl(id);
     				if (icPerson != null) {

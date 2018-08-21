@@ -8,6 +8,7 @@ package com.zhiyun.service;
 import java.util.List;
 
 import com.zhiyun.base.service.BaseService;
+import com.zhiyun.entity.IcloudEnterpriseauth;
 import com.zhiyun.entity.IcloudPersonalauth;
 
 /**
@@ -26,7 +27,7 @@ public interface IcloudPersonalauthService extends BaseService<IcloudPersonalaut
     int updateSended(Long id);
 
     // 通过userId查询
-    IcloudPersonalauth findByUserId(Long userId);
+    List<IcloudPersonalauth> findByUserId(Long userId);
 
     void updateIcloudPersonalauth(IcloudPersonalauth icloudPersonalauth);
 

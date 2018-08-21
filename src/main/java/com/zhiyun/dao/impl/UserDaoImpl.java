@@ -42,6 +42,11 @@ public class UserDaoImpl extends BaseDaoImpl<User, Long> implements UserDao {
 	}
 
 	@Override
+	public String findPhoneByUserId(Long userId) {
+		return this.selectOne(getMethodName(),userId);
+	}
+
+	@Override
 	public User findUserByScreenNameAndEmail(String account) {
 		Params params = Params.create().add("account", account);
 		return this.selectOne(getMethodName(), params);

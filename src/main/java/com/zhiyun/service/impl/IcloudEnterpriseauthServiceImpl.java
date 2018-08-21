@@ -54,7 +54,7 @@ public class IcloudEnterpriseauthServiceImpl extends BaseServiceImpl<IcloudEnter
 	}
 
 	@Override
-	public IcloudEnterpriseauth findByUserId(Long userId) {
+	public List<IcloudEnterpriseauth> findByUserId(Long userId) {
 		return icloudEnterpriseauthDao.findByUserId(userId);
 	}
 
@@ -111,7 +111,7 @@ public class IcloudEnterpriseauthServiceImpl extends BaseServiceImpl<IcloudEnter
         icloudEnterpriseauth.setUpdated("F");
         icloudEnterpriseauth.setUserId(UserHolder.getId());
 
-        IcloudEnterpriseauth dbIcloudEnterpriseauth = icloudEnterpriseauthDao.findByUserId(UserHolder.getId());
+        IcloudEnterpriseauth dbIcloudEnterpriseauth = icloudEnterpriseauthDao.findByUserId(UserHolder.getId()).get(0);
 
         if(dbIcloudEnterpriseauth != null){
             throw new BusinessException("请勿重复认证");

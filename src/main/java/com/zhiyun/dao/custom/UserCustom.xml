@@ -203,6 +203,14 @@
 		 WHERE userid = #{userId,jdbcType=BIGINT}
 		 
 	</select>
+
+	<select id="findPhoneByUserId" parameterType="java.lang.Long" resultType="java.lang.String">
+		SELECT
+			screenName screenname
+		  FROM USER_
+		 WHERE userid = #{userId,jdbcType=BIGINT}
+
+	</select>
 	
 	<update id="updatePhone" parameterType="com.zhiyun.entity.User">
 		update user_ set 
