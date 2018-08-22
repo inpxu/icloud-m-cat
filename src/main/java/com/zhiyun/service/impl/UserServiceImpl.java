@@ -70,7 +70,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 	@Autowired
 	private IcloudApplicationentryDao icloudApplicationentryDao;
 
-	@Autowired
+	@Resource
 	private InterfaceForUser interfaceForUser;
 
 	@Resource
@@ -234,8 +234,8 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 
 	    BaseUserInfoDto baseUserInfoDto = new BaseUserInfoDto();
 
-        IcloudPersonalauth icloudPersonalauth = personalauthDao.findByUserId(userId);
-        IcloudEnterpriseauth icloudEnterpriseauth = enterpriseauthDao.findByUserId(userId);
+        IcloudPersonalauth icloudPersonalauth = personalauthDao.findByUserId(userId).get(0);
+        IcloudEnterpriseauth icloudEnterpriseauth = enterpriseauthDao.findByUserId(userId).get(0);
 
         AccountDto accountDto = getAccountDto(userId,icloudPersonalauth,icloudEnterpriseauth);
         PersonalAuthDto personalAuthDto = getPersonalAuthDto(icloudPersonalauth);
@@ -357,7 +357,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
     @Override
     public EnterpriseAuthDto getEnterpriseAuth(Long userId) {
 
-        IcloudEnterpriseauth icloudEnterpriseauth = enterpriseauthDao.findByUserId(userId);
+        IcloudEnterpriseauth icloudEnterpriseauth = enterpriseauthDao.findByUserId(userId).get(0);
         EnterpriseAuthDto enterpriseAuthDto = getEnterpriseAuthDto(icloudEnterpriseauth);
 
         return enterpriseAuthDto;
