@@ -19,6 +19,7 @@ import com.zhiyun.internal.server.oc.entity.ApprolvalEntry;
 import com.zhiyun.internal.server.oc.entity.ApprolvalEntryMarket;
 import com.zhiyun.internal.server.oc.entity.IcloudApplicationagency;
 import com.zhiyun.service.*;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -159,10 +160,17 @@ public class ApprolvalEntryController {
     				ApprolvalEntry app = new ApprolvalEntry();
     				Long id = ic.getId();
     				Long userId = ic.getCreateUserId();
-    				IcloudPersonalauth icPerson = personalauthService.findByUserId(userId).get(0);
-    				if (icPerson != null) {
-    					app.setUserName(icPerson.getName());
-    				}
+
+					IcloudPersonalauth icPerson = null;
+					List<IcloudPersonalauth> icloudPersonalauths = personalauthService.findByUserId(userId);
+					if (CollectionUtils.isEmpty(icloudPersonalauths)){
+						icPerson = icloudPersonalauths.get(0);
+					}
+					IcloudEnterpriseauth icEnter = null;
+					List<IcloudEnterpriseauth> icloudEnterpriseauths = enterpriseauthService.findByUserId(userId);
+					if (CollectionUtils.isEmpty(icloudEnterpriseauths)){
+						icEnter = icloudEnterpriseauths.get(0);
+					}
     				app.setInCity(ic.getCity());
     				app.setInDistrict(ic.getDistrict());
     				app.setInProvince(ic.getProvince());
@@ -229,8 +237,16 @@ public class ApprolvalEntryController {
 					IcloudApplicationagency app = new IcloudApplicationagency();
 					Long id = ic.getId();
 					Long userId = ic.getUserId();
-					IcloudPersonalauth icPerson = personalauthService.findByUserId(userId).get(0);
-					IcloudEnterpriseauth icEnter = enterpriseauthService.findByUserId(userId).get(0);
+					IcloudPersonalauth icPerson = null;
+					List<IcloudPersonalauth> icloudPersonalauths = personalauthService.findByUserId(userId);
+					if (CollectionUtils.isEmpty(icloudPersonalauths)){
+						icPerson = icloudPersonalauths.get(0);
+					}
+					IcloudEnterpriseauth icEnter = null;
+					List<IcloudEnterpriseauth> icloudEnterpriseauths = enterpriseauthService.findByUserId(userId);
+					if (CollectionUtils.isEmpty(icloudEnterpriseauths)){
+						icEnter = icloudEnterpriseauths.get(0);
+					}
 					// 个人
 					if (icPerson != null) {
 						app.setName(icPerson.getName());
@@ -490,8 +506,8 @@ public class ApprolvalEntryController {
 					}
     				if (baseResult.getResult()) {
     					marketentryService.updateSended(id);
+						if (!baseResult.getResult()) {
     				}
-    				if (!baseResult.getResult()) {
     					throw new BusinessException(baseResult.getMessage());
     				}
     			}

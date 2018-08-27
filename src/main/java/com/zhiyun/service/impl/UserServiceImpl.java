@@ -234,9 +234,18 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 
 	    BaseUserInfoDto baseUserInfoDto = new BaseUserInfoDto();
 
-        IcloudPersonalauth icloudPersonalauth = personalauthDao.findByUserId(userId).get(0);
-        IcloudEnterpriseauth icloudEnterpriseauth = enterpriseauthDao.findByUserId(userId).get(0);
+		IcloudPersonalauth icloudPersonalauth = null;
+		List<IcloudPersonalauth> icloudPersonalauths = personalauthDao.findByUserId(userId);
+		if(CollectionUtils.isNotEmpty(icloudPersonalauths)){
+			icloudPersonalauth = icloudPersonalauths.get(0);
+		}
 
+		IcloudEnterpriseauth icloudEnterpriseauth = null;
+		List<IcloudEnterpriseauth>  icloudEnterpriseauths = enterpriseauthDao.findByUserId(userId);
+		if (CollectionUtils.isNotEmpty(icloudEnterpriseauths)){
+			icloudEnterpriseauth = icloudEnterpriseauths.get(0);
+		}
+		
         AccountDto accountDto = getAccountDto(userId,icloudPersonalauth,icloudEnterpriseauth);
         PersonalAuthDto personalAuthDto = getPersonalAuthDto(icloudPersonalauth);
         EnterpriseAuthDto enterpriseAuthDto = getEnterpriseAuthDto(icloudEnterpriseauth);

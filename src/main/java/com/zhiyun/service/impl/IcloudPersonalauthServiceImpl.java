@@ -13,6 +13,7 @@ import com.zhiyun.base.exception.BusinessException;
 import com.zhiyun.client.UserHolder;
 import com.zhiyun.constants.AuditState;
 import com.zhiyun.service.IcloudEnterpriseauthService;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import com.zhiyun.base.dao.BaseDao;
@@ -109,8 +110,11 @@ public class IcloudPersonalauthServiceImpl extends BaseServiceImpl<IcloudPersona
         icloudPersonalauth.setSended("F");
         icloudPersonalauth.setUpdated("F");
         icloudPersonalauth.setUserId(UserHolder.getId());
-
-	    IcloudPersonalauth dbIcloudPersonalauth = icloudPersonalauthDao.findByUserId(UserHolder.getId()).get(0);
+		IcloudPersonalauth dbIcloudPersonalauth = null;
+		List<IcloudPersonalauth> icloudPersonalauths = icloudPersonalauthDao.findByUserId(UserHolder.getId());
+		if (CollectionUtils.isNotEmpty(icloudPersonalauths)) {
+			dbIcloudPersonalauth = icloudPersonalauths.get(0);
+		}
 	    if(dbIcloudPersonalauth != null){
 	        throw new BusinessException("请勿重复认证");
         }
